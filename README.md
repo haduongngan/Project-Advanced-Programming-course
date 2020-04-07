@@ -5,7 +5,7 @@ In NIM game, two players take turns removing objects from distinct piles. On eac
 In my game, players can play in different modes:
   1. Human VS Human
   2. AIPlayer VS Human
-  3. SmartAIPlayer Human
+  3. SmartAIPlayer VS Human
 
 Players can also choose who will go first:
   1. The first player
