@@ -123,6 +123,87 @@ game/fast:
 	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/build
 .PHONY : game/fast
 
+AIPlayer.o: AIPlayer.cpp.o
+
+.PHONY : AIPlayer.o
+
+# target to build an object file
+AIPlayer.cpp.o:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/AIPlayer.cpp.o
+.PHONY : AIPlayer.cpp.o
+
+AIPlayer.i: AIPlayer.cpp.i
+
+.PHONY : AIPlayer.i
+
+# target to preprocess a source file
+AIPlayer.cpp.i:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/AIPlayer.cpp.i
+.PHONY : AIPlayer.cpp.i
+
+AIPlayer.s: AIPlayer.cpp.s
+
+.PHONY : AIPlayer.s
+
+# target to generate assembly for a file
+AIPlayer.cpp.s:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/AIPlayer.cpp.s
+.PHONY : AIPlayer.cpp.s
+
+HumanPlayer.o: HumanPlayer.cpp.o
+
+.PHONY : HumanPlayer.o
+
+# target to build an object file
+HumanPlayer.cpp.o:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/HumanPlayer.cpp.o
+.PHONY : HumanPlayer.cpp.o
+
+HumanPlayer.i: HumanPlayer.cpp.i
+
+.PHONY : HumanPlayer.i
+
+# target to preprocess a source file
+HumanPlayer.cpp.i:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/HumanPlayer.cpp.i
+.PHONY : HumanPlayer.cpp.i
+
+HumanPlayer.s: HumanPlayer.cpp.s
+
+.PHONY : HumanPlayer.s
+
+# target to generate assembly for a file
+HumanPlayer.cpp.s:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/HumanPlayer.cpp.s
+.PHONY : HumanPlayer.cpp.s
+
+SmartAIPlayer.o: SmartAIPlayer.cpp.o
+
+.PHONY : SmartAIPlayer.o
+
+# target to build an object file
+SmartAIPlayer.cpp.o:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/SmartAIPlayer.cpp.o
+.PHONY : SmartAIPlayer.cpp.o
+
+SmartAIPlayer.i: SmartAIPlayer.cpp.i
+
+.PHONY : SmartAIPlayer.i
+
+# target to preprocess a source file
+SmartAIPlayer.cpp.i:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/SmartAIPlayer.cpp.i
+.PHONY : SmartAIPlayer.cpp.i
+
+SmartAIPlayer.s: SmartAIPlayer.cpp.s
+
+.PHONY : SmartAIPlayer.s
+
+# target to generate assembly for a file
+SmartAIPlayer.cpp.s:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/SmartAIPlayer.cpp.s
+.PHONY : SmartAIPlayer.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -150,6 +231,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+player.o: player.cpp.o
+
+.PHONY : player.o
+
+# target to build an object file
+player.cpp.o:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/player.cpp.o
+.PHONY : player.cpp.o
+
+player.i: player.cpp.i
+
+.PHONY : player.i
+
+# target to preprocess a source file
+player.cpp.i:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/player.cpp.i
+.PHONY : player.cpp.i
+
+player.s: player.cpp.s
+
+.PHONY : player.s
+
+# target to generate assembly for a file
+player.cpp.s:
+	$(MAKE) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/player.cpp.s
+.PHONY : player.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +267,21 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... game"
+	@echo "... AIPlayer.o"
+	@echo "... AIPlayer.i"
+	@echo "... AIPlayer.s"
+	@echo "... HumanPlayer.o"
+	@echo "... HumanPlayer.i"
+	@echo "... HumanPlayer.s"
+	@echo "... SmartAIPlayer.o"
+	@echo "... SmartAIPlayer.i"
+	@echo "... SmartAIPlayer.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... player.o"
+	@echo "... player.i"
+	@echo "... player.s"
 .PHONY : help
 
 

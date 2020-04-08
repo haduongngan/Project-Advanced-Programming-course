@@ -70,17 +70,77 @@ CMakeFiles/game.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/game.dir/main.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/hatnho0708/Documents/GitHub/Project/game/main.cpp -o CMakeFiles/game.dir/main.cpp.s
 
+CMakeFiles/game.dir/player.cpp.o: CMakeFiles/game.dir/flags.make
+CMakeFiles/game.dir/player.cpp.o: ../player.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/game.dir/player.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/game.dir/player.cpp.o -c /Users/hatnho0708/Documents/GitHub/Project/game/player.cpp
+
+CMakeFiles/game.dir/player.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/game.dir/player.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/hatnho0708/Documents/GitHub/Project/game/player.cpp > CMakeFiles/game.dir/player.cpp.i
+
+CMakeFiles/game.dir/player.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/game.dir/player.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/hatnho0708/Documents/GitHub/Project/game/player.cpp -o CMakeFiles/game.dir/player.cpp.s
+
+CMakeFiles/game.dir/HumanPlayer.cpp.o: CMakeFiles/game.dir/flags.make
+CMakeFiles/game.dir/HumanPlayer.cpp.o: ../HumanPlayer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/game.dir/HumanPlayer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/game.dir/HumanPlayer.cpp.o -c /Users/hatnho0708/Documents/GitHub/Project/game/HumanPlayer.cpp
+
+CMakeFiles/game.dir/HumanPlayer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/game.dir/HumanPlayer.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/hatnho0708/Documents/GitHub/Project/game/HumanPlayer.cpp > CMakeFiles/game.dir/HumanPlayer.cpp.i
+
+CMakeFiles/game.dir/HumanPlayer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/game.dir/HumanPlayer.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/hatnho0708/Documents/GitHub/Project/game/HumanPlayer.cpp -o CMakeFiles/game.dir/HumanPlayer.cpp.s
+
+CMakeFiles/game.dir/AIPlayer.cpp.o: CMakeFiles/game.dir/flags.make
+CMakeFiles/game.dir/AIPlayer.cpp.o: ../AIPlayer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/game.dir/AIPlayer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/game.dir/AIPlayer.cpp.o -c /Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.cpp
+
+CMakeFiles/game.dir/AIPlayer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/game.dir/AIPlayer.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.cpp > CMakeFiles/game.dir/AIPlayer.cpp.i
+
+CMakeFiles/game.dir/AIPlayer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/game.dir/AIPlayer.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.cpp -o CMakeFiles/game.dir/AIPlayer.cpp.s
+
+CMakeFiles/game.dir/SmartAIPlayer.cpp.o: CMakeFiles/game.dir/flags.make
+CMakeFiles/game.dir/SmartAIPlayer.cpp.o: ../SmartAIPlayer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/game.dir/SmartAIPlayer.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/game.dir/SmartAIPlayer.cpp.o -c /Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.cpp
+
+CMakeFiles/game.dir/SmartAIPlayer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/game.dir/SmartAIPlayer.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.cpp > CMakeFiles/game.dir/SmartAIPlayer.cpp.i
+
+CMakeFiles/game.dir/SmartAIPlayer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/game.dir/SmartAIPlayer.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.cpp -o CMakeFiles/game.dir/SmartAIPlayer.cpp.s
+
 # Object files for target game
 game_OBJECTS = \
-"CMakeFiles/game.dir/main.cpp.o"
+"CMakeFiles/game.dir/main.cpp.o" \
+"CMakeFiles/game.dir/player.cpp.o" \
+"CMakeFiles/game.dir/HumanPlayer.cpp.o" \
+"CMakeFiles/game.dir/AIPlayer.cpp.o" \
+"CMakeFiles/game.dir/SmartAIPlayer.cpp.o"
 
 # External object files for target game
 game_EXTERNAL_OBJECTS =
 
 game: CMakeFiles/game.dir/main.cpp.o
+game: CMakeFiles/game.dir/player.cpp.o
+game: CMakeFiles/game.dir/HumanPlayer.cpp.o
+game: CMakeFiles/game.dir/AIPlayer.cpp.o
+game: CMakeFiles/game.dir/SmartAIPlayer.cpp.o
 game: CMakeFiles/game.dir/build.make
 game: CMakeFiles/game.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable game"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable game"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/game.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

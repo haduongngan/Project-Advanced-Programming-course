@@ -2,6 +2,11 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <SDL.h>
+#include "Player.h"
+#include "HumanPlayer.h"
+#include "AIPlayer.h"
+#include "SmartAIPlayer.h"
 using namespace std;
 
 const char path[] = "game/Stones.txt";
@@ -29,219 +34,6 @@ vector<int> chooseLevel(const char* f, int level){
     return a;
 }
 
-class Player {
-private:
-    string name;
-    string type; //loai ng choi AI, human,...
-    int mode; //mode choi ...vs...
-    int id; //nguoi choi so 1 hay so 2
-    bool Isyourturn;
-    bool Isthewinner;
-public:
-    string getname() const {
-        return name;
-    }
-    //virtual void getName() = 0;
-    void setName(string _name){
-        name = _name;
-    }
-    void setType(string _type){
-        type = _type;
-    }
-    void setId(int _id){
-        id = _id;
-    }
-    void setMode(int _mode){
-        mode = _mode;
-    }
-    //virtual void getType() = 0;
-    void setTurn(int turn){
-        if (id==turn) Isyourturn = true;
-        else Isyourturn = false;
-    }
-    void setIsthewinner(int winner){
-        if (id==winner) Isthewinner = true;
-        else Isthewinner = false;
-    }
-    virtual void move(vector<int>& matrix) = 0;
-};
-
-class HumanPlayer : public Player {
-public:
-    HumanPlayer(){
-        setType("Human");
-    }
-    void move(vector<int>& matrix){
-        int pile, stones;
-        do {
-            cout << getname() << " lay tu coc so: ";
-            cin >> pile;
-        } while (!hoplepile(matrix,pile));
-
-        do {
-            cout << getname() << " lay bao nhieu vien: ";
-            cin >> stones;
-        } while (!hoplestone(matrix,pile,stones));
-
-        matrix[pile-1] -= stones;
-    }
-    void getName(){
-        cout << "Enter your username: ";
-        string _name;
-        cin >> _name;
-        setName(_name);
-    }
-    bool hoplepile(const vector<int>& matrix, const int &pile){
-        if (pile>=1 && pile <= matrix.size() && matrix[pile-1]>0) return true;
-        return false;
-    }
-    bool hoplestone(const vector<int>& matrix, const int &pile, const int &stones){
-        if (matrix[pile-1]>=stones) return true;
-        return false;
-    }
-};
-
-class AIPlayer : public Player {
-public:
-    AIPlayer(){
-        setType("AIPlayer");
-        setName("AIPlayer");
-    }
-    void move(vector<int>& matrix){
-        int pile, stones=0;
-        int Npiles = matrix.size();
-        while (stones==0){
-            pile = rand() % Npiles;
-            if (matrix[pile]) stones = rand() % (matrix[pile]) + 1;
-        }
-        matrix[pile] -= stones;
-        cout << getname() << " lay " << stones << " vien da tu coc " << pile + 1 << endl;
-    }
-};
-
-class SmartAIPlayer : public Player {
-public:
-    SmartAIPlayer(){
-        setType("SmartAIPlayer");
-        setName("SmartAIPlayer");
-    }
-    bool RemainOnePile(const vector<int>& matrix){
-        int size = matrix.size();
-        int count = 0;
-        for (int i=0; i<size; i++){
-            if (matrix[i] != 0) count++;
-        }
-        if (count == 1) return true;
-        return false;
-    }
-    void moveOnePile(vector<int>& matrix){
-        int index;
-        int size = matrix.size();
-        for (int i=0; i<size; i++){
-            if (matrix[i]>0){
-                index = i;
-                break;
-            }
-        }
-        cout << getname() << " lay " << matrix[index] << " vien da tu coc " << index + 1 << endl;
-        matrix[index] = 0;
-    }
-    bool RemainTwoPiles(const vector<int>& matrix){
-        int size = matrix.size();
-        int count = 0;
-        for (int i=0; i<size; i++){
-            if (matrix[i] != 0) count++;
-        }
-        if (count == 2) return true;
-        return false;
-    }
-    void moveTwoPiles(vector<int>& matrix){
-        int index1, index2;
-        int size = matrix.size();
-        for (int i=0; i<size; i++){
-            if (matrix[i]>0){
-                index1 = i;
-                break;
-            }
-        }
-        for (int i=index1+1; i<size; i++){
-            if (matrix[i]>0){
-                index2 = i;
-                break;
-            }
-        }
-        if (matrix[index1]>matrix[index2]){
-            cout << getname() << " lay " << matrix[index1] - matrix[index2] << " vien da tu coc " << index1 + 1 << endl;
-            matrix[index1]=matrix[index2];
-        }
-        else if (matrix[index1]<matrix[index2]){
-            cout << getname() << " lay " << matrix[index2] - matrix[index1] << " vien da tu coc " << index2 + 1 << endl;
-            matrix[index2]=matrix[index1];
-        }
-        else{
-            int pile, stones=0;
-            while (stones==0){
-                pile = index1;
-                stones = rand() % (matrix[pile]) + 1;
-            }
-            matrix[pile] -= stones;
-            cout << getname() << " lay " << stones << " vien da tu coc " << pile + 1 << endl;
-        }
-    }
-    int NimSum(const vector<int>& matrix){
-        int sum = 0;
-        int size = matrix.size();
-        for (int i=0; i<size; i++){
-            sum = sum ^ matrix[i];
-        }
-        return sum;
-    }
-    bool IsgoodPos(int NimSum){
-        if (NimSum != 0) return true;
-        return false;
-    }
-    vector<int> XOR(const vector<int>& matrix){
-        int size = matrix.size();
-        vector<int>a;
-        int nimsum = NimSum(matrix);
-        for (int i=0; i< size; i++){
-            int tmp = nimsum ^ matrix[i];
-            a.push_back(tmp);
-        }
-        return a;
-    }
-    void move(vector<int>& matrix){
-        if (RemainOnePile(matrix)) moveOnePile(matrix);
-        else if (RemainTwoPiles(matrix)) moveTwoPiles(matrix);
-        else {
-            int nimsum = NimSum(matrix);
-            if (IsgoodPos(nimsum)){
-                vector<int>x = XOR(matrix);
-                int size = matrix.size();
-                int index;
-                for (int i=0; i<size; i++){
-                    if (matrix[i]>x[i]){
-                        index = i;
-                        break;
-                    }
-                }
-                cout<< getname() << " lay " << matrix[index] - x[index] << " vien da tu coc " << index + 1 << endl;
-                matrix[index] = x[index];
-            }
-            else {
-                int pile, stones=0;
-                int Npiles = matrix.size();
-                while (stones==0){
-                    pile = rand() % Npiles;
-                    if (matrix[pile]) stones = rand() % (matrix[pile]) + 1;
-                }
-                matrix[pile] -= stones;
-                cout << getname() << " lay " << stones << " vien da tu coc " << pile + 1 << endl;
-            }
-        }
-    }
-};
-
 class Game{
 private:
     int NumOfPiles;
@@ -253,7 +45,12 @@ private:
     SmartAIPlayer smart;
     int level;
     int turn;
+    bool pause;
 public:
+    void setPause(){
+        pause = true;
+    }
+
     void setMode(){
         cout << "Type of game: ";
         cin >> playMode; //3 = smart vs human
@@ -406,8 +203,102 @@ public:
     }
 };
 
-int main() {
-    Game game1;
-    game1.play();
+//SDL
+
+//Screen dimension const
+const int SCREEN_WIDTH = 512;
+const int SCREEN_HEIGHT = 640;
+
+//the window
+SDL_Window* window = nullptr;
+
+//surface
+SDL_Surface* screenSurface = nullptr;
+
+//the image
+SDL_Surface* image = nullptr;
+
+//starts up SDL and creates window
+bool init(){
+    bool success = true;
+    if ( SDL_Init(SDL_INIT_VIDEO) < 0 ){
+        cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
+        success = false;
+    }
+    else {
+        //Create window
+        window = SDL_CreateWindow("NIM GAME", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if ( window == nullptr ){
+            cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
+            success = false;
+        }
+        else {
+            //get window surface
+            screenSurface = SDL_GetWindowSurface(window);
+
+        }
+    }
+    return success;
+}
+
+//Load media
+bool loadMedia(){
+    bool success = true;
+
+    //load image
+    image = SDL_LoadBMP("../backgr.bmp");
+    if (image == nullptr){
+        cout << "Unable to load image! SDL Error: " << SDL_GetError() << endl;
+        success = false;
+    }
+    return success;
+}
+
+//Frees media and shuts down SDl
+void close(){
+    SDL_FreeSurface(image);
+    image = nullptr;
+
+    SDL_DestroyWindow(window); //se take care screensurface
+    window = nullptr;
+
+    SDL_Quit();
+}
+
+void eloop(){
+    SDL_Event e;
+    bool quit = false;
+    while (!quit){
+        while (SDL_PollEvent(&e)){
+            if (e.type == SDL_QUIT){
+                quit = true;
+            }
+        }
+    }
+}
+
+int main(int argc, char** argv) {
+
+
+    //Initialize SDL
+    if ( !init() ){
+        cout << "Failed to initialize!\n";
+    }
+    else {
+        //load media
+        if ( !loadMedia() ){
+            cout << "Failed to load media!\n ";
+        }
+        else {
+            //apply the image
+            SDL_BlitSurface(image, nullptr, screenSurface, nullptr);
+            //Update
+            SDL_UpdateWindowSurface(window);
+
+            eloop();
+        }
+    }
+    //free resourses and close
+    close();
     return 0;
 }

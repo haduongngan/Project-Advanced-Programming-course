@@ -90,7 +90,34 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.cpp">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.h">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/HumanPlayer.cpp">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/HumanPlayer.h">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/Player.h">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.cpp">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.h">
+			<Option target="game"/>
+		</Unit>
 		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/main.cpp">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/player.cpp">
+			<Option target="game"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/player.h">
 			<Option target="game"/>
 		</Unit>
 		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/CMakeLists.txt">
