@@ -5,45 +5,49 @@
 		<Option title="game"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\SDL\;CMake Files\..\..\..\SDL\cmake\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug"/>
+				<Option working_dir="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug"/>
+				<Option working_dir="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug"/>
+				<Option working_dir="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="game">
-				<Option output="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/game" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug"/>
+				<Option output="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/game" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Library/Frameworks/SDL2.framework/Headers"/>
+					<Add directory="/Library/Frameworks/SDL2_image.framework/Headers"/>
+					<Add directory="/Library/Frameworks/SDL2_mixer.framework/Headers"/>
+					<Add directory="/Library/Frameworks/SDL2_ttf.framework/Headers"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -53,19 +57,23 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 game"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 game"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="game/fast">
-				<Option output="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/game" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/hatnho0708/Documents/SDL/game/cmake-build-debug"/>
+				<Option output="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/game" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Library/Frameworks/SDL2.framework/Headers"/>
+					<Add directory="/Library/Frameworks/SDL2_image.framework/Headers"/>
+					<Add directory="/Library/Frameworks/SDL2_mixer.framework/Headers"/>
+					<Add directory="/Library/Frameworks/SDL2_ttf.framework/Headers"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -75,18 +83,30 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 game/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/SDL/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 game/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/hatnho0708/Documents/GitHub/Project/game/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/hatnho0708/Documents/SDL/game/main.cpp">
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/main.cpp">
 			<Option target="game"/>
 		</Unit>
-		<Unit filename="/Users/hatnho0708/Documents/SDL/game/CMakeLists.txt">
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/../../../SDL/cmake/FindSDL2.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\SDL\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/../../../SDL/cmake/FindSDL2_image.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\SDL\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/../../../SDL/cmake/FindSDL2_mixer.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\SDL\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/hatnho0708/Documents/GitHub/Project/game/../../../SDL/cmake/FindSDL2_ttf.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\SDL\cmake\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/game.dir/main.cpp.o  -o game 
+/Library/Developer/CommandLineTools/usr/bin/c++  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/game.dir/main.cpp.o  -o game -Wl,-rpath,/Library/Frameworks -framework SDL2 -framework Cocoa -framework SDL2_image -framework SDL2_ttf -framework SDL2_mixer 

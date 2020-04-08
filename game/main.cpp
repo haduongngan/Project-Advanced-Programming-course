@@ -4,7 +4,7 @@
 #include <sstream>
 using namespace std;
 
-const char path[] = "/Users/hatnho0708/Documents/SDL/game/Stones.txt";
+const char path[] = "game/Stones.txt";
 vector<int> chooseLevel(const char* f, int level){
     vector<vector<int>>data;
     ifstream infile(f);
@@ -73,10 +73,16 @@ public:
     }
     void move(vector<int>& matrix){
         int pile, stones;
-        cout << getname() << " lay tu coc so: ";
-        cin >> pile;
-        cout << getname() << " lay bao nhieu vien: ";
-        cin >> stones;
+        do {
+            cout << getname() << " lay tu coc so: ";
+            cin >> pile;
+        } while (!hoplepile(matrix,pile));
+
+        do {
+            cout << getname() << " lay bao nhieu vien: ";
+            cin >> stones;
+        } while (!hoplestone(matrix,pile,stones));
+
         matrix[pile-1] -= stones;
     }
     void getName(){
@@ -84,6 +90,14 @@ public:
         string _name;
         cin >> _name;
         setName(_name);
+    }
+    bool hoplepile(const vector<int>& matrix, const int &pile){
+        if (pile>=1 && pile <= matrix.size() && matrix[pile-1]>0) return true;
+        return false;
+    }
+    bool hoplestone(const vector<int>& matrix, const int &pile, const int &stones){
+        if (matrix[pile-1]>=stones) return true;
+        return false;
     }
 };
 
