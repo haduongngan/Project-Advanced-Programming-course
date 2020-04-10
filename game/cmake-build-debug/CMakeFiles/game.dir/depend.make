@@ -60,6 +60,7 @@ CMakeFiles/game.dir/main.cpp.o: /Library/Frameworks/SDL2.framework/Headers/SDL_v
 CMakeFiles/game.dir/main.cpp.o: /Library/Frameworks/SDL2.framework/Headers/SDL_video.h
 CMakeFiles/game.dir/main.cpp.o: /Library/Frameworks/SDL2.framework/Headers/begin_code.h
 CMakeFiles/game.dir/main.cpp.o: /Library/Frameworks/SDL2.framework/Headers/close_code.h
+CMakeFiles/game.dir/main.cpp.o: /Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h
 CMakeFiles/game.dir/main.cpp.o: ../AIPlayer.h
 CMakeFiles/game.dir/main.cpp.o: ../HumanPlayer.h
 CMakeFiles/game.dir/main.cpp.o: ../Player.h

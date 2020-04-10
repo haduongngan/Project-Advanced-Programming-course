@@ -61,6 +61,7 @@ CMakeFiles/game.dir/main.cpp.o
  /Library/Frameworks/SDL2.framework/Headers/SDL_video.h
  /Library/Frameworks/SDL2.framework/Headers/begin_code.h
  /Library/Frameworks/SDL2.framework/Headers/close_code.h
+ /Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h
  /Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.h
  /Users/hatnho0708/Documents/GitHub/Project/game/HumanPlayer.h
  /Users/hatnho0708/Documents/GitHub/Project/game/Player.h

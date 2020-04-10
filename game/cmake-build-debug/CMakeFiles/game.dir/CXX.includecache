@@ -644,6 +644,16 @@ close_code.h
 
 /Library/Frameworks/SDL2.framework/Headers/close_code.h
 
+/Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h
+SDL2/SDL.h
+-
+SDL2/SDL_version.h
+-
+SDL2/begin_code.h
+-
+SDL2/close_code.h
+-
+
 /Users/hatnho0708/Documents/GitHub/Project/game/AIPlayer.h
 Player.h
 /Users/hatnho0708/Documents/GitHub/Project/game/Player.h
@@ -656,12 +666,6 @@ Player.h
 iostream
 -
 string
--
-
-/Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.cpp
-SmartAIPlayer.h
-/Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.h
-vector
 -
 
 /Users/hatnho0708/Documents/GitHub/Project/game/SmartAIPlayer.h
@@ -678,6 +682,8 @@ fstream
 sstream
 -
 SDL.h
+-
+SDL_image.h
 -
 Player.h
 /Users/hatnho0708/Documents/GitHub/Project/game/Player.h

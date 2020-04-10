@@ -3,13 +3,14 @@
 #include <fstream>
 #include <sstream>
 #include <SDL.h>
+#include<SDL_image.h>
 #include "Player.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
 #include "SmartAIPlayer.h"
 using namespace std;
 
-const char path[] = "game/Stones.txt";
+const char path[] = "../Stones.txt";
 vector<int> chooseLevel(const char* f, int level){
     vector<vector<int>>data;
     ifstream infile(f);
@@ -206,8 +207,8 @@ public:
 //SDL
 
 //Screen dimension const
-const int SCREEN_WIDTH = 512;
-const int SCREEN_HEIGHT = 640;
+const double SCREEN_WIDTH = 532.992;
+const double SCREEN_HEIGHT = 666.24;
 
 //the window
 SDL_Window* window = nullptr;
@@ -246,7 +247,9 @@ bool loadMedia(){
     bool success = true;
 
     //load image
-    image = SDL_LoadBMP("../backgr.bmp");
+    //image = IMG_Load("../color-01.png");
+    image = IMG_Load("../background4.png");
+    //image = SDL_LoadBMP("../backgr.bmp");
     if (image == nullptr){
         cout << "Unable to load image! SDL Error: " << SDL_GetError() << endl;
         success = false;
