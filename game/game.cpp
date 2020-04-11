@@ -5,6 +5,11 @@
 #include "game.h"
 #include <sstream>
 #include <fstream>
+#include <cstdlib>
+
+using namespace std;
+
+
 
 const char path[] = "../Stones.txt";
 vector<int> chooseLevel(const char* f, int level){
@@ -51,6 +56,10 @@ vector<int> chooseLevel(const char* f, int level){
     void Game :: setLevel(){
         cout << "Level of game: ";
         cin >> level;
+        while (level > 15 || level < 1){
+            cout << "Level of game: ";
+            cin >> level;
+        }
     }
     int Game :: getLevel(){
         return level;
@@ -115,8 +124,6 @@ vector<int> chooseLevel(const char* f, int level){
                 human2.move(Stones);
                 turn = 1;
             }
-            human1.setTurn(turn);
-            human2.setTurn(turn);
         }
 
         else if (playMode == 2) {
@@ -127,8 +134,6 @@ vector<int> chooseLevel(const char* f, int level){
                 human2.move(Stones);
                 turn = 1;
             }
-            AI.setTurn(turn);
-            human2.setTurn(turn);
         }
 
         else if (playMode == 3) {
@@ -139,8 +144,6 @@ vector<int> chooseLevel(const char* f, int level){
                 human2.move(Stones);
                 turn = 1;
             }
-            smart.setTurn(turn);
-            human2.setTurn(turn);
         }
     }
 
@@ -168,19 +171,11 @@ vector<int> chooseLevel(const char* f, int level){
         setPlayers();
         cout << "Choose who has the first turn: ";
         cin >> turn;
-        if (turn == 3) turn = rand()%2 +1; //turn = 3 is random
-        if (playMode == 1){
-            human1.setTurn(turn);
-            human2.setTurn(turn);
+        while (turn > 3 || turn < 1){
+            cout << "Choose who has the first turn: ";
+            cin >> turn;
         }
-        else if (playMode == 2){
-            AI.setTurn(turn);
-            human2.setTurn(turn);
-        }
-        else if (playMode == 3){
-            smart.setTurn(turn);
-            human2.setTurn(turn);
-        }
+        if (turn == 3) turn = rand()%2 +1;
         in();
         while (checkWin()==0){
             step();

@@ -16,18 +16,18 @@
     void Player :: setId(int _id){
         id = _id;
     }
-    void Player :: setMode(int _mode){
-        mode = _mode;
-    }
+    //void Player :: setMode(int _mode){
+      //  mode = _mode;
+    //}
     //virtual void getType() = 0;
-    void Player :: setTurn(int turn){
-        if (id==turn) Isyourturn = true;
-        else Isyourturn = false;
-    }
-    void Player :: setIsthewinner(int winner){
-        if (id==winner) Isthewinner = true;
-        else Isthewinner = false;
-    }
+    //void Player :: setTurn(int turn){
+      //  if (id==turn) Isyourturn = true;
+        //else Isyourturn = false;
+    //}
+   // void Player :: setIsthewinner(int winner){
+      //  if (id==winner) Isthewinner = true;
+    //    else Isthewinner = false;
+    //}
     void move(vector<int>& matrix);
     //Player :: Player() {}
 
