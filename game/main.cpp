@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <SDL.h>
-#include<SDL_image.h>
+#include <SDL_image.h>
 #include "Player.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
