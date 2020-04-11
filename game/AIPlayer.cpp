@@ -4,6 +4,8 @@
 
 #include "AIPlayer.h"
 #include <vector>
+#include <cstdlib>
+
 
 
     AIPlayer :: AIPlayer(){
@@ -14,6 +16,7 @@
         int pile, stones=0;
         int Npiles = matrix.size();
         while (stones==0){
+            srand(time(0));
             pile = rand() % Npiles;
             if (matrix[pile]) stones = rand() % (matrix[pile]) + 1;
         }
