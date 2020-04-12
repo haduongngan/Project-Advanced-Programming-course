@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.15)
 project(game)
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(game main.cpp Player.h player.cpp HumanPlayer.h HumanPlayer.cpp AIPlayer.h AIPlayer.cpp SmartAIPlayer.h SmartAIPlayer.cpp game.cpp game.h)
+add_executable(game main.cpp
+        Player.h player.cpp
+        HumanPlayer.h HumanPlayer.cpp
+        AIPlayer.h AIPlayer.cpp
+        SmartAIPlayer.h SmartAIPlayer.cpp
+        game.cpp game.h
+        VARIABLES_PROTOTYPE.cpp VARIABLES_PROTOTYPE.h
+        level.h level.cpp welcome.cpp welcome.h)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /Users/hatnho0708/Documents/SDL/cmake)
 
