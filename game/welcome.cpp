@@ -14,15 +14,26 @@ void welcometogame(){
         //load media
         extern char* path;
         path = "../image/color-01.png";
-        image = loadSurface(path);
+        //image = loadSurface(path);
 
         //apply the image
-        SDL_BlitSurface(image, nullptr, screenSurface, nullptr);
+        //SDL_BlitSurface(image, nullptr, screenSurface, nullptr);
         //Update
-        SDL_UpdateWindowSurface(window);
+        //SDL_UpdateWindowSurface(window);
 
-        eloop();
+        //Clear screen
+        SDL_RenderClear(renderer);
+
+        if (loadImage(path)) {
+            //render texture to screen
+            SDL_RenderCopy(renderer, Texture, nullptr, nullptr);
+
+            //update
+            SDL_RenderPresent(renderer);
+
+            eloop();
+        }
     }
     //free resourses and close
-    close();
+    //close();
 }

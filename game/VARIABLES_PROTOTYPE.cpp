@@ -3,8 +3,6 @@
 //
 
 #include "VARIABLES_PROTOTYPE.h"
-//starts up SDL and creates window
-
 
 bool init(){
     bool success = true;
@@ -20,15 +18,23 @@ bool init(){
             success = false;
         }
         else {
-            //initialize PNG loading
-            int imgFlags = IMG_INIT_PNG;
-            if (!(IMG_Init(imgFlags)&imgFlags)) {
-                cout << "SDL_image could not initialize!  SDL_image Error: " << IMG_GetError() << endl;
+            //screenSurface = SDL_GetWindowSurface(window);
+            //create renderer for window
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            if (renderer == nullptr){
+                cout << "Renderer could not be create! SDL Error: " << SDL_GetError() << endl;
                 success = false;
             }
             else {
-                //get window surface
-                screenSurface = SDL_GetWindowSurface(window);
+                //initialize renderer color
+                SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+                //initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if (!(IMG_Init(imgFlags)&imgFlags)) {
+                    cout << "SDL_image could not initialize!  SDL_image Error: " << IMG_GetError() << endl;
+                    success = false;
+                }
             }
         }
     }
@@ -53,7 +59,8 @@ SDL_Surface* loadSurface(char* path){
         cout << "Failed to load media!\n ";
     }
     else {
-        optimized = SDL_ConvertSurface(image, screenSurface ->format,0);
+        //screenSurface = SDL_GetWindowSurface(window);
+        optimized = SDL_ConvertSurface(image, screenSurface ->format,0); ///
         if (optimized == nullptr){
             cout << " Unable to optimize image! SDL Error: " << SDL_GetError() << endl;
         }
@@ -63,16 +70,36 @@ SDL_Surface* loadSurface(char* path){
     return optimized;
 }
 
-//Frees media and shuts down SDl
-void close(){
-    SDL_FreeSurface(image);
-    image = nullptr;
+SDL_Texture* loadTexture(char* path){
+    //the final texture
+    SDL_Texture* newTexture = nullptr;
 
-    SDL_DestroyWindow(window); //se take care screensurface
-    window = nullptr;
-
-    SDL_Quit();
+    //Load image
+    if (!loadMedia(path)){
+        cout << "Failed to load media!\n ";
+    }
+    else {
+        //create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface(renderer, image);
+        if (newTexture == nullptr){
+            cout << "Unable to create texture from surface! SDL Error: " << SDL_GetError() << endl;
+        }
+        //SDL_FreeSurface(image);
+    }
+    return newTexture;
 }
+
+bool loadImage(char* path){
+    bool success = true;
+    Texture = loadTexture(path);
+    if (Texture == nullptr){
+        cout << "Failed to load texture image!" << endl;
+        success = false;
+    }
+    return success;
+}
+
+
 
 void eloop(){
     SDL_Event e;
@@ -84,4 +111,26 @@ void eloop(){
             }
         }
     }
+}
+
+//Frees media and shuts down SDl
+void close(){
+    brick.free();
+    Backgr.free();
+    active.free();
+
+    SDL_FreeSurface(image);
+    image = nullptr;
+
+    SDL_DestroyTexture(Texture);
+    Texture = nullptr;
+
+    SDL_DestroyRenderer(renderer);
+    renderer = nullptr;
+
+    SDL_DestroyWindow(window); //se take care screensurface
+    window = nullptr;
+
+    IMG_Quit();
+    SDL_Quit();
 }

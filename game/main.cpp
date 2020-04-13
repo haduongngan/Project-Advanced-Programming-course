@@ -11,6 +11,7 @@
 #include "VARIABLES_PROTOTYPE.h"
 #include "level.h"
 #include "welcome.h"
+#include "LTexture.h"
 using namespace std;
 
 const double SCREEN_WIDTH = 532.992;
@@ -25,14 +26,26 @@ SDL_Surface* screenSurface = nullptr;
 //the image
 SDL_Surface* image = nullptr;
 
+//the window renderer
+SDL_Renderer* renderer = nullptr;
+
+//current displayed texture
+SDL_Texture* Texture = nullptr;
+
 //path
 char* path = "";
+
+LTexture brick;
+LTexture Backgr;
+LTexture active;
 
 
 int main(int argc, char** argv) {
 
     welcometogame();
-    loadLevel1();
+    loadLevel2();
+    //loadLevel4();
+    close();
 
     return 0;
 }

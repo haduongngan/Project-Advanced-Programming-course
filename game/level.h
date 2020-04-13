@@ -14,6 +14,8 @@ using namespace std;
 #ifndef GAME_LEVEL_H
 #define GAME_LEVEL_H
 
+bool loadbrick(char* path);
+bool loadactive(char* path);
 void loadLevel1();
 void loadLevel2();
 void loadLevel3();
