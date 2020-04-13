@@ -10,12 +10,17 @@
 #include "SmartAIPlayer.h"
 #include "game.h"
 #include "VARIABLES_PROTOTYPE.h"
+#include <cmath>
+#include <string>
 using namespace std;
 #ifndef GAME_LEVEL_H
 #define GAME_LEVEL_H
 
-bool loadbrick(char* path);
+bool loadbrick();
 bool loadactive(char* path);
+bool loadunactive(char* path);
+bool loadback(char* path);
+
 void loadLevel1();
 void loadLevel2();
 void loadLevel3();

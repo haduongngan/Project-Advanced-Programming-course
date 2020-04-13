@@ -21,24 +21,25 @@ bool LTexture :: loadFFile(char* path){
     SDL_Texture* newTexture = nullptr;
 
     //Load image
-    if (!loadMedia(path)){
-        cout << "Failed to load media!\n ";
+    SDL_Surface* loadedSurface = IMG_Load(path);
+    if (loadedSurface == nullptr){
+        cout << "Failed to load image " << path << ". SDL_image Error: " << IMG_GetError();
     }
     else {
         //color key image
-        SDL_SetColorKey(image, SDL_TRUE, SDL_MapRGB(image -> format, 0, 0xFF, 0xFF));
+        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface -> format, 0, 0xFF, 0xFF));
 
         //create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(renderer, image);
+        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
         if (newTexture == nullptr){
             cout << "Unable to create texture from surface! SDL Error: " << SDL_GetError() << endl;
         }
         else {
             //get image dimesions
-            mWidth = image -> w;
-            mHeight = image -> h;
+            mWidth = loadedSurface -> w;
+            mHeight = loadedSurface -> h;
         }
-        //SDL_FreeSurface(image);
+        SDL_FreeSurface(loadedSurface);
     }
     //return
     mTexture = newTexture;
@@ -69,3 +70,38 @@ double LTexture :: getWidth(){
 double LTexture :: getHeight(){
     return mHeight;
 }
+
+//create image from font string
+bool LTexture :: loadFromRenderedText(char* texturetext, SDL_Colour textColor){
+    free();
+
+    //render text surface
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, texturetext, textColor);
+    if (textSurface == nullptr){
+        cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << endl;
+    }
+    else {
+        //Create texture from surface pixels
+        mTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+        if (mTexture == nullptr){
+            cout << "Unable to create textture from rendered text! SDL Error: " << SDL_GetError() << endl;
+        }
+        else {
+            mWidth = textSurface -> w;
+            mHeight = textSurface -> h;
+        }
+        SDL_FreeSurface(textSurface);
+    }
+    return mTexture != nullptr;
+
+}
+
+//void LTexture :: render(int x, int y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip = SDL_FLIP_NONE);
+
+//void LTexture :: render(int x, int y, SDL_Rect* clip = nullptr){}
+
+//set color modulation
+//void LTexture :: setColor(Uint8 red, Uint8 green, Uint8 blue){}
+
+//set blending
+//void LTexture :: setBlendMode(SDL_BlendMode blending){}

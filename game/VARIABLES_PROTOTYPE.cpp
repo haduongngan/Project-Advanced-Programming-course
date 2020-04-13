@@ -35,6 +35,13 @@ bool init(){
                     cout << "SDL_image could not initialize!  SDL_image Error: " << IMG_GetError() << endl;
                     success = false;
                 }
+
+                //initialize SDL ttf
+                if (TTF_Init() == -1){
+                    cout << "SDL_ttf could not initialize!  SDL_ttf Error: " << TTF_GetError() << endl;
+                    success = false;
+                }
+
             }
         }
     }
@@ -75,16 +82,17 @@ SDL_Texture* loadTexture(char* path){
     SDL_Texture* newTexture = nullptr;
 
     //Load image
-    if (!loadMedia(path)){
-        cout << "Failed to load media!\n ";
+    SDL_Surface* loadedSurface = IMG_Load(path);
+    if (loadedSurface == nullptr){
+        cout << "Failed to load image " << path << ". SDL_image Error: " << IMG_GetError();
     }
     else {
         //create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(renderer, image);
+        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
         if (newTexture == nullptr){
             cout << "Unable to create texture from surface! SDL Error: " << SDL_GetError() << endl;
         }
-        //SDL_FreeSurface(image);
+        SDL_FreeSurface(loadedSurface);
     }
     return newTexture;
 }
@@ -99,7 +107,23 @@ bool loadImage(char* path){
     return success;
 }
 
-
+bool loadText(char* path, char* text){
+    bool success = true;
+    //open the font
+    font = TTF_OpenFont(path, 28);
+    if (font == nullptr){
+        cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
+    }
+    else {
+        //render text
+        SDL_Color textColor = {0,0,0};
+        if (!texttexture.loadFromRenderedText(text, textColor)){
+            cout << "Failed to render text texture\n";
+            success = false;
+        }
+    }
+    return success;
+}
 
 void eloop(){
     SDL_Event e;
@@ -119,6 +143,9 @@ void close(){
     Backgr.free();
     active.free();
 
+    TTF_CloseFont(font);
+    font = nullptr;
+
     SDL_FreeSurface(image);
     image = nullptr;
 
@@ -131,6 +158,7 @@ void close(){
     SDL_DestroyWindow(window); //se take care screensurface
     window = nullptr;
 
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 }

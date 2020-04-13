@@ -3,6 +3,8 @@
 #include <SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <cmath>
+#include <string>
 #include "Player.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
@@ -32,6 +34,12 @@ SDL_Renderer* renderer = nullptr;
 //current displayed texture
 SDL_Texture* Texture = nullptr;
 
+//globally used font
+TTF_Font* font = nullptr;
+
+//rendered texture
+LTexture texttexture;
+
 //path
 char* path = "";
 
@@ -40,12 +48,20 @@ LTexture Backgr;
 LTexture active;
 
 
-int main(int argc, char** argv) {
 
-    welcometogame();
-    loadLevel2();
-    //loadLevel4();
-    close();
+
+
+
+int main(int argc, char** argv) {
+    if ( !init() ){
+        cout << "Failed to initialize!\n";
+    }
+    else {
+       // welcometogame();
+        loadLevel2();
+        //loadLevel4();
+        close();
+    }
 
     return 0;
 }

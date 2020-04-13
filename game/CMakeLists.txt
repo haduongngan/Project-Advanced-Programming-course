@@ -9,7 +9,11 @@ add_executable(game main.cpp
         SmartAIPlayer.h SmartAIPlayer.cpp
         game.cpp game.h
         VARIABLES_PROTOTYPE.cpp VARIABLES_PROTOTYPE.h
-        level.h level.cpp welcome.cpp welcome.h LTexture.cpp LTexture.h)
+        level.h level.cpp
+        welcome.cpp welcome.h
+        LTexture.cpp LTexture.h
+        brick.cpp brick.h
+        )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /Users/hatnho0708/Documents/SDL/cmake)
 

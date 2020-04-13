@@ -6,14 +6,11 @@
 using namespace std;
 
 void welcometogame(){
-    //Initialize SDL
-    if ( !init() ){
-        cout << "Failed to initialize!\n";
-    }
-    else {
+
         //load media
         extern char* path;
         path = "../image/color-01.png";
+        char* pathfont = "../font/Xerox Sans Serif Narrow.ttf";
         //image = loadSurface(path);
 
         //apply the image
@@ -28,12 +25,19 @@ void welcometogame(){
             //render texture to screen
             SDL_RenderCopy(renderer, Texture, nullptr, nullptr);
 
-            //update
+            if (loadText(pathfont, "welcome to NIM game")) {
+                //render texture to screen
+                //SDL_Rect Message = {100, 100, 500, 500};
+
+                //SDL_RenderCopy(renderer, Texture, nullptr, &Message);
+                texttexture.render(( SCREEN_WIDTH - texttexture.getWidth() ) / 2, ( SCREEN_HEIGHT - texttexture.getHeight() ) / 2);
+            }
+           //update
             SDL_RenderPresent(renderer);
 
             eloop();
         }
-    }
+
     //free resourses and close
     //close();
 }

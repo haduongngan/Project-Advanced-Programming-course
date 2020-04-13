@@ -5,6 +5,7 @@
 #include "level.h"
 #include "VARIABLES_PROTOTYPE.h"
 #include "LTexture.h"
+#include "brick.h"
 
 extern char* path;
 
@@ -12,7 +13,9 @@ extern LTexture brick;
 extern LTexture Backgr;
 extern LTexture active;
 
-bool loadbrick(char* path){
+int pileNow = 0; //ktra xem dang chon o pile nao
+
+bool loadbrick(){
     bool success = true;
     //load brick
     if (!brick.loadFFile("../image/brick-01.png")){
@@ -20,6 +23,11 @@ bool loadbrick(char* path){
 
         success = false;
     }
+    return success;
+}
+
+bool loadback(char* path){
+    bool success = true;
     //load back
     if (!Backgr.loadFFile(path)){
         cout << "Failed to load backgr" << endl;
@@ -32,6 +40,17 @@ bool loadactive(char* path){
     bool success = true;
     //load active
     if (!active.loadFFile("../image/active_character-01.png")){
+        cout << "Failed to load active" << endl;
+
+        success = false;
+    }
+    return success;
+}
+
+bool loadunactive(char* path){
+    bool success = true;
+    //load active
+    if (!active.loadFFile("../image/unactive_character-01.png")){
         cout << "Failed to load active" << endl;
 
         success = false;
@@ -64,27 +83,62 @@ void loadLevel1(){
 }
 
 void loadLevel2(){
+    SDL_Event e;
+    bool quit = false;
+    while (!quit){
+        while (SDL_PollEvent(&e)){
+            if (e.type == SDL_QUIT){
+                quit = true;
+            }
+        }
         //load media
-        init();
+        // init();
         path = "../image/background2.png";
         //Clear screen
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-        if (loadbrick(path)&&loadactive(path)) {
+        if (loadbrick()&&loadactive(path)&&loadback(path)) {
+            char* pathfont = "../font/Xerox Sans Serif Narrow.ttf";
             Backgr.render(0,0);
-            brick.render(240, 190);
-            brick.render(120,123);
-            active.render(500, 200);
+            class brick p1[5];
+            p1[0].setPosition(10,20);
+            p1[1].setPosition(10, 120);
+            p1[2].setPosition(10, 220);
+            p1[3].setPosition(10, 320);
+            p1[4].setPosition(10, 420);
+            p1[0].setPile(1);
+            p1[1].setPile(2);
+            pileNow = 1;
 
-            //render texture to screen
-            //SDL_RenderCopy(renderer, Texture, nullptr, nullptr);
+            for (int i=0; i<5; i++){
+                p1[i].setTruepile(pileNow);
+            }
 
+            for (int i=0; i<5; i++){
+                p1[i].handleEvent(&e);
+            }
+            for (int i=0; i<5; i++){
+                p1[i].rend();
+            }
             //update
             SDL_RenderPresent(renderer);
 
-            eloop();
+            if (loadText(pathfont, "hatnho")) {
+                //render texture to screen
+                //SDL_Rect Message = {100, 100, 500, 500};
+
+                //SDL_RenderCopy(renderer, Texture, nullptr, &Message);
+                texttexture.render(10, 500);
+            }
+
+
+            //eloop();
         }
+        //close();
+    }
+
+
 }
 
 void loadLevel3(){

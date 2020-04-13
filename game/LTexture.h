@@ -18,6 +18,7 @@ extern SDL_Window* window;
 extern SDL_Surface* screenSurface;
 extern SDL_Surface* image;
 extern SDL_Renderer* renderer;
+extern TTF_Font* font;
 
 class LTexture {
 private:
@@ -39,10 +40,20 @@ public:
 
     //renders texture at given point
     void render(int x, int y);
+    //void render(int x, int y, SDL_Rect* clip = nullptr);
 
     //get image dimensions
     double getWidth();
     double getHeight();
+
+    //create image from font string
+    bool loadFromRenderedText (char* texturetext, SDL_Colour textColor);
+
+    //set color modulation
+    //void setColor(Uint8 red, Uint8 green, Uint8 blue);
+
+    //set blending
+    //void setBlendMode(SDL_BlendMode blending);
 };
 
 
