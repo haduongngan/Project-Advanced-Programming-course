@@ -7,6 +7,7 @@
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
 #include "SmartAIPlayer.h"
+#include "VARIABLES_PROTOTYPE.h"
 using namespace std;
 #ifndef GAME_GAME_H
 #define GAME_GAME_H
@@ -17,14 +18,16 @@ private:
     int NumOfPiles;
     vector<int>Stones;
     int playMode;
-    HumanPlayer human1;
-    HumanPlayer human2;
-    AIPlayer AI;
-    SmartAIPlayer smart;
+
     int level;
     int turn;
     bool pause;
 public:
+    HumanPlayer human1;
+    HumanPlayer human2;
+    AIPlayer AI;
+    SmartAIPlayer smart;
+
     void setPause();
 
     void setMode();

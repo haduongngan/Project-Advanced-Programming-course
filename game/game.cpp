@@ -6,35 +6,13 @@
 #include <sstream>
 #include <fstream>
 #include <cstdlib>
+#include "VARIABLES_PROTOTYPE.h"
 
 using namespace std;
 
 
 
-const char path[] = "../Stones.txt";
-vector<int> chooseLevel(const char* f, int level){
-    vector<vector<int>>data;
-    ifstream infile(f);
-    string line;
-    while(getline(infile,line)){
-        vector<int>tmp;
-        int value;
-        stringstream iss(line);
-        while(iss>>value){
-            tmp.push_back(value);
-        }
-        data.push_back(tmp);
-    }
-    int maxlevel = data.size();
-    int num;
-    if (level > maxlevel) num = rand() % maxlevel;
-    else num = level-1;
-    vector<int>a;
-    for (int i=0; i<data[num][0];i++){
-        a.push_back(data[num][i+1]);
-    }
-    return a;
-}
+const char pathdata[] = "../Stones.txt";
 
 
     void Game :: setPause(){
@@ -66,7 +44,7 @@ vector<int> chooseLevel(const char* f, int level){
     }
 
     void Game :: setStones(){
-        Stones = chooseLevel(path,level);
+        Stones = chooseLevel(pathdata,level);
         NumOfPiles = Stones.size();
     }
     vector<int> Game :: getStones(){
@@ -124,6 +102,8 @@ vector<int> chooseLevel(const char* f, int level){
                 human2.move(Stones);
                 turn = 1;
             }
+            human1.setTurn(turn);
+            human2.setTurn(turn);
         }
 
         else if (playMode == 2) {
@@ -134,6 +114,8 @@ vector<int> chooseLevel(const char* f, int level){
                 human2.move(Stones);
                 turn = 1;
             }
+            AI.setTurn(turn);
+            human2.setTurn(turn);
         }
 
         else if (playMode == 3) {
@@ -144,6 +126,8 @@ vector<int> chooseLevel(const char* f, int level){
                 human2.move(Stones);
                 turn = 1;
             }
+            smart.setTurn(turn);
+            human2.setTurn(turn);
         }
     }
 
@@ -176,6 +160,18 @@ vector<int> chooseLevel(const char* f, int level){
             cin >> turn;
         }
         if (turn == 3) turn = rand()%2 +1;
+        if (playMode == 1){
+            human1.setTurn(turn);
+            human2.setTurn(turn);
+        }
+        else if (playMode == 2){
+            AI.setTurn(turn);
+            human2.setTurn(turn);
+        }
+        else if (playMode == 3){
+            smart.setTurn(turn);
+            human2.setTurn(turn);
+        }
         in();
         while (checkWin()==0){
             step();

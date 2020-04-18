@@ -46,6 +46,7 @@ char* path = "";
 LTexture brick;
 LTexture Backgr;
 LTexture active;
+LTexture unactive;
 
 
 
@@ -57,6 +58,7 @@ int main(int argc, char** argv) {
         cout << "Failed to initialize!\n";
     }
     else {
+
        // welcometogame();
         loadLevel2();
         //loadLevel4();

@@ -162,3 +162,28 @@ void close(){
     IMG_Quit();
     SDL_Quit();
 }
+
+
+vector<int> chooseLevel(const char* f, int level){
+    vector<vector<int>>data;
+    ifstream infile(f);
+    string line;
+    while(getline(infile,line)){
+        vector<int>tmp;
+        int value;
+        stringstream iss(line);
+        while(iss>>value){
+            tmp.push_back(value);
+        }
+        data.push_back(tmp);
+    }
+    int maxlevel = data.size();
+    int num;
+    if (level > maxlevel) num = rand() % maxlevel;
+    else num = level-1;
+    vector<int>a;
+    for (int i=0; i<data[num][0];i++){
+        a.push_back(data[num][i+1]);
+    }
+    return a;
+}

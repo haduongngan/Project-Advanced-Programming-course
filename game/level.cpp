@@ -6,12 +6,19 @@
 #include "VARIABLES_PROTOTYPE.h"
 #include "LTexture.h"
 #include "brick.h"
+#include <fstream>
+#include <sstream>
+#include "game.h"
+
+const char lev[] = "../Stones.txt";
+
 
 extern char* path;
 
 extern LTexture brick;
 extern LTexture Backgr;
 extern LTexture active;
+extern LTexture unactive;
 
 int pileNow = 0; //ktra xem dang chon o pile nao
 
@@ -36,7 +43,7 @@ bool loadback(char* path){
     return success;
 }
 
-bool loadactive(char* path){
+bool loadactive(){
     bool success = true;
     //load active
     if (!active.loadFFile("../image/active_character-01.png")){
@@ -47,10 +54,10 @@ bool loadactive(char* path){
     return success;
 }
 
-bool loadunactive(char* path){
+bool loadunactive(){
     bool success = true;
     //load active
-    if (!active.loadFFile("../image/unactive_character-01.png")){
+    if (!unactive.loadFFile("../image/unactive_character-01.png")){
         cout << "Failed to load active" << endl;
 
         success = false;
@@ -83,60 +90,124 @@ void loadLevel1(){
 }
 
 void loadLevel2(){
+    path = "../image/background2.png";
     SDL_Event e;
     bool quit = false;
+    vector<int>a = chooseLevel(lev,2);
+    const int Npile = 2;
+    bool isrend[2][13];
+
+    for (int i=0; i<2; i++){
+        for (int j=0; j<13 ; j++){
+            if (j<a[i]) isrend[i][j] = true;
+            else isrend[i][j] = false;
+        }
+    }
+
+
+    //Clear screen
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
     while (!quit){
         while (SDL_PollEvent(&e)){
             if (e.type == SDL_QUIT){
                 quit = true;
             }
-        }
-        //load media
-        // init();
-        path = "../image/background2.png";
-        //Clear screen
-        SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-        if (loadbrick()&&loadactive(path)&&loadback(path)) {
+        }
+        Game game1;
+        //game1.play();
+        if (loadbrick()&&loadactive()&&loadback(path)&&loadunactive()) {
             char* pathfont = "../font/Xerox Sans Serif Narrow.ttf";
             Backgr.render(0,0);
-            class brick p1[5];
-            p1[0].setPosition(10,20);
-            p1[1].setPosition(10, 120);
-            p1[2].setPosition(10, 220);
-            p1[3].setPosition(10, 320);
-            p1[4].setPosition(10, 420);
-            p1[0].setPile(1);
-            p1[1].setPile(2);
+
+            if (game1.getMode()==2){
+                if (game1.AI.Isyourturn) {
+                    active.render(132, 520);
+                    unactive.render(366,520);
+                }
+                else {
+                    unactive.render(132, 520);
+                    active.render(366,520);
+                }
+            }
+
+
+            class brick p[2][13];
+
+            p[0][0].setPosition(42,199); //
+            p[0][1].setPosition(77, 199); //
+            p[0][2].setPosition(112, 199);  //
+            p[0][3].setPosition(147,199); //
+            p[0][4].setPosition(182,199); //
+            p[0][5].setPosition(217,199); //
+            p[0][6].setPosition(252,199); //
+            p[0][7].setPosition(287,199);  //
+            p[0][8].setPosition(322,199);  //
+            p[0][9].setPosition(357,199); //
+            p[0][10].setPosition(392,199); //
+            p[0][11].setPosition(427,199); //
+            p[0][12].setPosition(462,199); //
+            //p1[15].setPosition(490,199);
+
+            p[1][0].setPosition(42, 334);  //
+            p[1][1].setPosition(77, 334);
+            p[1][2].setPosition(112,334);
+            p[1][3].setPosition(147,334);
+            p[1][4].setPosition(182,334);
+            p[1][5].setPosition(217,334);
+            p[1][6].setPosition(252,334);
+            p[1][7].setPosition(287,334);
+            p[1][8].setPosition(322,334);
+            p[1][9].setPosition(357,334); //
+            p[1][10].setPosition(392,334); //
+            p[1][11].setPosition(427,334); //
+            p[1][12].setPosition(462,334);
+
+            for (int i=0; i<2; i++){
+                for (int j=0; j<13 ; j++){
+                    p[i][j].setPile(i+1);
+                }
+            }
             pileNow = 1;
 
-            for (int i=0; i<5; i++){
-                p1[i].setTruepile(pileNow);
+            for (int i=0; i<2; i++){
+                for (int j=0; j<13 ; j++){
+                    p[i][j].setTruepile(pileNow);
+                }
+            }
+            for (int i=0; i<2; i++){
+                for (int j=0; j<13 ; j++){
+                    p[i][j].handleEvent(&e);
+                }
             }
 
-            for (int i=0; i<5; i++){
-                p1[i].handleEvent(&e);
+            for (int i=0; i<2; i++){
+                for (int j=0; j<13 ; j++){
+                    if (!p[i][j].getRen()) isrend[i][j] = false;
+                }
             }
-            for (int i=0; i<5; i++){
-                p1[i].rend();
+
+            for (int i=0; i<2; i++){
+                for (int j=0; j<13 ; j++){
+                    if (isrend[i][j]) p[i][j].rend();
+                }
             }
-            //update
+
+            if (loadText(pathfont, "Level 2")) {
+                texttexture.render(230, 10);
+            }
+
+            //update screen
             SDL_RenderPresent(renderer);
 
-            if (loadText(pathfont, "hatnho")) {
-                //render texture to screen
-                //SDL_Rect Message = {100, 100, 500, 500};
-
-                //SDL_RenderCopy(renderer, Texture, nullptr, &Message);
-                texttexture.render(10, 500);
-            }
-
-
-            //eloop();
         }
-        //close();
+
+
+        //eloop();
     }
+
 
 
 }

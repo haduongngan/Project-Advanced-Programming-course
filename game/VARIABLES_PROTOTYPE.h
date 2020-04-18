@@ -9,6 +9,9 @@
 #include <cmath>
 #include <string>
 #include <cstring>
+#include <fstream>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 #ifndef GAME_VARIABLES_PROTOTYPE_H
@@ -33,4 +36,5 @@ bool loadImage(char* path);
 bool loadText(char* path, char* text);
 void eloop();
 void close();
+vector<int> chooseLevel(const char* f, int level);
 #endif //GAME_VARIABLES_PROTOTYPE_H

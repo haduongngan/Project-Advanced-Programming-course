@@ -40,9 +40,9 @@ int brick :: getY(){
 }
 
 void brick :: rend(){
-    if (ren){
+    //if (ren){
         obj.render(mPosition.x, mPosition.y);
-    }
+    //}
 }
 
 void brick :: setPile (int p){
@@ -65,7 +65,7 @@ void brick :: setPosition(int x, int y){
 
 void brick :: handleEvent(SDL_Event* e){
     //if mouse event happened
-    if (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP){
+    if (e->type == SDL_MOUSEBUTTONUP){ //|| e->type == SDL_MOUSEBUTTONUP e->type == SDL_MOUSEBUTTONDOWN
         //get mouse position
         int x, y;
         SDL_GetMouseState(&x, &y);
