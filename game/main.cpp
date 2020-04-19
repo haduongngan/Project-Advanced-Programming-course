@@ -22,34 +22,30 @@ const double SCREEN_HEIGHT = 666.24;
 //the window
 SDL_Window* window = nullptr;
 
-//surface
-SDL_Surface* screenSurface = nullptr;
-
-//the image
-SDL_Surface* image = nullptr;
 
 //the window renderer
 SDL_Renderer* renderer = nullptr;
 
 //current displayed texture
-SDL_Texture* Texture = nullptr;
+SDL_Texture* Texture = nullptr; //chuyen load anh
 
 //globally used font
 TTF_Font* font = nullptr;
 
 //rendered texture
-LTexture texttexture;
+LTexture texttexture;  //chuyen load text
 
 //path
-char* path = "";
+const char pathdata[] = "../Stones.txt";
+char* pathfont = "/../font/Xerox Sans Serif Narrow.ttf";
 
 LTexture brick;
 LTexture Backgr;
 LTexture active;
 LTexture unactive;
+LTexture Node;
 
-
-
+vector<vector<int>>data;
 
 
 

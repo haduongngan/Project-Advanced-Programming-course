@@ -9,17 +9,25 @@
 
 
     AIPlayer :: AIPlayer(){
-        setType("AIPlayer");
-        setName("AIPlayer");
+        name = "AIPlayer";
+        id = 1;
+        Isthewinner = 0;
+        Isyourturn = 0;
+        pileChoose = 0;
+        stonesChoose = 0;
     }
+
+    //chay xong se dc ket qua la lay bnhieu da o hang nao
     void AIPlayer :: move(vector<int>& matrix){
-        int pile, stones=0;
+        pileChoose = 0;
+        stonesChoose = 0;
         int Npiles = matrix.size();
-        while (stones==0){
+        while (stonesChoose==0){
             srand(time(0));
-            pile = rand() % Npiles;
-            if (matrix[pile]) stones = rand() % (matrix[pile]) + 1;
+            pileChoose = rand() % Npiles;
+            if (matrix[pileChoose]) stonesChoose = rand() % (matrix[pileChoose]) + 1;
         }
-        matrix[pile] -= stones;
-        cout << getname() << " lay " << stones << " vien da tu coc " << pile + 1 << endl;
+        matrix[pileChoose] -= stonesChoose;
     }
+
+    AIPlayer :: ~AIPlayer() = default;

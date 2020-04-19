@@ -7,9 +7,14 @@
 
 
     SmartAIPlayer :: SmartAIPlayer(){
-        setType("SmartAIPlayer");
-        setName("SmartAIPlayer");
+        name = "SmartAIPlayer";
+        id = 1;
+        Isthewinner = 0;
+        Isyourturn = 0;
+        pileChoose = 0;
+        stonesChoose = 0;
     }
+
     bool SmartAIPlayer :: RemainOnePile(const vector<int>& matrix){
         int size = matrix.size();
         int count = 0;
@@ -19,18 +24,21 @@
         if (count == 1) return true;
         return false;
     }
+
     void SmartAIPlayer :: moveOnePile(vector<int>& matrix){
-        int index;
+        pileChoose = 0;
+        stonesChoose = 0;
         int size = matrix.size();
         for (int i=0; i<size; i++){
             if (matrix[i]>0){
-                index = i;
+                pileChoose = i;
                 break;
             }
         }
-        cout << getname() << " lay " << matrix[index] << " vien da tu coc " << index + 1 << endl;
-        matrix[index] = 0;
+        stonesChoose = matrix[pileChoose];
+        matrix[pileChoose] = 0;
     }
+
     bool SmartAIPlayer :: RemainTwoPiles(const vector<int>& matrix){
         int size = matrix.size();
         int count = 0;
@@ -40,7 +48,10 @@
         if (count == 2) return true;
         return false;
     }
+
     void SmartAIPlayer :: moveTwoPiles(vector<int>& matrix){
+        pileChoose = 0;
+        stonesChoose = 0;
         int index1, index2;
         int size = matrix.size();
         for (int i=0; i<size; i++){
@@ -56,23 +67,26 @@
             }
         }
         if (matrix[index1]>matrix[index2]){
-            cout << getname() << " lay " << matrix[index1] - matrix[index2] << " vien da tu coc " << index1 + 1 << endl;
+            pileChoose = index1;
+            stonesChoose = matrix[index1] - matrix[index2];
             matrix[index1]=matrix[index2];
         }
         else if (matrix[index1]<matrix[index2]){
-            cout << getname() << " lay " << matrix[index2] - matrix[index1] << " vien da tu coc " << index2 + 1 << endl;
-            matrix[index2]=matrix[index1];
+            pileChoose = index2;
+            stonesChoose = matrix[index2] - matrix[index1];
+            matrix[index1]=matrix[index2];
         }
         else{
-            int pile, stones=0;
-            while (stones==0){
-                pile = index1;
-                stones = rand() % (matrix[pile]) + 1;
+            int Npiles = matrix.size();
+            while (stonesChoose==0){
+                srand(time(0));
+                pileChoose = rand() % Npiles;
+                if (matrix[pileChoose]) stonesChoose = rand() % (matrix[pileChoose]) + 1;
             }
-            matrix[pile] -= stones;
-            cout << getname() << " lay " << stones << " vien da tu coc " << pile + 1 << endl;
+            matrix[pileChoose] -= stonesChoose;
         }
     }
+
     int SmartAIPlayer :: NimSum(const vector<int>& matrix){
         int sum = 0;
         int size = matrix.size();
@@ -81,10 +95,12 @@
         }
         return sum;
     }
+
     bool SmartAIPlayer :: IsgoodPos(int NimSum){
         if (NimSum != 0) return true;
         return false;
     }
+
     vector<int> SmartAIPlayer :: XOR(const vector<int>& matrix){
         int size = matrix.size();
         vector<int>a;
@@ -95,10 +111,13 @@
         }
         return a;
     }
+
     void SmartAIPlayer :: move(vector<int>& matrix){
         if (RemainOnePile(matrix)) moveOnePile(matrix);
         else if (RemainTwoPiles(matrix)) moveTwoPiles(matrix);
         else {
+            pileChoose = 0;
+            stonesChoose = 0;
             int nimsum = NimSum(matrix);
             if (IsgoodPos(nimsum)){
                 vector<int>x = XOR(matrix);
@@ -110,18 +129,19 @@
                         break;
                     }
                 }
-                cout<< getname() << " lay " << matrix[index] - x[index] << " vien da tu coc " << index + 1 << endl;
-                matrix[index] = x[index];
+                stonesChoose = matrix[index] - x[index];
+                pileChoose = index;
             }
             else {
-                int pile, stones=0;
                 int Npiles = matrix.size();
-                while (stones==0){
-                    pile = rand() % Npiles;
-                    if (matrix[pile]) stones = rand() % (matrix[pile]) + 1;
+                while (stonesChoose==0){
+                    srand(time(0));
+                    pileChoose = rand() % Npiles;
+                    if (matrix[pileChoose]) stonesChoose = rand() % (matrix[pileChoose]) + 1;
                 }
-                matrix[pile] -= stones;
-                cout << getname() << " lay " << stones << " vien da tu coc " << pile + 1 << endl;
+                matrix[pileChoose] -= stonesChoose;
             }
         }
     }
+
+    SmartAIPlayer :: ~SmartAIPlayer() = default;

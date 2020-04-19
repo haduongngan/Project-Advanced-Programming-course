@@ -12,11 +12,7 @@ using namespace std;
 #ifndef GAME_LTEXTURE_H
 #define GAME_LTEXTURE_H
 
-extern const double SCREEN_WIDTH;
-extern const double SCREEN_HEIGHT;
-extern SDL_Window* window;
-extern SDL_Surface* screenSurface;
-extern SDL_Surface* image;
+
 extern SDL_Renderer* renderer;
 extern TTF_Font* font;
 
@@ -29,31 +25,28 @@ private:
     double mHeight;
 
 public:
+    //ham tao
     LTexture();
+
+    //ham huy
     ~LTexture();
 
-    //load image
+    //load image -> mTexture
     bool loadFFile(char* path);
+
+    //create image from font string -> mTexture
+    bool loadFromRenderedText (char* texturetext, SDL_Colour textColor);
 
     //deallocates texture
     void free();
 
     //renders texture at given point
     void render(int x, int y);
-    //void render(int x, int y, SDL_Rect* clip = nullptr);
 
     //get image dimensions
     double getWidth();
     double getHeight();
 
-    //create image from font string
-    bool loadFromRenderedText (char* texturetext, SDL_Colour textColor);
-
-    //set color modulation
-    //void setColor(Uint8 red, Uint8 green, Uint8 blue);
-
-    //set blending
-    //void setBlendMode(SDL_BlendMode blending);
 };
 
 

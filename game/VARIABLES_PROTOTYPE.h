@@ -19,22 +19,33 @@ using namespace std;
 
 extern const double SCREEN_WIDTH;
 extern const double SCREEN_HEIGHT;
+extern vector<vector<int>>data;
 extern SDL_Window* window;
-extern SDL_Surface* screenSurface;
 extern SDL_Renderer* renderer;
 extern SDL_Texture* Texture;
 extern LTexture brick;
 extern LTexture Backgr;
 extern LTexture active;
+extern LTexture unactive;
+extern LTexture Node;
 extern LTexture texttexture;
 
+
 bool init();
-bool loadMedia(char* path);
-SDL_Surface* loadSurface(char* path);
-SDL_Texture* loadTexture(char* path);
-bool loadImage(char* path);
-bool loadText(char* path, char* text);
-void eloop();
+
+SDL_Texture* loadTexture(char* pathImage);
+
+bool loadImage(char* pathImage);
+
+bool loadText(char* pathFont, char* text, int size);
+
 void close();
-vector<int> chooseLevel(const char* f, int level);
+
+vector<int> chooseLevel(const char* f, int level, vector<vector<int>>data);
+
+void loadData(const char* f);
+
+
+
+
 #endif //GAME_VARIABLES_PROTOTYPE_H

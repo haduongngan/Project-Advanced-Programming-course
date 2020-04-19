@@ -25,7 +25,7 @@ void welcometogame(){
             //render texture to screen
             SDL_RenderCopy(renderer, Texture, nullptr, nullptr);
 
-            if (loadText(pathfont, "welcome to NIM game")) {
+            if (loadText(pathfont, "welcome to NIM game", 28)) {
                 //render texture to screen
                 //SDL_Rect Message = {100, 100, 500, 500};
 

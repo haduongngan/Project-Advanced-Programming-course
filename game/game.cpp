@@ -3,182 +3,576 @@
 //
 
 #include "game.h"
-#include <sstream>
-#include <fstream>
-#include <cstdlib>
 #include "VARIABLES_PROTOTYPE.h"
-
 using namespace std;
 
 
-
-const char pathdata[] = "../Stones.txt";
-
-
-    void Game :: setPause(){
-        pause = true;
-    }
-
-    void Game :: setMode(){
-        cout << "Type of game: ";
-        cin >> playMode; //3 = smart vs human
-        while (playMode > 3 || playMode < 1){
-            cout << "Type of game: ";
-            cin >> playMode;
-        }
-    }
-    int Game :: getMode(){
-        return playMode;
-    }
-
-    void Game :: setLevel(){
-        cout << "Level of game: ";
-        cin >> level;
-        while (level > 15 || level < 1){
-            cout << "Level of game: ";
-            cin >> level;
-        }
-    }
-    int Game :: getLevel(){
-        return level;
-    }
-
-    void Game :: setStones(){
-        Stones = chooseLevel(pathdata,level);
-        NumOfPiles = Stones.size();
-    }
-    vector<int> Game :: getStones(){
-        return Stones;
-    }
-
-    void Game :: setPlayers(){
-        if (playMode == 1) { //human vs human
-            human1.setId(1);
-            human1.getName();
-            human2.setId(2);
-            human2.getName();
-        }
-        else if (playMode == 2) { //AIPlayer vs human
-            AI.setId(1);
-            human2.setId(2);
-            human2.getName();
-        }
-        else if (playMode == 3) { //SmartAIPlayer vs human
-            smart.setId(1);
-            human2.setId(2);
-            human2.getName();
+//ham tao
+Game :: Game(){
+    NPiles = 0;
+    NStones = {0};
+    playMode = 1;
+    level = 1;
+    firstturn = 1;
+    hint = 1;
+    for (int i=0; i<2; i++){
+        for (int j=0; j<13 ; j++){
+            Stone[i][j].setPile(i+1);
+            Stone[i][j].setCol(j+1);
         }
     }
 
+}
 
-    void Game :: in(){
-        for (int i=0; i<Stones.size(); i++){
-            cout << "Pile " << i+1 << " : ";
-            for (int j=1; j<=Stones[i]; j++){
-                cout << "O ";
-            }
-            cout << endl;
+//ham huy
+Game :: ~Game(){
+    for (int i=0; i<6; i++){
+        for (int j=0; j<13; j++){
+            Stone[i][j].obj.free();
+            Stone[i][j].brick02.free();
         }
-        cout << endl;
     }
+}
 
-    bool Game :: checkWin(){
-        bool check = 1;
-        for (int i=0; i<Stones.size(); i++){
-            if (Stones[i]>0) {
+
+//tao mang luu so stones moi pile
+void Game :: setStones(){
+    NStones = chooseLevel(pathdata,level,data);
+    NPiles = NStones.size();
+}
+
+//khoi tao nguoi choi dua vao mode
+void Game :: setPlayers(){
+    if (playMode == 1) { //human vs human
+        human1.id = 1;
+        human1.name = "Player 1";
+        human2.id = 2;
+        human2.name = "Player 2";
+    }
+    else if (playMode == 2) { //AIPlayer vs human
+        human2.id = 2;
+        human2.name = "Player 2";
+    }
+    else if (playMode == 3) { //SmartAIPlayer vs human
+        human2.id = 2;
+        human2.name = "Player 2";
+    }
+}
+
+//kiem tra co nguoi chien thang : tra ve 1 neu co ng thang
+bool Game :: checkWin(){
+    bool check = 1;
+    for (int i=0; i<NPiles; i++){
+        for (int j=0; j<13;j++){
+            if (isrend[i][j]) {
                 check = 0;
                 break;
             }
         }
-        return check;
+    }
+    return 1;
+}
+
+
+//de cho case 5: thong bao nguoi chien thang while(!quit)
+void Game :: winner(){
+    //load back case 5
+    if (loadImage("../image/cover-01.png")){
+        Backgr.loadFFile("../image/cover-01.png");
+        Backgr.render(0,0);
     }
 
-    void Game :: step(){
-        if (playMode == 1) {
-            if (turn == 1) {
-                human1.move(Stones);
-                turn = 2;
-            } else {
-                human2.move(Stones);
-                turn = 1;
-            }
-            human1.setTurn(turn);
-            human2.setTurn(turn);
-        }
 
-        else if (playMode == 2) {
-            if (turn == 1) {
-                AI.move(Stones);
-                turn = 2;
-            } else {
-                human2.move(Stones);
-                turn = 1;
-            }
-            AI.setTurn(turn);
-            human2.setTurn(turn);
-        }
+    //thong bao chien thang : load text //nen load trc cho render
 
-        else if (playMode == 3) {
-            if (turn == 1) {
-                smart.move(Stones);
-                turn = 2;
-            } else {
-                human2.move(Stones);
-                turn = 1;
-            }
-            smart.setTurn(turn);
-            human2.setTurn(turn);
+    if (human1.Isthewinner){
+        if (loadText(pathfont, "Congratulation", 30)) {
+            texttexture.render(190, 230);
+        }
+        if (loadText(pathfont, "The winner is Player 1.", 28)) {
+            texttexture.render(163, 260);
         }
     }
-
-    void Game :: winner(){
-        if (playMode == 1){
-            if (turn == 2) cout << "The winner is " << human1.getname() << endl;
-            else cout << "The winner is " << human2.getname() << endl;
+    else if (human2.Isthewinner){
+        if (loadText(pathfont, "Congratulation", 30)) {
+            texttexture.render(190, 230);
         }
-
-        else if (playMode == 2){
-            if (turn == 2) cout << "The winner is " << AI.getname() << endl;
-            else cout << "The winner is " << human2.getname() << endl;
+        if (loadText(pathfont, "The winner is Player 2.", 28)) {
+            texttexture.render(163, 260);
         }
-
-        else if (playMode == 3){
-            if (turn == 2) cout << "The winner is " << smart.getname() << endl;
-            else cout << "The winner is " << human2.getname() << endl;
+    }
+    else if (AI.Isthewinner) {
+        if (loadText(pathfont, "Congratulation", 30)) {
+            texttexture.render(190, 230);
+        }
+        if (loadText(pathfont, "The winner is AIPlayer.", 28)) {
+            texttexture.render(163, 260);
+        }
+    }
+    else if (smart.Isthewinner) {
+        if (loadText(pathfont, "Congratulation", 30)) {
+            texttexture.render(190, 230);
+        }
+        if (loadText(pathfont, "The winner is SmartAIPlayer.", 28)) {
+            texttexture.render(163, 260);
         }
     }
 
-    void Game :: play(){
-        setMode();
-        setLevel();
-        setStones();
-        setPlayers();
-        cout << "Choose who has the first turn: ";
-        cin >> turn;
-        while (turn > 3 || turn < 1){
-            cout << "Choose who has the first turn: ";
-            cin >> turn;
-        }
-        if (turn == 3) turn = rand()%2 +1;
-        if (playMode == 1){
-            human1.setTurn(turn);
-            human2.setTurn(turn);
-        }
-        else if (playMode == 2){
-            AI.setTurn(turn);
-            human2.setTurn(turn);
-        }
-        else if (playMode == 3){
-            smart.setTurn(turn);
-            human2.setTurn(turn);
-        }
-        in();
-        while (checkWin()==0){
-            step();
-            if (checkWin()==1){
-                winner();
-                break;
-            }
-            in();
+    //load cac node
+    if (loadText(pathfont, "Next level", 28)) {
+        texttexture.render(220, 330);
+    }
+    if (loadText(pathfont, "Menu", 28)) {
+        texttexture.render(243, 380);
+    }
+    if (loadText(pathfont, "Quit", 28)) {
+        texttexture.render(245, 430);
+    }
+    //update screen
+    SDL_RenderPresent(renderer);
+}
+
+//tao mang brick dua theo level
+void Game :: setbrick(){
+    if (level==1){
+        Stone[0][0].setPosition(42,199); //
+        Stone[0][1].setPosition(77, 199); //
+        Stone[0][2].setPosition(112, 199);  //
+
+        Stone[1][0].setPosition(42, 334);  //
+        Stone[1][1].setPosition(77, 334);
+        Stone[1][2].setPosition(112,334);
+        Stone[1][3].setPosition(147,334);
+        Stone[1][4].setPosition(182,334);
+    }
+
+    else if (level==2){
+        Stone[0][0].setPosition(42,199); //
+        Stone[0][1].setPosition(77, 199); //
+        Stone[0][2].setPosition(112, 199);  //
+        Stone[0][3].setPosition(147,199); //
+        Stone[0][4].setPosition(182,199); //
+        Stone[0][5].setPosition(217,199); //
+
+        Stone[1][0].setPosition(42, 334);  //
+        Stone[1][1].setPosition(77, 334);
+        Stone[1][2].setPosition(112,334);
+        Stone[1][3].setPosition(147,334);
+        Stone[1][4].setPosition(182,334);
+        Stone[1][5].setPosition(217,334);
+        Stone[1][6].setPosition(252,334);
+        Stone[1][7].setPosition(287,334);
+        Stone[1][8].setPosition(322,334);
+    }
+
+    else if (level==4){
+        Stone[0][0].setPosition(42,135); //
+        Stone[0][1].setPosition(77, 135); //
+        Stone[0][2].setPosition(112, 135);  //
+
+        Stone[1][0].setPosition(42, 262);  //
+        Stone[1][1].setPosition(77, 262);
+        Stone[1][2].setPosition(112,262);
+        Stone[1][3].setPosition(147,262);
+
+        Stone[2][0].setPosition(42,388); //
+        Stone[2][1].setPosition(77, 388); //
+        Stone[2][2].setPosition(112, 388);  //
+        Stone[2][3].setPosition(147,388); //
+        Stone[2][4].setPosition(182,388); //
+    }
+
+    else if (level==5){
+        Stone[0][0].setPosition(42,135); //
+        Stone[0][1].setPosition(77, 135); //
+        Stone[0][2].setPosition(112, 135);  //
+        Stone[0][3].setPosition(147,135); //
+        Stone[0][4].setPosition(182,135); //
+        Stone[0][5].setPosition(217,135); //
+
+        Stone[1][0].setPosition(42, 262);  //
+        Stone[1][1].setPosition(77, 262);
+        Stone[1][2].setPosition(112,262);
+        Stone[1][3].setPosition(147,262);
+
+        Stone[2][0].setPosition(42,388); //
+        Stone[2][1].setPosition(77, 388); //
+        Stone[2][2].setPosition(112, 388);  //
+        Stone[2][3].setPosition(147,388); //
+        Stone[2][4].setPosition(182,388); //
+        Stone[2][5].setPosition(217,388); //
+        Stone[2][6].setPosition(252,388); //
+        Stone[2][7].setPosition(287,388);  //
+        Stone[2][8].setPosition(322,388);  //
+    }
+
+    else if (level==6){
+        Stone[0][0].setPosition(42,135); //
+        Stone[0][1].setPosition(77, 135); //
+        Stone[0][2].setPosition(112, 135);  //
+        Stone[0][3].setPosition(147,135); //
+        Stone[0][4].setPosition(182,135); //
+        Stone[0][5].setPosition(217,135); //
+        Stone[0][6].setPosition(252,135); //
+        Stone[0][7].setPosition(287,135);  //
+        Stone[0][8].setPosition(322,135);  //
+
+        Stone[1][0].setPosition(42, 262);  //
+        Stone[1][1].setPosition(77, 262);
+        Stone[1][2].setPosition(112,262);
+        Stone[1][3].setPosition(147,262);
+        Stone[1][4].setPosition(182,262);
+        Stone[1][5].setPosition(217,262);
+        Stone[1][6].setPosition(252,262);
+        Stone[1][7].setPosition(287,262);
+        Stone[1][8].setPosition(322,262);
+        Stone[1][9].setPosition(357,262); //
+        Stone[1][10].setPosition(392,262); //
+        Stone[1][11].setPosition(427,262); //
+
+        Stone[2][0].setPosition(42,388); //
+        Stone[2][1].setPosition(77, 388); //
+        Stone[2][2].setPosition(112, 388);  //
+        Stone[2][3].setPosition(147,388); //
+        Stone[2][4].setPosition(182,388); //
+        Stone[2][5].setPosition(217,388); //
+        Stone[2][6].setPosition(252,388); //
+    }
+
+    else if (level==3){
+        Stone[0][0].setPosition(42,199); //
+        Stone[0][1].setPosition(77, 199); //
+        Stone[0][2].setPosition(112, 199);  //
+        Stone[0][3].setPosition(147,199); //
+        Stone[0][4].setPosition(182,199); //
+        Stone[0][5].setPosition(217,199); //
+        Stone[0][6].setPosition(252,199); //
+        Stone[0][7].setPosition(287,199);  //
+        Stone[0][8].setPosition(322,199);  //
+        Stone[0][9].setPosition(357,199); //
+        Stone[0][10].setPosition(392,199); //
+        Stone[0][11].setPosition(427,199); //
+        Stone[0][12].setPosition(462,199); //
+
+        Stone[1][0].setPosition(42, 334);  //
+        Stone[1][1].setPosition(77, 334);
+        Stone[1][2].setPosition(112,334);
+        Stone[1][3].setPosition(147,334);
+        Stone[1][4].setPosition(182,334);
+        Stone[1][5].setPosition(217,334);
+        Stone[1][6].setPosition(252,334);
+        Stone[1][7].setPosition(287,334);
+    }
+
+    else if (level==7){
+        Stone[0][0].setPosition(42,108); //
+        Stone[0][1].setPosition(77, 108); //
+        Stone[0][2].setPosition(112, 108);  //
+        Stone[0][3].setPosition(147,108); //
+        Stone[0][4].setPosition(182,108); //
+        Stone[0][5].setPosition(217,108); //
+        Stone[0][6].setPosition(252,108); //
+
+        Stone[1][0].setPosition(42, 218);  //
+        Stone[1][1].setPosition(77, 218);
+
+        Stone[2][0].setPosition(42,323); //
+        Stone[2][1].setPosition(77, 323); //
+        Stone[2][2].setPosition(112, 323);  //
+        Stone[2][3].setPosition(147,323); //
+        Stone[2][4].setPosition(182,323); //
+        Stone[2][5].setPosition(217,323); //
+        Stone[2][6].setPosition(252,323); //
+        Stone[2][7].setPosition(287,323);  //
+        Stone[2][8].setPosition(322,323);  //
+
+        Stone[3][0].setPosition(42,429); //
+        Stone[3][1].setPosition(77, 429); //
+        Stone[3][2].setPosition(112, 429);  //
+    }
+
+    else if (level==8){
+        Stone[0][0].setPosition(42,108); //
+        Stone[0][1].setPosition(77, 108); //
+        Stone[0][2].setPosition(112, 108);  //
+        Stone[0][3].setPosition(147,108); //
+
+        Stone[1][0].setPosition(42, 218);  //
+        Stone[1][1].setPosition(77, 218);
+        Stone[1][2].setPosition(112,218);
+        Stone[1][3].setPosition(147,218);
+        Stone[1][4].setPosition(182,218);
+        Stone[1][5].setPosition(217,218);
+        Stone[1][6].setPosition(252,218);
+        Stone[1][7].setPosition(287,218);
+
+        Stone[2][0].setPosition(42,323); //
+        Stone[2][1].setPosition(77, 323); //
+        Stone[2][2].setPosition(112, 323);  //
+        Stone[2][3].setPosition(147,323); //
+        Stone[2][4].setPosition(182,323); //
+
+        Stone[3][0].setPosition(42,429); //
+        Stone[3][1].setPosition(77, 429); //
+        Stone[3][2].setPosition(112, 429);  //
+        Stone[3][3].setPosition(147,429); //
+        Stone[3][4].setPosition(182,429); //
+        Stone[3][5].setPosition(217,429); //
+    }
+
+    else if (level==9){
+        Stone[0][0].setPosition(42,108); //
+
+        Stone[1][0].setPosition(42, 218);  //
+        Stone[1][1].setPosition(77, 218);
+        Stone[1][2].setPosition(112,218);
+
+        Stone[2][0].setPosition(42,323); //
+        Stone[2][1].setPosition(77, 323); //
+        Stone[2][2].setPosition(112, 323);  //
+        Stone[2][3].setPosition(147,323); //
+        Stone[2][4].setPosition(182,323); //
+        Stone[2][5].setPosition(217,323); //
+        Stone[2][6].setPosition(252,323); //
+        Stone[2][7].setPosition(287,323);  //
+
+        Stone[3][0].setPosition(42,429); //
+        Stone[3][1].setPosition(77, 429); //
+        Stone[3][2].setPosition(112, 429);  //
+        Stone[3][3].setPosition(147,429); //
+        Stone[3][4].setPosition(182,429); //
+    }
+
+    else if (level==10){
+        Stone[0][0].setPosition(42,94); //
+        Stone[0][1].setPosition(77, 94); //
+        Stone[0][2].setPosition(112, 94);  //
+        Stone[0][3].setPosition(147,94); //
+        Stone[0][4].setPosition(182,94); //
+        Stone[0][5].setPosition(217,94); //
+
+        Stone[1][0].setPosition(42, 186);  //
+        Stone[1][1].setPosition(77, 186);
+        Stone[1][2].setPosition(112,186);
+        Stone[1][3].setPosition(147,186);
+        Stone[1][4].setPosition(182,186);
+        Stone[1][5].setPosition(217,186);
+        Stone[1][6].setPosition(252,186);
+        Stone[1][7].setPosition(287,186);
+
+        Stone[2][0].setPosition(42,275); //
+        Stone[2][1].setPosition(77, 275); //
+
+        Stone[3][0].setPosition(42,369); //
+        Stone[3][1].setPosition(77, 369); //
+        Stone[3][2].setPosition(112, 369);  //
+        Stone[3][3].setPosition(147,369); //
+        Stone[3][4].setPosition(182,369); //
+        Stone[3][5].setPosition(217,369); //
+        Stone[3][6].setPosition(252,369); //
+        Stone[3][7].setPosition(287,369);  //
+        Stone[3][8].setPosition(322,369);  //
+
+        Stone[4][0].setPosition(42,458); //
+        Stone[4][1].setPosition(77, 458); //
+        Stone[4][2].setPosition(112, 458);  //
+    }
+
+    else if (level==11){
+        Stone[0][0].setPosition(42,94); //
+        Stone[0][1].setPosition(77, 94); //
+
+        Stone[1][0].setPosition(42, 186);  //
+        Stone[1][1].setPosition(77, 186);
+        Stone[1][2].setPosition(112,186);
+        Stone[1][3].setPosition(147,186);
+
+        Stone[2][0].setPosition(42,275); //
+        Stone[2][1].setPosition(77, 275); //
+        Stone[2][2].setPosition(112, 275);  //
+        Stone[2][3].setPosition(147,275); //
+        Stone[2][4].setPosition(182,275); //
+        Stone[2][5].setPosition(217,275); //
+        Stone[2][6].setPosition(252,275); //
+
+        Stone[3][0].setPosition(42,369); //
+        Stone[3][1].setPosition(77, 369); //
+        Stone[3][2].setPosition(112, 369);  //
+        Stone[3][3].setPosition(147,369); //
+        Stone[3][4].setPosition(182,369); //
+
+        Stone[4][0].setPosition(42,458); //
+    }
+
+    else if (level==12){
+        Stone[0][0].setPosition(42,94); //
+        Stone[0][1].setPosition(77, 94); //
+        Stone[0][2].setPosition(112, 94);  //
+        Stone[0][3].setPosition(147,94); //
+        Stone[0][4].setPosition(182,94); //
+        Stone[0][5].setPosition(217,94); //
+        Stone[0][6].setPosition(252,94); //
+
+        Stone[1][0].setPosition(42, 186);  //
+        Stone[1][1].setPosition(77, 186);
+        Stone[1][2].setPosition(112,186);
+        Stone[1][3].setPosition(147,186);
+        Stone[1][4].setPosition(182,186);
+        Stone[1][5].setPosition(217,186);
+
+
+        Stone[2][0].setPosition(42,275); //
+        Stone[2][1].setPosition(77, 275); //
+
+        Stone[3][0].setPosition(42,369); //
+        Stone[3][1].setPosition(77, 369); //
+        Stone[3][2].setPosition(112, 369);  //
+        Stone[3][3].setPosition(147,369); //
+
+        Stone[4][0].setPosition(42,458); //
+        Stone[4][1].setPosition(77, 458); //
+        Stone[4][2].setPosition(112, 458);  //
+    }
+
+    else if (level==13){
+        Stone[0][0].setPosition(42,76); //
+        Stone[0][1].setPosition(77, 76); //
+        Stone[0][2].setPosition(112, 76);  //
+        Stone[0][3].setPosition(147,76); //
+        Stone[0][4].setPosition(182,76); //
+        Stone[0][5].setPosition(217,76); //
+
+        Stone[1][0].setPosition(42, 152);  //
+        Stone[1][1].setPosition(77, 152);
+        Stone[1][2].setPosition(112,152);
+        Stone[1][3].setPosition(147,152);
+        Stone[1][4].setPosition(182,152);
+        Stone[1][5].setPosition(217,152);
+        Stone[1][6].setPosition(252,152);
+
+        Stone[2][0].setPosition(42,227); //
+        Stone[2][1].setPosition(77, 227); //
+        Stone[2][2].setPosition(112, 227);  //
+
+        Stone[3][0].setPosition(42,305); //
+        Stone[3][1].setPosition(77, 305); //
+        Stone[3][2].setPosition(112, 305);  //
+        Stone[3][3].setPosition(147,305); //
+        Stone[3][4].setPosition(182,305); //
+
+        Stone[4][0].setPosition(42,384); //
+        Stone[4][1].setPosition(77, 384); //
+        Stone[4][2].setPosition(112, 384);  //
+        Stone[4][3].setPosition(147,384); //
+        Stone[4][4].setPosition(182,384); //
+        Stone[4][5].setPosition(217,384); //
+        Stone[4][6].setPosition(252,384); //
+
+        Stone[5][0].setPosition(42,460); //
+        Stone[5][1].setPosition(77, 460); //
+        Stone[5][2].setPosition(112, 460);  //
+        Stone[5][3].setPosition(147,460); //
+        Stone[5][4].setPosition(182,460); //
+        Stone[5][5].setPosition(217,460); //
+        Stone[5][6].setPosition(252,460); //
+        Stone[5][7].setPosition(287,460);  //
+        Stone[5][8].setPosition(322,460);  //
+        Stone[5][9].setPosition(357,460); //
+    }
+
+    else if (level==14){
+        Stone[0][0].setPosition(42,76); //
+        Stone[0][1].setPosition(77, 76); //
+
+        Stone[1][0].setPosition(42, 152);  //
+        Stone[1][1].setPosition(77, 152);
+        Stone[1][2].setPosition(112,152);
+        Stone[1][3].setPosition(147,152);
+        Stone[1][4].setPosition(182,152);
+        Stone[1][5].setPosition(217,152);
+        Stone[1][6].setPosition(252,152);
+
+        Stone[2][0].setPosition(42,227); //
+        Stone[2][1].setPosition(77, 227); //
+        Stone[2][2].setPosition(112, 227);  //
+        Stone[2][3].setPosition(147,227); //
+
+        Stone[3][0].setPosition(42,305); //
+        Stone[3][1].setPosition(77, 305); //
+        Stone[3][2].setPosition(112, 305);  //
+        Stone[3][3].setPosition(147,305); //
+        Stone[3][4].setPosition(182,305); //
+        Stone[3][5].setPosition(217,305); //
+        Stone[3][6].setPosition(252,305); //
+
+        Stone[4][0].setPosition(42,384); //
+        Stone[4][1].setPosition(77, 384); //
+
+        Stone[5][0].setPosition(42,460); //
+        Stone[5][1].setPosition(77, 460); //
+        Stone[5][2].setPosition(112, 460);  //
+        Stone[5][3].setPosition(147,460); //
+        Stone[5][4].setPosition(182,460); //
+        Stone[5][5].setPosition(217,460); //
+        Stone[5][6].setPosition(252,460); //
+        Stone[5][7].setPosition(287,460);  //
+    }
+
+    else if (level==15){
+        Stone[0][0].setPosition(42,76); //
+        Stone[0][1].setPosition(77, 76); //
+        Stone[0][2].setPosition(112, 76);  //
+
+        Stone[1][0].setPosition(42, 152);  //
+        Stone[1][1].setPosition(77, 152);
+        Stone[1][2].setPosition(112,152);
+        Stone[1][3].setPosition(147,152);
+        Stone[1][4].setPosition(182,152);
+        Stone[1][5].setPosition(217,152);
+
+        Stone[2][0].setPosition(42,227); //
+        Stone[2][1].setPosition(77, 227); //
+        Stone[2][2].setPosition(112, 227);  //
+        Stone[2][3].setPosition(147,227); //
+        Stone[2][4].setPosition(182,227); //
+        Stone[2][5].setPosition(217,227); //
+        Stone[2][6].setPosition(252,227); //
+        Stone[2][7].setPosition(287,227);  //
+
+        Stone[3][0].setPosition(42,305); //
+        Stone[3][1].setPosition(77, 305); //
+        Stone[3][2].setPosition(112, 305);  //
+
+        Stone[4][0].setPosition(42,384); //
+        Stone[4][1].setPosition(77, 384); //
+        Stone[4][2].setPosition(112, 384);  //
+        Stone[4][3].setPosition(147,384); //
+        Stone[4][4].setPosition(182,384); //
+        Stone[4][5].setPosition(217,384); //
+        Stone[4][6].setPosition(252,384); //
+        Stone[4][7].setPosition(287,384);  //
+
+        Stone[5][0].setPosition(42,460); //
+        Stone[5][1].setPosition(77, 460); //
+        Stone[5][2].setPosition(112, 460);  //
+        Stone[5][3].setPosition(147,460); //
+        Stone[5][4].setPosition(182,460); //
+        Stone[5][5].setPosition(217,460); //
+    }
+
+}
+
+//tao mang isrend dua theo level
+void Game :: setIsrend(){
+    for (int i=0; i<6; i++){
+        for (int j=0; j<13 ; j++){
+            if (j<NStones[i] && i<NPiles) isrend[i][j] = true;
+            else isrend[i][j] = false;
         }
     }
+}
+
+
+
+
+

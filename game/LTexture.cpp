@@ -5,16 +5,19 @@
 #include "LTexture.h"
 #include "VARIABLES_PROTOTYPE.h"
 
+//khoi tao
 LTexture :: LTexture(){
     mTexture = nullptr;
     mWidth = 0;
     mHeight = 0;
 }
+
+//ham huy
 LTexture :: ~LTexture(){
     free();
 }
 
-//load image
+//load image -> mTexture
 bool LTexture :: loadFFile(char* path){
     free();
     //the final texture
@@ -46,32 +49,7 @@ bool LTexture :: loadFFile(char* path){
     return (mTexture != nullptr);
 }
 
-//deallocates texture
-void LTexture :: free(){
-    if (mTexture != nullptr){
-        SDL_DestroyTexture(mTexture);
-        mTexture = nullptr;
-        mWidth = 0;
-        mHeight = 0;
-    }
-}
-
-//renders texture at given point
-void LTexture :: render(int x, int y){
-    //set rendering space and render to screen
-    SDL_Rect renderQuad = {x, y, static_cast<int>(mWidth), static_cast<int>(mHeight)};
-    SDL_RenderCopy(renderer, mTexture, nullptr, &renderQuad);
-}
-
-//get image dimensions
-double LTexture :: getWidth(){
-    return mWidth;
-}
-double LTexture :: getHeight(){
-    return mHeight;
-}
-
-//create image from font string
+//create image from font string -> mTexture
 bool LTexture :: loadFromRenderedText(char* texturetext, SDL_Colour textColor){
     free();
 
@@ -96,12 +74,27 @@ bool LTexture :: loadFromRenderedText(char* texturetext, SDL_Colour textColor){
 
 }
 
-//void LTexture :: render(int x, int y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip = SDL_FLIP_NONE);
+//deallocates texture
+void LTexture :: free(){
+    if (mTexture != nullptr){
+        SDL_DestroyTexture(mTexture);
+        mTexture = nullptr;
+        mWidth = 0;
+        mHeight = 0;
+    }
+}
 
-//void LTexture :: render(int x, int y, SDL_Rect* clip = nullptr){}
+//renders texture at given point
+void LTexture :: render(int x, int y){
+    //set rendering space and render to screen
+    SDL_Rect renderQuad = {x, y, static_cast<int>(mWidth), static_cast<int>(mHeight)};
+    SDL_RenderCopy(renderer, mTexture, nullptr, &renderQuad);
+}
 
-//set color modulation
-//void LTexture :: setColor(Uint8 red, Uint8 green, Uint8 blue){}
-
-//set blending
-//void LTexture :: setBlendMode(SDL_BlendMode blending){}
+//get image dimensions
+double LTexture :: getWidth(){
+    return mWidth;
+}
+double LTexture :: getHeight(){
+    return mHeight;
+}

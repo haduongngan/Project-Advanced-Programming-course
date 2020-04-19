@@ -2,18 +2,23 @@
 // Created by Duong Ngan Ha on 08/04/2020.
 //
 
-#include "Player.h"
+#include<iostream>
+#include <string>
+using namespace std;
+
 #ifndef GAME_HUMANPLAYER_H
 #define GAME_HUMANPLAYER_H
 
-class HumanPlayer : public Player {
+class HumanPlayer{
 public:
+    string name;
+    int id; //nguoi choi so 1 hay so 2
+    bool Isyourturn;
+    bool Isthewinner;
+
     HumanPlayer();
-    void move(vector<int>& matrix);
-    void getName();
-    bool hoplepile(const vector<int>& matrix, const int &pile);
-    bool hoplestone(const vector<int>& matrix, const int &pile, const int &stones);
-    ~HumanPlayer() = default;
+
+    ~HumanPlayer();
 };
 
 #endif //GAME_HUMANPLAYER_H

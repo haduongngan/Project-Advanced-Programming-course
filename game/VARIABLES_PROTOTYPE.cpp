@@ -3,7 +3,7 @@
 //
 
 #include "VARIABLES_PROTOTYPE.h"
-
+//init
 bool init(){
     bool success = true;
     if ( SDL_Init(SDL_INIT_VIDEO) < 0 ){
@@ -18,7 +18,7 @@ bool init(){
             success = false;
         }
         else {
-            //screenSurface = SDL_GetWindowSurface(window);
+
             //create renderer for window
             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
             if (renderer == nullptr){
@@ -48,43 +48,14 @@ bool init(){
     return success;
 }
 
-//Load media
-bool loadMedia(char* path){
-    bool success = true;
-
-    image = IMG_Load(path);
-    if (image == nullptr){
-        cout << "Unable to load image! SDL_image Error: " << IMG_GetError() << endl;
-        success = false;
-    }
-    return success;
-}
-
-SDL_Surface* loadSurface(char* path){
-    SDL_Surface* optimized = nullptr;
-    if (!loadMedia(path)){
-        cout << "Failed to load media!\n ";
-    }
-    else {
-        //screenSurface = SDL_GetWindowSurface(window);
-        optimized = SDL_ConvertSurface(image, screenSurface ->format,0); ///
-        if (optimized == nullptr){
-            cout << " Unable to optimize image! SDL Error: " << SDL_GetError() << endl;
-        }
-        SDL_FreeSurface(image);
-        image = nullptr;
-    }
-    return optimized;
-}
-
-SDL_Texture* loadTexture(char* path){
+SDL_Texture* loadTexture(char* pathImage){
     //the final texture
     SDL_Texture* newTexture = nullptr;
 
     //Load image
-    SDL_Surface* loadedSurface = IMG_Load(path);
+    SDL_Surface* loadedSurface = IMG_Load(pathImage);
     if (loadedSurface == nullptr){
-        cout << "Failed to load image " << path << ". SDL_image Error: " << IMG_GetError();
+        cout << "Failed to load image " << pathImage << ". SDL_image Error: " << IMG_GetError();
     }
     else {
         //create texture from surface pixels
@@ -97,9 +68,9 @@ SDL_Texture* loadTexture(char* path){
     return newTexture;
 }
 
-bool loadImage(char* path){
+bool loadImage(char* pathImage){
     bool success = true;
-    Texture = loadTexture(path);
+    Texture = loadTexture(pathImage);
     if (Texture == nullptr){
         cout << "Failed to load texture image!" << endl;
         success = false;
@@ -107,10 +78,10 @@ bool loadImage(char* path){
     return success;
 }
 
-bool loadText(char* path, char* text){
+bool loadText(char* pathFont, char* text, int size){
     bool success = true;
     //open the font
-    font = TTF_OpenFont(path, 28);
+    font = TTF_OpenFont(pathFont, size);
     if (font == nullptr){
         cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
     }
@@ -125,29 +96,16 @@ bool loadText(char* path, char* text){
     return success;
 }
 
-void eloop(){
-    SDL_Event e;
-    bool quit = false;
-    while (!quit){
-        while (SDL_PollEvent(&e)){
-            if (e.type == SDL_QUIT){
-                quit = true;
-            }
-        }
-    }
-}
-
 //Frees media and shuts down SDl
 void close(){
     brick.free();
     Backgr.free();
     active.free();
+    unactive.free();
+    Node.free();
 
     TTF_CloseFont(font);
     font = nullptr;
-
-    SDL_FreeSurface(image);
-    image = nullptr;
 
     SDL_DestroyTexture(Texture);
     Texture = nullptr;
@@ -155,7 +113,7 @@ void close(){
     SDL_DestroyRenderer(renderer);
     renderer = nullptr;
 
-    SDL_DestroyWindow(window); //se take care screensurface
+    SDL_DestroyWindow(window);
     window = nullptr;
 
     TTF_Quit();
@@ -163,9 +121,16 @@ void close(){
     SDL_Quit();
 }
 
+vector<int> chooseLevel(const char* f, int level, vector<vector<int>>data){
+    int num = level-1;
+    vector<int>a;
+    for (int i=0; i<data[num][0];i++){
+        a.push_back(data[num][i+1]);
+    }
+    return a;
+}
 
-vector<int> chooseLevel(const char* f, int level){
-    vector<vector<int>>data;
+void loadData(const char* f){
     ifstream infile(f);
     string line;
     while(getline(infile,line)){
@@ -177,13 +142,5 @@ vector<int> chooseLevel(const char* f, int level){
         }
         data.push_back(tmp);
     }
-    int maxlevel = data.size();
-    int num;
-    if (level > maxlevel) num = rand() % maxlevel;
-    else num = level-1;
-    vector<int>a;
-    for (int i=0; i<data[num][0];i++){
-        a.push_back(data[num][i+1]);
-    }
-    return a;
 }
+

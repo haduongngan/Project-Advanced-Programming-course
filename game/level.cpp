@@ -90,19 +90,20 @@ void loadLevel1(){
 }
 
 void loadLevel2(){
-    path = "../image/background2.png";
+    path = "../image/background6.png";
     SDL_Event e;
     bool quit = false;
     vector<int>a = chooseLevel(lev,2);
     const int Npile = 2;
-    bool isrend[2][13];
+    bool isrend[6][13];
 
-    for (int i=0; i<2; i++){
+    for (int i=0; i<6; i++){
         for (int j=0; j<13 ; j++){
-            if (j<a[i]) isrend[i][j] = true;
+            if (j<a[i] && i<Npile) isrend[i][j] = true;
             else isrend[i][j] = false;
         }
     }
+
 
 
     //Clear screen
@@ -136,12 +137,12 @@ void loadLevel2(){
 
             class brick p[2][13];
 
-            p[0][0].setPosition(42,199); //
-            p[0][1].setPosition(77, 199); //
-            p[0][2].setPosition(112, 199);  //
-            p[0][3].setPosition(147,199); //
-            p[0][4].setPosition(182,199); //
-            p[0][5].setPosition(217,199); //
+            p[0][0].setPosition(42,76); //
+            p[0][1].setPosition(77, 152); //
+            p[0][2].setPosition(112, 227);  //
+            p[0][3].setPosition(147,305); //
+            p[0][4].setPosition(182,384); //
+            p[0][5].setPosition(217,460); //
             p[0][6].setPosition(252,199); //
             p[0][7].setPosition(287,199);  //
             p[0][8].setPosition(322,199);  //
@@ -151,23 +152,12 @@ void loadLevel2(){
             p[0][12].setPosition(462,199); //
             //p1[15].setPosition(490,199);
 
-            p[1][0].setPosition(42, 334);  //
-            p[1][1].setPosition(77, 334);
-            p[1][2].setPosition(112,334);
-            p[1][3].setPosition(147,334);
-            p[1][4].setPosition(182,334);
-            p[1][5].setPosition(217,334);
-            p[1][6].setPosition(252,334);
-            p[1][7].setPosition(287,334);
-            p[1][8].setPosition(322,334);
-            p[1][9].setPosition(357,334); //
-            p[1][10].setPosition(392,334); //
-            p[1][11].setPosition(427,334); //
-            p[1][12].setPosition(462,334);
+
 
             for (int i=0; i<2; i++){
                 for (int j=0; j<13 ; j++){
                     p[i][j].setPile(i+1);
+                    p[i][j].setCol(j+1);
                 }
             }
             pileNow = 1;
@@ -179,7 +169,7 @@ void loadLevel2(){
             }
             for (int i=0; i<2; i++){
                 for (int j=0; j<13 ; j++){
-                    p[i][j].handleEvent(&e);
+                    p[i][j].handleEvent(&e, isrend);
                 }
             }
 
@@ -195,7 +185,8 @@ void loadLevel2(){
                 }
             }
 
-            if (loadText(pathfont, "Level 2")) {
+
+            if (loadText(pathfont, "Level 2", 28)) {
                 texttexture.render(212, 9);
             }
 

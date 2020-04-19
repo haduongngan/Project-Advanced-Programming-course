@@ -2,11 +2,6 @@
 // Created by Duong Ngan Ha on 13/04/2020.
 //
 
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <SDL_mixer.h>
 #include "LTexture.h"
 using namespace std;
 
@@ -14,12 +9,13 @@ using namespace std;
 #define GAME_BRICK_H
 
 
-
-
-
 class brick {
-private:
+public:
+    //brick-01
     LTexture obj;
+
+    //brick-02
+    LTexture brick02;
 
     //top left position
     SDL_Point mPosition;
@@ -35,19 +31,47 @@ private:
     int pile;
     bool truepile;
 
-public:
+    //Colum
+    int col;
+
+    //ham tao
     brick();
+
+    //ham huy
     ~brick();
+
+    //lay gtri ren
     bool getRen();
-    void setRen(bool c);
-    void setTruepile(int p);
-    void setPile(int p);
+
+    //lay toa do X
     int getX();
+
+    //lay toa do Y
     int getY();
+
+    //lay so hang no dang o
     int getPile();
+
+    //lay so cot no dang o
+    int getCol();
+
+    //xac dinh xem co thuoc hang dang chon khong
+    void setTruepile(int p);
+
+    //xac dinh thuoc hang nao
+    void setPile(int p);
+
+    //xac dinh thuoc cot nao
+    void setCol(int id);
+
+    //render
     void rend();
+
+    //xac dinh toa do brick
     void setPosition(int x, int y);
-    void handleEvent(SDL_Event* e);
+
+    //xu ly khi bam vao
+    void handleEvent(SDL_Event* e, bool isrend[6][13]);
 };
 
 
