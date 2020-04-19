@@ -119,8 +119,8 @@ void loadLevel2(){
         Game game1;
         //game1.play();
         if (loadbrick()&&loadactive()&&loadback(path)&&loadunactive()) {
-            char* pathfont = "../font/Xerox Sans Serif Narrow.ttf";
-            Backgr.render(0,0);
+            char* pathfont = "/../font/Xerox Sans Serif Narrow.ttf";
+            Backgr.render(0,0);  //gomarice_syouwa_retro_pop.ttf
 
             if (game1.getMode()==2){
                 if (game1.AI.Isyourturn) {
@@ -196,7 +196,7 @@ void loadLevel2(){
             }
 
             if (loadText(pathfont, "Level 2")) {
-                texttexture.render(230, 10);
+                texttexture.render(212, 9);
             }
 
             //update screen

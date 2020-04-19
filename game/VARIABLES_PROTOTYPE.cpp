@@ -116,7 +116,7 @@ bool loadText(char* path, char* text){
     }
     else {
         //render text
-        SDL_Color textColor = {0,0,0};
+        SDL_Color textColor = {0xF8,0xF8,0xff};  //0xFF,0xFa,0xf0
         if (!texttexture.loadFromRenderedText(text, textColor)){
             cout << "Failed to render text texture\n";
             success = false;
