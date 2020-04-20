@@ -2,12 +2,14 @@
 // Created by Duong Ngan Ha on 13/04/2020.
 //
 
-#include "LTexture.h"
-using namespace std;
+
 
 #ifndef GAME_BRICK_H
 #define GAME_BRICK_H
 
+#include "LTexture.h"
+#include <vector>
+using namespace std;
 
 class brick {
 public:
@@ -40,21 +42,6 @@ public:
     //ham huy
     ~brick();
 
-    //lay gtri ren
-    bool getRen();
-
-    //lay toa do X
-    int getX();
-
-    //lay toa do Y
-    int getY();
-
-    //lay so hang no dang o
-    int getPile();
-
-    //lay so cot no dang o
-    int getCol();
-
     //xac dinh xem co thuoc hang dang chon khong
     void setTruepile(int p);
 
@@ -71,7 +58,8 @@ public:
     void setPosition(int x, int y);
 
     //xu ly khi bam vao
-    void handleEvent(SDL_Event* e, bool isrend[6][13]);
+    void handleEvent(SDL_Event* e, bool isrend[6][13], vector<int> &matrix);
+
 };
 
 

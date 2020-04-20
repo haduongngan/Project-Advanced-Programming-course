@@ -2,16 +2,17 @@
 // Created by Duong Ngan Ha on 13/04/2020.
 //
 
+
+
+#ifndef GAME_LTEXTURE_H
+#define GAME_LTEXTURE_H
+
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL_mixer.h>
 using namespace std;
-
-#ifndef GAME_LTEXTURE_H
-#define GAME_LTEXTURE_H
-
 
 extern SDL_Renderer* renderer;
 extern TTF_Font* font;

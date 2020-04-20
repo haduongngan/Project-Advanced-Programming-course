@@ -15,6 +15,8 @@ public:
     int id; //nguoi choi so 1 hay so 2
     bool Isyourturn;
     bool Isthewinner;
+    bool play;
+    bool hint;
 
     HumanPlayer();
 

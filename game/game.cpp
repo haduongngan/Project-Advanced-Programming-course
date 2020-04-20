@@ -10,11 +10,10 @@ using namespace std;
 //ham tao
 Game :: Game(){
     NPiles = 0;
-    NStones = {0};
     playMode = 1;
     level = 1;
     firstturn = 1;
-    hint = 1;
+    select = false;
     for (int i=0; i<2; i++){
         for (int j=0; j<13 ; j++){
             Stone[i][j].setPile(i+1);
@@ -39,23 +38,54 @@ Game :: ~Game(){
 void Game :: setStones(){
     NStones = chooseLevel(pathdata,level,data);
     NPiles = NStones.size();
+
 }
 
-//khoi tao nguoi choi dua vao mode
+//khoi tao nguoi choi dua vao mode va first turn
 void Game :: setPlayers(){
     if (playMode == 1) { //human vs human
         human1.id = 1;
         human1.name = "Player 1";
+        human1.play = 1;
         human2.id = 2;
         human2.name = "Player 2";
+        human2.play = 1;
+        if (firstturn == 1) {
+            human1.Isyourturn = true;
+            human2.Isyourturn = false;
+        }
+        else {
+            human1.Isyourturn = false;
+            human2.Isyourturn = true;
+        }
     }
     else if (playMode == 2) { //AIPlayer vs human
+        AI.play = 1;
         human2.id = 2;
         human2.name = "Player 2";
+        human2.play = 1;
+        if (firstturn == 1) {
+            AI.Isyourturn = true;
+            human2.Isyourturn = false;
+        }
+        else {
+            AI.Isyourturn = false;
+            human2.Isyourturn = true;
+        }
     }
     else if (playMode == 3) { //SmartAIPlayer vs human
+        smart.play = 1;
         human2.id = 2;
         human2.name = "Player 2";
+        human2.play = 1;
+        if (firstturn == 1) {
+            smart.Isyourturn = true;
+            human2.Isyourturn = false;
+        }
+        else {
+            smart.Isyourturn = false;
+            human2.Isyourturn = true;
+        }
     }
 }
 
@@ -70,64 +100,74 @@ bool Game :: checkWin(){
             }
         }
     }
-    return 1;
+    return check;
 }
 
 
 //de cho case 5: thong bao nguoi chien thang while(!quit)
 void Game :: winner(){
     //load back case 5
-    if (loadImage("../image/cover-01.png")){
-        Backgr.loadFFile("../image/cover-01.png");
-        Backgr.render(0,0);
-    }
-
+        background[1].render(0,0);
 
     //thong bao chien thang : load text //nen load trc cho render
 
-    if (human1.Isthewinner){
-        if (loadText(pathfont, "Congratulation", 30)) {
-            texttexture.render(190, 230);
-        }
-        if (loadText(pathfont, "The winner is Player 1.", 28)) {
-            texttexture.render(163, 260);
+     if (human1.Isthewinner){
+         if (loadText(pathfont, "Congratulation!!!", 30)) {
+             texttexture.render(160, 200);
+         }
+         if (loadText(pathfont, "The winner is", 28)) {
+             texttexture.render(186, 232);
+         }
+        if (loadText(pathfont, "Player 1", 32)) {
+            texttexture.render(217, 260);
         }
     }
     else if (human2.Isthewinner){
-        if (loadText(pathfont, "Congratulation", 30)) {
-            texttexture.render(190, 230);
-        }
-        if (loadText(pathfont, "The winner is Player 2.", 28)) {
-            texttexture.render(163, 260);
+         if (loadText(pathfont, "Congratulation!!!", 30)) {
+             texttexture.render(160, 200);
+         }
+         if (loadText(pathfont, "The winner is", 28)) {
+             texttexture.render(186, 232);
+         }
+        if (loadText(pathfont, "Player 2", 32)) {
+            texttexture.render(217, 260);
         }
     }
     else if (AI.Isthewinner) {
-        if (loadText(pathfont, "Congratulation", 30)) {
-            texttexture.render(190, 230);
+        if (loadText(pathfont, "Congratulation!!!", 30)) {
+            texttexture.render(160, 200);
         }
-        if (loadText(pathfont, "The winner is AIPlayer.", 28)) {
-            texttexture.render(163, 260);
+        if (loadText(pathfont, "The winner is", 28)) {
+            texttexture.render(186, 232);
+        }
+        if (loadText(pathfont, "AIPlayer", 32)) {
+           texttexture.render(200, 260);
         }
     }
     else if (smart.Isthewinner) {
-        if (loadText(pathfont, "Congratulation", 30)) {
-            texttexture.render(190, 230);
-        }
-        if (loadText(pathfont, "The winner is SmartAIPlayer.", 28)) {
-            texttexture.render(163, 260);
+         if (loadText(pathfont, "Congratulation!!!", 30)) {
+             texttexture.render(160, 200);
+         }
+         if (loadText(pathfont, "The winner is", 28)) {
+             texttexture.render(186, 232);
+         }
+        if (loadText(pathfont, "SmartAIPlayer", 32)) {
+            texttexture.render(167, 260);
         }
     }
 
     //load cac node
     if (loadText(pathfont, "Next level", 28)) {
-        texttexture.render(220, 330);
+        texttexture.render(212, 318);
     }
     if (loadText(pathfont, "Menu", 28)) {
-        texttexture.render(243, 380);
+        texttexture.render(238, 365);
     }
     if (loadText(pathfont, "Quit", 28)) {
-        texttexture.render(245, 430);
+        texttexture.render(241, 420);
     }
+
+
     //update screen
     SDL_RenderPresent(renderer);
 }

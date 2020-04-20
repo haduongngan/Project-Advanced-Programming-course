@@ -5,6 +5,7 @@
 #include "LTexture.h"
 #include "VARIABLES_PROTOTYPE.h"
 
+
 //khoi tao
 LTexture :: LTexture(){
     mTexture = nullptr;
@@ -20,8 +21,10 @@ LTexture :: ~LTexture(){
 //load image -> mTexture
 bool LTexture :: loadFFile(char* path){
     free();
+
     //the final texture
     SDL_Texture* newTexture = nullptr;
+
 
     //Load image
     SDL_Surface* loadedSurface = IMG_Load(path);

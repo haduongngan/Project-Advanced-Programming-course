@@ -13,6 +13,7 @@
         Isyourturn = 0;
         pileChoose = 0;
         stonesChoose = 0;
+        play = 0;
     }
 
     bool SmartAIPlayer :: RemainOnePile(const vector<int>& matrix){

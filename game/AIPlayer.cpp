@@ -15,6 +15,7 @@
         Isyourturn = 0;
         pileChoose = 0;
         stonesChoose = 0;
+        play = 0;
     }
 
     //chay xong se dc ket qua la lay bnhieu da o hang nao

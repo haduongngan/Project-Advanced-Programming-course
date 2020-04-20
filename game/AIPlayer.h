@@ -2,12 +2,13 @@
 // Created by Duong Ngan Ha on 08/04/2020.
 //
 
-#include<iostream>
-#include <string>
-using namespace std;
+
 
 #ifndef GAME_AIPLAYER_H
 #define GAME_AIPLAYER_H
+#include<iostream>
+#include <string>
+using namespace std;
 
 class AIPlayer{
 public:
@@ -15,6 +16,7 @@ public:
     int id; //nguoi choi so 1 hay so 2
     bool Isyourturn;
     bool Isthewinner;
+    bool play;
     int pileChoose;
     int stonesChoose;
 

@@ -27,30 +27,6 @@ brick :: ~brick(){
     brick02.free();
 }
 
-//lay gtri ren
-bool brick :: getRen(){
-    return ren;
-}
-
-//lay toa do X
-int brick :: getX(){
-    return mPosition.x;
-}
-
-//lay toa do Y
-int brick :: getY(){
-    return mPosition.y;
-}
-
-//lay so hang no dang o
-int brick :: getPile(){
-    return pile;
-}
-
-//lay so cot no dang o
-int brick :: getCol(){
-    return col;
-}
 
 //xac dinh xem co thuoc hang dang chon khong
 void brick :: setTruepile(int pileNow) {
@@ -82,7 +58,7 @@ void brick :: setPosition(int x, int y){
 }
 
 //xu ly khi bam vao
-void brick :: handleEvent(SDL_Event* e, bool isrend[6][13]){
+void brick :: handleEvent(SDL_Event* e, bool isrend[6][13], vector<int> &matrix){
     //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEMOTION ){ //|| e->type == SDL_MOUSEBUTTONUP e->type == SDL_MOUSEBUTTONDOWN
         //get mouse position
@@ -96,7 +72,11 @@ void brick :: handleEvent(SDL_Event* e, bool isrend[6][13]){
         else if (y < mPosition.y) inside = false;
         else if (y > mPosition.y + mHeight) inside = false;
 
-        if (inside && truepile && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col] == false) ren = false;
+        if (inside && truepile && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col] == false && isrend[pile-1][col-1] == true) {
+            ren = false;
+            matrix[pile-1]--;
+            isrend[pile-1][col-1] == false;
+        }
         else if (inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1] == true){
             brick02.render(mPosition.x, mPosition.y-3 );
         }

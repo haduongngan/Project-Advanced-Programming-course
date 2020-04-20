@@ -1,6 +1,10 @@
 //
 // Created by Duong Ngan Ha on 12/04/2020.
 //
+
+#ifndef GAME_GAME_H
+#define GAME_GAME_H
+
 #include <iostream>
 #include <vector>
 #include "Player.h"
@@ -10,13 +14,10 @@
 #include "VARIABLES_PROTOTYPE.h"
 #include "brick.h"
 using namespace std;
-#ifndef GAME_GAME_H
-#define GAME_GAME_H
-
 extern vector<vector<int>>data;
 extern const char pathdata[];
 extern char* pathfont;
-extern LTexture Backgr;
+extern LTexture background[7];
 
 class Game{
 public:
@@ -25,7 +26,7 @@ public:
     int playMode;
     int level;
     int firstturn;
-    bool hint;
+    bool select;
     class brick Stone[6][13];
     bool isrend[6][13];
     HumanPlayer human1;
