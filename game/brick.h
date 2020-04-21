@@ -28,6 +28,7 @@ public:
 
     //render?
     bool ren;
+    bool ren02;
 
     //pile
     int pile;
@@ -58,7 +59,7 @@ public:
     void setPosition(int x, int y);
 
     //xu ly khi bam vao
-    void handleEvent(SDL_Event* e, bool isrend[6][13], vector<int> &matrix);
+    void handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int> &matrix);
 
 };
 

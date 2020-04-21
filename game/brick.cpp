@@ -15,6 +15,7 @@ brick :: brick(){
         mPosition.x = 0;
         mPosition.y = 0;
         ren = true;
+        ren02 = false;
         pile = 0;
         col = 0;
         truepile = false;
@@ -58,9 +59,9 @@ void brick :: setPosition(int x, int y){
 }
 
 //xu ly khi bam vao
-void brick :: handleEvent(SDL_Event* e, bool isrend[6][13], vector<int> &matrix){
+void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int> &matrix){
     //if mouse event happened
-    if (e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEMOTION ){ //|| e->type == SDL_MOUSEBUTTONUP e->type == SDL_MOUSEBUTTONDOWN
+    if (e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEMOTION ){
         //get mouse position
         int x, y;
         SDL_GetMouseState(&x, &y);
@@ -75,12 +76,21 @@ void brick :: handleEvent(SDL_Event* e, bool isrend[6][13], vector<int> &matrix)
         if (inside && truepile && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col] == false && isrend[pile-1][col-1] == true) {
             ren = false;
             matrix[pile-1]--;
-            isrend[pile-1][col-1] == false;
-        }
-        else if (inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1] == true){
-            brick02.render(mPosition.x, mPosition.y-3 );
+            isrend[pile-1][col-1] = false;
+            //cout << pile << " " <<col << " " << isrend[pile-1][col-1] << endl;
         }
         else ren = true;
+
+        if ((inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1] == true) // ||
+        //(inside && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col-1] == true && !truepile) ||
+                //(inside && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col-1] == true && isrend[pile-1][col])
+                ){
+            //brick02.render(mPosition.x, mPosition.y-3 );
+            ren02  = true;
+        }
+        else {
+            ren02 = false;
+        }
     }
 
 }

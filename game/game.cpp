@@ -14,13 +14,20 @@ Game :: Game(){
     level = 1;
     firstturn = 1;
     select = false;
-    for (int i=0; i<2; i++){
+    pileNow = -1;
+    for (int i=0; i<6; i++){
         for (int j=0; j<13 ; j++){
             Stone[i][j].setPile(i+1);
             Stone[i][j].setCol(j+1);
         }
     }
-
+    for (int i=0; i<6; i++){
+        vector<bool> tmp;
+        for (int j=0; j<13; j++){
+            tmp.push_back(false);
+        }
+        isrend.push_back(tmp);
+    }
 }
 
 //ham huy
@@ -606,8 +613,7 @@ void Game :: setbrick(){
 void Game :: setIsrend(){
     for (int i=0; i<6; i++){
         for (int j=0; j<13 ; j++){
-            if (j<NStones[i] && i<NPiles) isrend[i][j] = true;
-            else isrend[i][j] = false;
+            isrend[i][j] = i < NPiles && j < NStones[i];
         }
     }
 }

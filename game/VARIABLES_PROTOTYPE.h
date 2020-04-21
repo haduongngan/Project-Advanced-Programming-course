@@ -10,6 +10,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL2_ttf/SDL_ttf.h>
 #include "LTexture.h"
 #include <cmath>
 #include <string>

@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <vector>
-#include "Player.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
 #include "SmartAIPlayer.h"
@@ -27,8 +26,9 @@ public:
     int level;
     int firstturn;
     bool select;
+    int pileNow;
     class brick Stone[6][13];
-    bool isrend[6][13];
+    vector<vector<bool>> isrend;
     HumanPlayer human1;
     HumanPlayer human2;
     AIPlayer AI;

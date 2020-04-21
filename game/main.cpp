@@ -5,13 +5,11 @@
 #include <SDL_mixer.h>
 #include <cmath>
 #include <string>
-#include "Player.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
 #include "SmartAIPlayer.h"
 #include "game.h"
 #include "VARIABLES_PROTOTYPE.h"
-#include "welcome.h"
 #include "LTexture.h"
 using namespace std;
 
