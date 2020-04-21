@@ -65,6 +65,8 @@ void Game :: setPlayers(){
             human1.Isyourturn = false;
             human2.Isyourturn = true;
         }
+        AI.play = 0;
+        smart.play = 0;
     }
     else if (playMode == 2) { //AIPlayer vs human
         AI.play = 1;
@@ -79,6 +81,8 @@ void Game :: setPlayers(){
             AI.Isyourturn = false;
             human2.Isyourturn = true;
         }
+        human1.play = 0;
+        smart.play = 0;
     }
     else if (playMode == 3) { //SmartAIPlayer vs human
         smart.play = 1;
@@ -93,6 +97,8 @@ void Game :: setPlayers(){
             smart.Isyourturn = false;
             human2.Isyourturn = true;
         }
+        AI.play = 0;
+        human1.play = 0;
     }
 }
 
@@ -114,7 +120,8 @@ bool Game :: checkWin(){
 //de cho case 5: thong bao nguoi chien thang while(!quit)
 void Game :: winner(){
     //load back case 5
-        background[1].render(0,0);
+    background[0].render(0,0);
+    background[1].render(0,0);
 
     //thong bao chien thang : load text //nen load trc cho render
 
@@ -129,7 +136,7 @@ void Game :: winner(){
             texttexture.render(217, 260);
         }
     }
-    else if (human2.Isthewinner){
+    else if (human2.Isthewinner && select){
          if (loadText(pathfont, "Congratulation!!!", 30)) {
              texttexture.render(160, 200);
          }
@@ -140,7 +147,7 @@ void Game :: winner(){
             texttexture.render(217, 260);
         }
     }
-    else if (AI.Isthewinner) {
+    else if (human2.Isthewinner && !select && playMode == 2) {
         if (loadText(pathfont, "Congratulation!!!", 30)) {
             texttexture.render(160, 200);
         }
@@ -151,7 +158,7 @@ void Game :: winner(){
            texttexture.render(200, 260);
         }
     }
-    else if (smart.Isthewinner) {
+    else if (human2.Isthewinner && !select && playMode == 3) {
          if (loadText(pathfont, "Congratulation!!!", 30)) {
              texttexture.render(160, 200);
          }

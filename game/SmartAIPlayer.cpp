@@ -75,7 +75,7 @@
         else if (matrix[index1]<matrix[index2]){
             pileChoose = index2;
             stonesChoose = matrix[index2] - matrix[index1];
-            matrix[index1]=matrix[index2];
+            matrix[index2] = matrix[index1];
         }
         else{
             int Npiles = matrix.size();

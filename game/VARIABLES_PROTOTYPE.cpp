@@ -635,21 +635,13 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                 if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
 
                     //set truepile
-                    for (int i=0; i<2; i++){
+                    for (int i=0; i<6; i++){
                         for (int j=0; j<13 ; j++){
                             yourGame.Stone[i][j].setTruepile(yourGame.pileNow);
                         }
                     }
 
-                    //neu chon brick
-                    for (int i=0; i<6; i++){
-                        for (int j=0; j<13 ; j++){
-                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
-                        }
-                    }
 
-                    //update screen
-                    SDL_RenderPresent(renderer);
 
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
@@ -682,9 +674,16 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     }
 
                     //set truepile
-                    for (int i=0; i<2; i++){
+                    for (int i=0; i<6; i++){
                         for (int j=0; j<13 ; j++){
                             yourGame.Stone[i][j].setTruepile(yourGame.pileNow);
+                        }
+                    }
+
+                    //neu chon brick
+                    for (int i=0; i<6; i++){
+                        for (int j=0; j<13 ; j++){
+                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
                         }
                     }
 
@@ -754,6 +753,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     for (int i=0; i<6; i++) {
                         for (int j = 0; j < 13; j++) {
                             if (i<yourGame.NPiles && j < yourGame.NStones[i]) yourGame.isrend[i][j] = true;
+                            else yourGame.isrend[i][j] = false;
                         }
                     }
 
@@ -772,12 +772,13 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                 if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
 
-                    //neu chon brick
+                    //set truepile
                     for (int i=0; i<6; i++){
                         for (int j=0; j<13 ; j++){
-                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
+                            yourGame.Stone[i][j].setTruepile(yourGame.pileNow);
                         }
                     }
+
 
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
@@ -809,9 +810,16 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     }
 
                     //set truepile
-                    for (int i=0; i<2; i++){
+                    for (int i=0; i<6; i++){
                         for (int j=0; j<13 ; j++){
                             yourGame.Stone[i][j].setTruepile(yourGame.pileNow);
+                        }
+                    }
+
+                    //neu chon brick
+                    for (int i=0; i<6; i++){
+                        for (int j=0; j<13 ; j++){
+                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
                         }
                     }
 
@@ -881,6 +889,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     for (int i=0; i<6; i++) {
                         for (int j = 0; j < 13; j++) {
                             if (i<yourGame.NPiles && j < yourGame.NStones[i]) yourGame.isrend[i][j] = true;
+                            else yourGame.isrend[i][j] = false;
                         }
                     }
 
@@ -899,12 +908,14 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                 if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
 
-                    //neu chon brick
+                    //set truepile
                     for (int i=0; i<6; i++){
                         for (int j=0; j<13 ; j++){
-                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
+                            yourGame.Stone[i][j].setTruepile(yourGame.pileNow);
                         }
                     }
+
+
 
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
@@ -935,11 +946,17 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         }
                     }
 
-
                     //set truepile
-                    for (int i=0; i<2; i++){
+                    for (int i=0; i<6; i++){
                         for (int j=0; j<13 ; j++){
                             yourGame.Stone[i][j].setTruepile(yourGame.pileNow);
+                        }
+                    }
+
+                    //neu chon brick
+                    for (int i=0; i<6; i++){
+                        for (int j=0; j<13 ; j++){
+                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
                         }
                     }
 

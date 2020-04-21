@@ -77,15 +77,10 @@ void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int
             ren = false;
             matrix[pile-1]--;
             isrend[pile-1][col-1] = false;
-            //cout << pile << " " <<col << " " << isrend[pile-1][col-1] << endl;
         }
         else ren = true;
 
-        if ((inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1] == true) // ||
-        //(inside && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col-1] == true && !truepile) ||
-                //(inside && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col-1] == true && isrend[pile-1][col])
-                ){
-            //brick02.render(mPosition.x, mPosition.y-3 );
+        if (inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1] == true){
             ren02  = true;
         }
         else {
