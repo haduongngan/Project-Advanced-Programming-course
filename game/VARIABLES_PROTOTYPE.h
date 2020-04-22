@@ -57,6 +57,8 @@ bool loadMusic();
 
 bool loadText(char* pathFont, char* text, int size);
 
+bool loadTextNew(char* pathFont, char* text, int size);
+
 void close();
 
 vector<int> chooseLevel(const char* f, int level, vector<vector<int>>data);

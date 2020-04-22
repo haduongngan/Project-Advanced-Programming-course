@@ -171,14 +171,62 @@ void Game :: winner(){
     }
 
     //load cac node
-    if (loadText(pathfont, "Next level", 28)) {
-        texttexture.render(212, 318);
+
+    //get mouse position
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+
+    //check if mourse is ib button
+    bool inNext = true;
+    bool inquit = true;
+    bool inMenu = true;
+    if (x < 241) inquit = false;
+    else if (x > 241 + 52) inquit = false;
+    else if (y < 438) inquit = false;
+    else if (y > 438 + 23) inquit = false;
+
+    if (x < 212) inNext = false;
+    else if (x > 212 + 127) inNext = false;
+    else if (y < 332) inNext = false;
+    else if (y > 332 + 26) inNext = false;
+
+    if (x < 238) inMenu = false;
+    else if (x > 238 + 70) inMenu = false;
+    else if (y < 378) inMenu = false;
+    else if (y > 378 + 26) inMenu = false;
+
+
+    if (inNext){
+        if (loadTextNew(pathfont, "Next level", 28)) {
+            texttexture.render(212, 318);
+        }
     }
-    if (loadText(pathfont, "Menu", 28)) {
-        texttexture.render(238, 365);
+    else {
+        if (loadText(pathfont, "Next level", 28)) {
+            texttexture.render(212, 318);
+        }
     }
-    if (loadText(pathfont, "Quit", 28)) {
-        texttexture.render(241, 420);
+
+    if (inMenu){
+        if (loadTextNew(pathfont, "Menu", 28)) {
+            texttexture.render(238, 365);
+        }
+    }
+    else {
+        if (loadText(pathfont, "Menu", 28)) {
+            texttexture.render(238, 365);
+        }
+    }
+
+    if (inquit){
+        if (loadTextNew(pathfont, "Quit", 28)) {
+            texttexture.render(241, 420);
+        }
+    }
+    else {
+        if (loadText(pathfont, "Quit", 28)) {
+            texttexture.render(241, 420);
+        }
     }
 
 

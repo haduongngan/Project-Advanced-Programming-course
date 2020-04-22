@@ -131,6 +131,26 @@ bool loadText(char* pathFont, char* text, int size){
     return success;
 }
 
+bool loadTextNew(char* pathFont, char* text, int size){
+    bool success = true;
+    TTF_CloseFont(font);
+    font = nullptr;
+    //open the font
+    font = TTF_OpenFont(pathFont, size);
+    if (font == nullptr){
+        cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
+    }
+    else {
+        //render text
+        SDL_Color textColor = {0xa5,0x2a,0x2a};  //0xFF,0xFa,0xf0
+        if (!texttexture.loadFromRenderedText(text, textColor)){
+            cout << "Failed to render text texture\n";
+            success = false;
+        }
+    }
+    return success;
+}
+
 //Frees media and shuts down SDl
 void close(){
     brick.free();
@@ -209,6 +229,29 @@ void welcome(class Game &yourGame){
 
     background[0].render(0,0);
 
+    //get mouse position
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+
+    //check if mourse is ib button
+    bool inhelp = true;
+    bool instart = true;
+    bool inquit = true;
+    if (x < 199) inquit = false;
+    else if (x > 199 + 100) inquit = false;
+    else if (y < 440) inquit = false;
+    else if (y > 440 + 40) inquit = false;
+
+    if (x < 199) inhelp = false;
+    else if (x > 199 + 111) inhelp = false;
+    else if (y < 360) inhelp = false;
+    else if (y > 360 + 60) inhelp = false;
+
+    if (x < 199) instart = false;
+    else if (x > 199 + 120) instart = false;
+    else if (y < 300) instart = false;
+    else if (y > 300 + 40) instart = false;
+
     if (loadText(pathfont, "Welcome to", 60)) {
         texttexture.render(90, 60);
     }
@@ -216,14 +259,35 @@ void welcome(class Game &yourGame){
         texttexture.render(150, 130);
     }
 
-    if (loadText(pathfont, "Start", 52)) {
-        texttexture.render(193, 270);
+    if (instart){
+        if (loadTextNew(pathfont, "Start", 52)) {
+            texttexture.render(193, 270);
+        }
     }
-    if (loadText(pathfont, "Help", 52)) {
-        texttexture.render(199, 340);
+    else {
+        if (loadText(pathfont, "Start", 52)) {
+            texttexture.render(193, 270);
+        }
     }
-    if (loadText(pathfont, "Quit", 52)) {
-        texttexture.render(199, 410);
+    if (inhelp){
+        if (loadTextNew(pathfont, "Help", 52)) {
+            texttexture.render(199, 340);
+        }
+    }
+    else {
+        if (loadText(pathfont, "Help", 52)) {
+            texttexture.render(199, 340);
+        }
+    }
+    if (inquit){
+        if (loadTextNew(pathfont, "Quit", 52)) {
+            texttexture.render(199, 410);
+        }
+    }
+    else {
+        if (loadText(pathfont, "Quit", 52)) {
+            texttexture.render(199, 410);
+        }
     }
 
     SDL_RenderPresent(renderer);
@@ -461,8 +525,10 @@ void handleEventCase1(SDL_Event* e, bool &quit, int &WinCase){
         else if (y > 300 + 40) instart = false;
 
         if (inquit) {
-            quit = true;
-            Mix_PlayChannel(-1, selectNode, 0);
+
+                quit = true;
+                Mix_PlayChannel(-1, selectNode, 0);
+
         }
         else if (inhelp) {
             WinCase = 2;
