@@ -10,14 +10,3 @@ In my game, players can play in different modes:
 Players can also choose who will go first:
   1. The first player
   2. The second player
-  3. Randomly
-  
-In folder "game":
-- Player.h & Player.cpp : define class Player and its member functions - base class 
-- AIPlayer.h & AIPlayer.cpp : define a type of player - AIPlayer (computer which removes objects randomly) - derived class
-- SmartAIPlayer.h & SmartAIPlayer.cpp : define a type of player - SmartAIPlayer (computer which plays to win) - derived class
-- HumanPlayer.h & HumanPlayer.cpp : define a type of player - human - derived class
-- game.h & game.cpp : define class Game and its member functions
-- Stones.txt : Data for different levels of game : number of piles and number of objects 
-- withoutSDL.cpp : game runs on the console without using SDL - I have finished it.
-- main.cpp : using SDL but it is in the process of completing.
