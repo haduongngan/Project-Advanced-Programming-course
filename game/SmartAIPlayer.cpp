@@ -132,6 +132,7 @@
                 }
                 stonesChoose = matrix[index] - x[index];
                 pileChoose = index;
+                matrix[pileChoose] -= stonesChoose;
             }
             else {
                 int Npiles = matrix.size();

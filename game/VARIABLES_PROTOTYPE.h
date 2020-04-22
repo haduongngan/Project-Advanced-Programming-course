@@ -43,12 +43,17 @@ extern LTexture minusnode;
 extern LTexture plusnode;
 extern LTexture text_input;
 
+extern Mix_Music *gMusic;
+extern Mix_Chunk *selectBrick;
+extern Mix_Chunk *selectNode;
+extern Mix_Chunk *win;
+extern Mix_Chunk *switchTurn;
 
 bool init();
 
 SDL_Texture* loadTexture(char* pathImage);
 
-bool loadImage(char* pathImage);
+bool loadMusic();
 
 bool loadText(char* pathFont, char* text, int size);
 

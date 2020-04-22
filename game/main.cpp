@@ -31,6 +31,14 @@ TTF_Font* font = nullptr;
 //rendered texture
 LTexture texttexture;  //chuyen load text
 
+//music
+Mix_Music *gMusic = nullptr;
+Mix_Chunk *selectBrick = nullptr;
+Mix_Chunk *selectNode = nullptr;
+Mix_Chunk *win = nullptr;
+Mix_Chunk *switchTurn = nullptr;
+
+
 //path
 const char pathdata[] = "../Stones.txt";
 char* pathfont = "../font/Sriracha-Regular.ttf";
@@ -117,11 +125,21 @@ int main(int argc, char** argv) {
         }
         loadData(pathdata);
 
+        if (!loadMusic()){
+            cout << "Unable to load music!" << endl;
+        }
+
         SDL_Event e;
         bool quit = false;
         int WinCase = 1;
 
         while (!quit){
+            //if there is no music
+            if (Mix_PlayingMusic()==0){
+                //play
+                Mix_PlayMusic(gMusic, -1);
+            }
+
             while (SDL_PollEvent(&e)){
                 if (e.type == SDL_QUIT){
                     quit = true;

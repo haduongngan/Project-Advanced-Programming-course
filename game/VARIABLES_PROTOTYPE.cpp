@@ -6,7 +6,7 @@
 //init
 bool init(){
     bool success = true;
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 ){
+    if ( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
         cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
         success = false;
     }
@@ -42,6 +42,12 @@ bool init(){
                     success = false;
                 }
 
+                //initialize SDL_mixer
+                if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0){
+                    cout << "SDL_mixer could not initialize!  SDL_mixer Error: " << Mix_GetError() << endl;
+                    success = false;
+                }
+
             }
         }
     }
@@ -68,14 +74,41 @@ SDL_Texture* loadTexture(char* pathImage){
     return newTexture;
 }
 
-bool loadImage(char* pathImage){
-    bool success = true;
-    Texture = loadTexture(pathImage);
-    if (Texture == nullptr){
-        cout << "Failed to load texture image!" << endl;
-        success = false;
+bool loadMusic(){
+    bool succcess = true;
+
+    //load music
+    gMusic = Mix_LoadMUS("../music/08-Frappe-Snowland_-Sherbet-Land-_1_-_mp3cut.net_.ogg");
+    if (gMusic == nullptr){
+        cout << "Failed to load Frappe music! SDL_mixer Error: " << Mix_GetError() << endl;
+        succcess = false;
     }
-    return success;
+
+    //load sound effect;
+    selectBrick = Mix_LoadWAV("../music/zapsplat_multimedia_game_tone_pick_up_collect_item_sci_fi_004_46204.ogg");
+    if (selectBrick == nullptr){
+        cout << "Failed to load selectBrick sound! SDL_mixer Error: " << Mix_GetError() << endl;
+        succcess = false;
+    }
+
+    selectNode = Mix_LoadWAV("../music/zapsplat_multimedia_game_tone_musical_bright_ping_musical_short_positive_002_44884.ogg");
+    if (selectNode == nullptr){
+        cout << "Failed to load selectNode sound! SDL_mixer Error: " << Mix_GetError() << endl;
+        succcess = false;
+    }
+
+    win = Mix_LoadWAV("../music/zapsplat_multimedia_game_tone_fanfare_synthesized_brass_44793.ogg");
+    if (win == nullptr){
+        cout << "Failed to load win sound! SDL_mixer Error: " << Mix_GetError() << endl;
+        succcess = false;
+    }
+
+    switchTurn = Mix_LoadWAV("../music/zapsplat_multimedia_game_tone_bright_positive_002_44875.ogg");
+    if (switchTurn == nullptr){
+        cout << "Failed to load switchTurn sound! SDL_mixer Error: " << Mix_GetError() << endl;
+        succcess = false;
+    }
+    return succcess;
 }
 
 bool loadText(char* pathFont, char* text, int size){
@@ -116,6 +149,18 @@ void close(){
 
     texttexture.free();
 
+    Mix_FreeChunk(selectBrick);
+    Mix_FreeChunk(selectNode);
+    Mix_FreeChunk(win);
+    Mix_FreeChunk(switchTurn);
+    selectNode = nullptr;
+    selectBrick = nullptr;
+    win = nullptr;
+    switchTurn = nullptr;
+
+    Mix_FreeMusic(gMusic);
+    gMusic = nullptr;
+
     TTF_CloseFont(font);
     font = nullptr;
 
@@ -128,6 +173,7 @@ void close(){
     SDL_DestroyWindow(window);
     window = nullptr;
 
+    Mix_Quit();
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
@@ -414,9 +460,18 @@ void handleEventCase1(SDL_Event* e, bool &quit, int &WinCase){
         else if (y < 300) instart = false;
         else if (y > 300 + 40) instart = false;
 
-        if (inquit) quit = true;
-        else if (inhelp) WinCase = 2;
-        else if (instart) WinCase = 3;
+        if (inquit) {
+            quit = true;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (inhelp) {
+            WinCase = 2;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (instart) {
+            WinCase = 3;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
     }
 }
 
@@ -434,7 +489,10 @@ void handleEventCase2(SDL_Event* e, int &WinCase){
         else if (y < 600) inNext = false;
         else if (y > 600 + 26) inNext = false;
 
-        if (inNext) WinCase = 1;
+        if (inNext) {
+            WinCase = 1;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
     }
 }
 
@@ -473,7 +531,7 @@ void handleEventCase3(SDL_Event* e, int &WinCase, class Game &yourGame){
         else if (y < 270) levelPlus = false;
         else if (y > 270 + 33) levelPlus = false;
 
-        //level
+        //first turn
         bool turnMinus = true;
         bool turnPlus = true;
         if (x < 280) turnMinus = false;
@@ -493,19 +551,66 @@ void handleEventCase3(SDL_Event* e, int &WinCase, class Game &yourGame){
         else if (y < 450) inNext = false;
         else if (y > 450 + 29) inNext = false;
 
-        if (modeMinus && (yourGame.playMode > 1)) yourGame.playMode--;
-        else if (modePlus && (yourGame.playMode < 3)) yourGame.playMode++;
-        else if (levelMinus && (yourGame.level > 1)) yourGame.level--;
-        else if (levelPlus && (yourGame.level < 15)) yourGame.level++;
-        else if (turnMinus && yourGame.firstturn > 1) yourGame.firstturn++;
-        else if (turnPlus && (yourGame.firstturn < 2)) yourGame.firstturn++;
+        if (modeMinus && (yourGame.playMode > 1)) {
+            yourGame.playMode--;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (modePlus && (yourGame.playMode < 3)) {
+            yourGame.playMode++;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (levelMinus && (yourGame.level > 1)) {
+            yourGame.level--;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (levelPlus && (yourGame.level < 15)) {
+            yourGame.level++;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (turnMinus && yourGame.firstturn > 1) {
+            yourGame.firstturn--;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (turnPlus && (yourGame.firstturn < 2)) {
+            yourGame.firstturn++;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
         else if (inNext){
+            //set up lai che do mac dinh nhung thong so khac
+            yourGame.NPiles = 0;
+            yourGame.NStones.clear();
+            yourGame.select = false;
+            yourGame.pileNow = -1;
+
+            yourGame.human1.Isthewinner = 0;
+            yourGame.human1.Isyourturn = 0;
+            yourGame.human1.play = 0;
+            yourGame.human1.hint = 1;
+
+            yourGame.human2.Isthewinner = 0;
+            yourGame.human2.Isyourturn = 0;
+            yourGame.human2.play = 0;
+            yourGame.human2.hint = 1;
+
+            yourGame.AI.Isthewinner = 0;
+            yourGame.AI.Isyourturn = 0;
+            yourGame.AI.pileChoose = 0;
+            yourGame.AI.stonesChoose = 0;
+            yourGame.AI.play = 0;
+
+            yourGame.smart.Isthewinner = 0;
+            yourGame.smart.Isyourturn = 0;
+            yourGame.smart.pileChoose = 0;
+            yourGame.smart.stonesChoose = 0;
+            yourGame.smart.play = 0;
+
             yourGame.setbrick();
             yourGame.setPlayers();
             yourGame.setStones();
             yourGame.setIsrend();
 
             WinCase = 4;
+            Mix_PlayChannel(-1, selectNode, 0);
         }
     }
 }
@@ -558,6 +663,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                                         yourGame.select = true;
                                         yourGame.NStones[i]--;
                                         yourGame.pileNow = i + 1;
+                                        Mix_PlayChannel(-1, selectBrick, 0);
                                         break;
                                     }
                                 }
@@ -595,6 +701,8 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.human2.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     //neu chon menu
@@ -607,6 +715,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
+                        Mix_PlayChannel(-1, selectNode, 0);
                     }
 
                     //neu chon next
@@ -622,12 +731,15 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.human2.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     if (yourGame.checkWin()) {
                         yourGame.human1.Isthewinner = true;
                         yourGame.human2.Isthewinner = false;
                         WinCase = 5;
+                        Mix_PlayChannel(-1, win, 1);
                     }
 
                 }
@@ -666,6 +778,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                                         yourGame.select = true;
                                         yourGame.NStones[i]--;
                                         yourGame.pileNow = i + 1;
+                                        Mix_PlayChannel(-1, selectBrick, 0);
                                         break;
                                     }
                                 }
@@ -701,6 +814,8 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.human1.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     //neu chon menu
@@ -713,6 +828,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
+                        Mix_PlayChannel(-1, selectNode, 0);
                     }
 
                     //neu chon next
@@ -728,12 +844,15 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.human1.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     if (yourGame.checkWin()) {
                         yourGame.human2.Isthewinner = true;
                         yourGame.human1.Isthewinner = false;
                         WinCase = 5;
+                        Mix_PlayChannel(-1, win, 0);
                     }
 
                 }
@@ -756,17 +875,20 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                             else yourGame.isrend[i][j] = false;
                         }
                     }
+                    Mix_PlayChannel(-1, selectBrick, 0);
 
                     //doi turn sau khi di xong
                     yourGame.AI.Isyourturn = false;
                     yourGame.human2.Isyourturn = true;
                     yourGame.select = false;
                     yourGame.pileNow = -1;
+                    Mix_PlayChannel(-1, switchTurn, 0);
 
                     if (yourGame.checkWin()) {
                         yourGame.AI.Isthewinner = true;
                         yourGame.human2.Isthewinner = false;
                         WinCase = 5;
+                        Mix_PlayChannel(-1, win, 0);
                     }
                 }
 
@@ -802,6 +924,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                                         yourGame.select = true;
                                         yourGame.NStones[i]--;
                                         yourGame.pileNow = i + 1;
+                                        Mix_PlayChannel(-1, selectBrick, 0);
                                         break;
                                     }
                                 }
@@ -837,6 +960,8 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.AI.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     //neu chon menu
@@ -849,6 +974,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
+                        Mix_PlayChannel(-1, selectNode, 0);
                     }
 
                     //neu chon next
@@ -864,12 +990,15 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.AI.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     if (yourGame.checkWin()) {
                         yourGame.human2.Isthewinner = true;
                         yourGame.AI.Isthewinner = false;
                         WinCase = 5;
+                        Mix_PlayChannel(-1, win, 0);
                     }
 
                 }
@@ -888,21 +1017,23 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     yourGame.smart.move(yourGame.NStones);
                     for (int i=0; i<6; i++) {
                         for (int j = 0; j < 13; j++) {
-                            if (i<yourGame.NPiles && j < yourGame.NStones[i]) yourGame.isrend[i][j] = true;
-                            else yourGame.isrend[i][j] = false;
+                            yourGame.isrend[i][j] = i < yourGame.NPiles && j < yourGame.NStones[i];
                         }
                     }
 
+                    Mix_PlayChannel(-1, selectBrick, 0);
                     //doi turn sau khi di xong
                     yourGame.smart.Isyourturn = false;
                     yourGame.human2.Isyourturn = true;
                     yourGame.select = false;
                     yourGame.pileNow = -1;
+                    Mix_PlayChannel(-1, switchTurn, 0);
 
                     if (yourGame.checkWin()) {
                         yourGame.smart.Isthewinner = true;
                         yourGame.human2.Isthewinner = false;
                         WinCase = 5;
+                        Mix_PlayChannel(-1, win, 0);
                     }
                 }
 
@@ -939,6 +1070,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                                         yourGame.select = true;
                                         yourGame.NStones[i]--;
                                         yourGame.pileNow = i + 1;
+                                        Mix_PlayChannel(-1, selectBrick, 0);
                                         break;
                                     }
                                 }
@@ -974,6 +1106,8 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.smart.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     //neu chon menu
@@ -986,6 +1120,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
+                        Mix_PlayChannel(-1, selectNode, 0);
                     }
 
                     //neu chon next
@@ -1001,12 +1136,15 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.smart.Isyourturn = true;
                         yourGame.select = false;
                         yourGame.pileNow = -1;
+                        Mix_PlayChannel(-1, selectNode, 0);
+                        Mix_PlayChannel(-1, switchTurn, 0);
                     }
 
                     if (yourGame.checkWin()) {
                         yourGame.human2.Isthewinner = true;
                         yourGame.smart.Isthewinner = false;
                         WinCase = 5;
+                        Mix_PlayChannel(-1, win, 0);
                     }
                 }
 
@@ -1042,11 +1180,17 @@ void handleEventCase5(SDL_Event* e, int &WinCase, class Game &yourGame, bool &qu
         else if (y < 378) inMenu = false;
         else if (y > 378 + 26) inMenu = false;
 
-        if (inquit) quit = true;
-        else if (inMenu) WinCase = 1;
+        if (inquit) {
+            quit = true;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
+        else if (inMenu) {
+            WinCase = 1;
+            Mix_PlayChannel(-1, selectNode, 0);
+        }
         else if (inNext) {
             WinCase = 4;
-
+            Mix_PlayChannel(-1, selectNode, 0);
             //setup lai
 
             yourGame.NPiles = 0;

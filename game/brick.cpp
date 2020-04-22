@@ -77,6 +77,7 @@ void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int
             ren = false;
             matrix[pile-1]--;
             isrend[pile-1][col-1] = false;
+            Mix_PlayChannel(-1, selectBrick, 0);
         }
         else ren = true;
 
