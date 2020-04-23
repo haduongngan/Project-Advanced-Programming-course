@@ -294,7 +294,7 @@ void welcome(class Game &yourGame){
 
 }
 
-void help(class Game &yourGame){
+void help(struct Game &yourGame){
     //Clear screen
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -308,15 +308,15 @@ void help(class Game &yourGame){
     if (loadText(pathfont, "Two players take turns removing bricks", 27)) {
         texttexture.render(30, 80);
     }
-    if (loadText(pathfont, "from distinct rows.", 27)) {
-        texttexture.render(140, 105);
+    if (loadText(pathfont, "from one of the rows that appear.", 27)) {
+        texttexture.render(70, 105);
     }
 
-    if (loadText(pathfont, "Select bricks in a single row and you must", 27)) {
-        texttexture.render(20, 139);
+    if (loadText(pathfont, "You must select at least one brick ", 27)) {
+        texttexture.render(75, 139);
     }
-    if (loadText(pathfont, "remove at least one brick in your turn.", 27)) {
-        texttexture.render(50, 164);
+    if (loadText(pathfont, "in your turn.", 27)) {
+        texttexture.render(190, 164);
     }
 
     if (loadText(pathfont, "Click the NEXT button to", 27)) {
@@ -326,45 +326,48 @@ void help(class Game &yourGame){
         texttexture.render(190, 223);
     }
 
-    if (loadText(pathfont, "In game, you can use ", 27)) {
-        texttexture.render(100, 257);
+    if (loadText(pathfont, "During the game, you can use", 27)) {
+        texttexture.render(50, 257);
     }
-    hint.render(360,257);
-    if (loadText(pathfont, "once to skip your turn.", 27)) {
-        texttexture.render(100, 282);
+    hint.render(400,257);
+    if (loadText(pathfont, "(once time) to skip your turn.", 27)) {
+        texttexture.render(65, 282);
     }
 
-    if (loadText(pathfont, "The last player to remove a", 27)) {
+    if (loadText(pathfont, "The player removing the last", 27)) {
         texttexture.render(100, 316);
     }
-    if (loadText(pathfont, "brick wins.", 27)) {
-        texttexture.render(200, 341);
+    if (loadText(pathfont, "brick will win the game.", 27)) {
+        texttexture.render(125, 341);
     }
 
-    if (loadText(pathfont, "You can choose play mode:", 27)) {
-        texttexture.render(120, 375);
+    if (loadText(pathfont, "You can choose 1 of 3 play modes:", 27)) {
+        texttexture.render(73, 375);
     }
-    if (loadText(pathfont, "1 is human VS human", 27)) {
-        texttexture.render(142, 400);
+    if (loadText(pathfont, "1. Player VS Player", 27)) {
+        texttexture.render(150, 400);
     }
-    if (loadText(pathfont, "2 is human VS AIPlayer", 27)) {
-        texttexture.render(130, 425);
+    if (loadText(pathfont, "2. Player VS AI", 27)) {
+        texttexture.render(150, 425);
     }
-    if (loadText(pathfont, "3 is human VS SmartAIPlayer", 27)) {
-        texttexture.render(90, 450);
+    if (loadText(pathfont, "3. Player VS SmartAI", 27)) {
+        texttexture.render(150, 450);
     }
 
-    if (loadText(pathfont, "You can choose who has the first turn.", 27)) {
-        texttexture.render(55, 484);
+    if (loadText(pathfont, "You are able choose who will take the first turn.", 27)) {
+        texttexture.render(20, 484);
     }
-    if (loadText(pathfont, "If your game's mode is 2 or 3, you are", 27)) {
+    if (loadText(pathfont, "If you are in mode 2 or 3, you will be", 27)) {
         texttexture.render(55, 509);
     }
     if (loadText(pathfont, "the player 2.", 27)) {
         texttexture.render(200, 534);
     }
+    if (loadTextNew(pathfont, "ENJOY NIM GAME!", 28)) {
+        texttexture.render(150, 570);
+    }
 
-    nextnode.render(217, 600);
+    nextnode.render(217, 625);
 
     SDL_RenderPresent(renderer);
 
@@ -526,8 +529,8 @@ void handleEventCase1(SDL_Event* e, bool &quit, int &WinCase){
 
         if (inquit) {
 
-                quit = true;
-                Mix_PlayChannel(-1, selectNode, 0);
+            quit = true;
+            Mix_PlayChannel(-1, selectNode, 0);
 
         }
         else if (inhelp) {
@@ -552,8 +555,8 @@ void handleEventCase2(SDL_Event* e, int &WinCase){
         bool inNext = true;
         if (x < 214) inNext = false;
         else if (x > 214 + 103) inNext = false;
-        else if (y < 600) inNext = false;
-        else if (y > 600 + 26) inNext = false;
+        else if (y < 625) inNext = false;
+        else if (y > 625 + 26) inNext = false;
 
         if (inNext) {
             WinCase = 1;
@@ -725,7 +728,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                                     if (inside && e->type == SDL_MOUSEBUTTONUP) {
                                         yourGame.Stone[i][j].ren = false;
                                         yourGame.isrend[i][j] = false;
-                                       // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
+                                        // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
                                         yourGame.select = true;
                                         yourGame.NStones[i]--;
                                         yourGame.pileNow = i + 1;

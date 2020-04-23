@@ -3,14 +3,11 @@
 //
 #include "HumanPlayer.h"
 
-    HumanPlayer :: HumanPlayer(){
-        Isthewinner = 0;
-        Isyourturn = 0;
-        play = 0;
-        hint = 1;
-    }
+HumanPlayer :: HumanPlayer(){
+    Isthewinner = 0;
+    Isyourturn = 0;
+    play = 0;
+    hint = 1;
+}
 
-    HumanPlayer :: ~HumanPlayer() = default;
-
-
-
+HumanPlayer :: ~HumanPlayer() = default;

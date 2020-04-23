@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
             cout << "Failed to load background5" << endl;
         }
         if (!background[6].loadFFile("../image/background6.png")){
-           cout << "Failed to load background6" << endl;
+            cout << "Failed to load background6" << endl;
         }
 
         if (!brick.loadFFile("../image/brick-01.png")){

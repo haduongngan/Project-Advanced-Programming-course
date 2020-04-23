@@ -48,7 +48,7 @@ void brick :: setCol(int id){
 //render
 void brick :: rend(){
     //if (ren){
-        obj.render(mPosition.x, mPosition.y);
+    obj.render(mPosition.x, mPosition.y);
     //}
 }
 
