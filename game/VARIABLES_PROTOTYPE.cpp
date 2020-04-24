@@ -339,8 +339,8 @@ void help(struct Game &yourGame){
         texttexture.render(150, 450);
     }
 
-    if (loadText(pathfont, "You are able choose who will take the first turn.", 27)) {
-        texttexture.render(20, 484);
+    if (loadText(pathfont, "You are able choose who goes first.", 27)) {
+        texttexture.render(61, 484);
     }
     if (loadText(pathfont, "If you are in mode 2 or 3, you will be", 27)) {
         texttexture.render(55, 509);
