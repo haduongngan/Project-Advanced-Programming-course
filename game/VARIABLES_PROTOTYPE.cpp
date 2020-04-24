@@ -315,7 +315,7 @@ void help(struct Game &yourGame){
         texttexture.render(50, 257);
     }
     hint.render(400,257);
-    if (loadText(pathfont, "(once time) to skip your turn.", 27)) {
+    if (loadText(pathfont, "(one time) to skip your turn.", 27)) {
         texttexture.render(65, 282);
     }
 
