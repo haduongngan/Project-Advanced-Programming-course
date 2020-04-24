@@ -54,26 +54,6 @@ bool init(){
     return success;
 }
 
-SDL_Texture* loadTexture(char* pathImage){
-    //the final texture
-    SDL_Texture* newTexture = nullptr;
-
-    //Load image
-    SDL_Surface* loadedSurface = IMG_Load(pathImage);
-    if (loadedSurface == nullptr){
-        cout << "Failed to load image " << pathImage << ". SDL_image Error: " << IMG_GetError();
-    }
-    else {
-        //create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-        if (newTexture == nullptr){
-            cout << "Unable to create texture from surface! SDL Error: " << SDL_GetError() << endl;
-        }
-        SDL_FreeSurface(loadedSurface);
-    }
-    return newTexture;
-}
-
 bool loadMusic(){
     bool succcess = true;
 
@@ -199,7 +179,7 @@ void close(){
     SDL_Quit();
 }
 
-vector<int> chooseLevel(const char* f, int level, vector<vector<int>>data){
+vector<int> chooseLevel(int level, vector<vector<int>>data){
     int num = level-1;
     vector<int>a;
     for (int i=0; i<data[num][0];i++){
@@ -471,7 +451,7 @@ void level(class Game &yourGame){
         active.render(132, 520);
         unactive.render(366,520);
     }
-    else {
+    else  {
         unactive.render(132, 520);
         active.render(366,520);
     }
@@ -501,7 +481,7 @@ void level(class Game &yourGame){
 
 }
 
-void handleEventCase1(SDL_Event* e, bool &quit, int &WinCase){
+void handleEventCase1(SDL_Event* e, int &WinCase, bool &quit){
     //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP){
         //get mouse position
@@ -813,7 +793,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                 }
 
-                if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
+                else if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
 
                     //set truepile
                     for (int i=0; i<6; i++){
@@ -961,7 +941,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     }
                 }
 
-                if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
+                else if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
 
                     //set truepile
                     for (int i=0; i<6; i++){
@@ -1106,7 +1086,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     }
                 }
 
-                if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
+                else if (yourGame.human2.Isyourturn) { //turn cua nguoi 2
 
                     //set truepile
                     for (int i=0; i<6; i++){
@@ -1260,35 +1240,15 @@ void handleEventCase5(SDL_Event* e, int &WinCase, class Game &yourGame, bool &qu
         else if (inNext) {
             WinCase = 4;
             Mix_PlayChannel(-1, selectNode, 0);
-            //setup lai
 
+            if (yourGame.human1.Isthewinner || yourGame.AI.Isthewinner || yourGame.smart.Isthewinner) yourGame.firstturn = 1;
+            else yourGame.firstturn = 2;
+            //setup lai
             yourGame.NPiles = 0;
             yourGame.NStones.clear();
             yourGame.level++;
             yourGame.select = false;
             yourGame.pileNow = -1;
-
-            yourGame.human1.Isthewinner = 0;
-            yourGame.human1.Isyourturn = 0;
-            yourGame.human1.play = 0;
-            yourGame.human1.hint = 1;
-
-            yourGame.human2.Isthewinner = 0;
-            yourGame.human2.Isyourturn = 0;
-            yourGame.human2.play = 0;
-            yourGame.human2.hint = 1;
-
-            yourGame.AI.Isthewinner = 0;
-            yourGame.AI.Isyourturn = 0;
-            yourGame.AI.pileChoose = 0;
-            yourGame.AI.stonesChoose = 0;
-            yourGame.AI.play = 0;
-
-            yourGame.smart.Isthewinner = 0;
-            yourGame.smart.Isyourturn = 0;
-            yourGame.smart.pileChoose = 0;
-            yourGame.smart.stonesChoose = 0;
-            yourGame.smart.play = 0;
 
             yourGame.setStones();
             yourGame.setIsrend();

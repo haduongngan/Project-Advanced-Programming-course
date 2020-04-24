@@ -18,8 +18,7 @@ extern const char pathdata[];
 extern char* pathfont;
 extern LTexture background[7];
 
-class Game{
-public:
+struct Game{
     int NPiles;
     vector<int>NStones;
     int playMode;
@@ -27,7 +26,7 @@ public:
     int firstturn;
     bool select;
     int pileNow;
-    class brick Stone[6][13];
+    struct brick Stone[6][13];
     vector<vector<bool>> isrend;
     HumanPlayer human1;
     HumanPlayer human2;

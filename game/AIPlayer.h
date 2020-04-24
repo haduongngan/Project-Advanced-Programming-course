@@ -10,8 +10,7 @@
 #include <string>
 using namespace std;
 
-class AIPlayer{
-public:
+struct AIPlayer{
     string name;
     int id; //nguoi choi so 1 hay so 2
     bool Isyourturn;

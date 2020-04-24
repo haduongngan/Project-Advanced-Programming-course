@@ -13,8 +13,7 @@ using namespace std;
 extern Mix_Chunk *selectBrick;
 
 
-class brick {
-public:
+struct brick {
     //brick-01
     LTexture obj;
 

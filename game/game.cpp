@@ -43,7 +43,7 @@ Game :: ~Game(){
 
 //tao mang luu so stones moi pile
 void Game :: setStones(){
-    NStones = chooseLevel(pathdata,level,data);
+    NStones = chooseLevel(level,data);
     NPiles = NStones.size();
 
 }
@@ -65,7 +65,21 @@ void Game :: setPlayers(){
             human1.Isyourturn = false;
             human2.Isyourturn = true;
         }
+        human1.Isthewinner = 0;
+        human2.Isthewinner = 0;
+        human1.hint = 1;
+        human2.hint = 1;
+
+        AI.Isthewinner = 0;
+        AI.Isyourturn = 0;
+        AI.pileChoose = 0;
+        AI.stonesChoose = 0;
         AI.play = 0;
+
+        smart.Isthewinner = 0;
+        smart.Isyourturn = 0;
+        smart.pileChoose = 0;
+        smart.stonesChoose = 0;
         smart.play = 0;
     }
     else if (playMode == 2) { //AIPlayer vs human
@@ -81,8 +95,22 @@ void Game :: setPlayers(){
             AI.Isyourturn = false;
             human2.Isyourturn = true;
         }
-        human1.play = 0;
+        AI.Isthewinner = 0;
+        AI.pileChoose = 0;
+        AI.stonesChoose = 0;
+        human2.Isthewinner = 0;
+        human2.hint = 1;
+
+        smart.Isthewinner = 0;
+        smart.Isyourturn = 0;
+        smart.pileChoose = 0;
+        smart.stonesChoose = 0;
         smart.play = 0;
+
+        human1.Isthewinner = 0;
+        human1.Isyourturn = 0;
+        human1.play = 0;
+        human1.hint = 1;
     }
     else if (playMode == 3) { //SmartAIPlayer vs human
         smart.play = 1;
@@ -97,8 +125,22 @@ void Game :: setPlayers(){
             smart.Isyourturn = false;
             human2.Isyourturn = true;
         }
+        smart.Isthewinner = 0;
+        smart.pileChoose = 0;
+        smart.stonesChoose = 0;
+        human2.Isthewinner = 0;
+        human2.hint = 1;
+
+        AI.Isthewinner = 0;
+        AI.Isyourturn = 0;
+        AI.pileChoose = 0;
+        AI.stonesChoose = 0;
         AI.play = 0;
+
+        human1.Isthewinner = 0;
+        human1.Isyourturn = 0;
         human1.play = 0;
+        human1.hint = 1;
     }
 }
 
@@ -147,7 +189,7 @@ void Game :: winner(){
             texttexture.render(217, 260);
         }
     }
-    else if (human2.Isthewinner && !select && playMode == 2) {
+    else if (AI.Isthewinner) {
         if (loadText(pathfont, "Congratulation!!!", 30)) {
             texttexture.render(160, 200);
         }
@@ -158,7 +200,7 @@ void Game :: winner(){
             texttexture.render(200, 260);
         }
     }
-    else if (human2.Isthewinner && !select && playMode == 3) {
+    else if (smart.Isthewinner) {
         if (loadText(pathfont, "Congratulation!!!", 30)) {
             texttexture.render(160, 200);
         }

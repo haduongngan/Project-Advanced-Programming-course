@@ -17,15 +17,13 @@ using namespace std;
 extern SDL_Renderer* renderer;
 extern TTF_Font* font;
 
-class LTexture {
-private:
+struct LTexture {
     SDL_Texture* mTexture;
 
     //image dimensions
     double mWidth;
     double mHeight;
 
-public:
     //ham tao
     LTexture();
 

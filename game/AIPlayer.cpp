@@ -7,7 +7,6 @@
 #include <cstdlib>
 
 
-
 AIPlayer :: AIPlayer(){
     name = "AIPlayer";
     id = 1;

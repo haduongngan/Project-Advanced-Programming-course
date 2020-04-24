@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
         cout << "Failed to initialize!\n";
     }
     else {
-        class Game yourGame;
+        struct Game yourGame;
         //load cac anh cho san
         if (!background[0].loadFFile("../image/144511.png")){
             cout << "Failed to load background case 1" << endl;
@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
                 }
                 switch (WinCase){
                     case 1: {
-                        handleEventCase1(&e, quit, WinCase);
+                        handleEventCase1(&e, WinCase, quit);
                         break;
                     }
 

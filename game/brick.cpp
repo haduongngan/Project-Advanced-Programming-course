@@ -31,8 +31,7 @@ brick :: ~brick(){
 
 //xac dinh xem co thuoc hang dang chon khong
 void brick :: setTruepile(int pileNow) {
-    if (pile == pileNow) truepile = true;
-    else truepile = false;
+    truepile = (pile == pileNow);
 }
 
 //xac dinh thuoc hang nao
@@ -73,7 +72,7 @@ void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int
         else if (y < mPosition.y) inside = false;
         else if (y > mPosition.y + mHeight) inside = false;
 
-        if (inside && truepile && e->type == SDL_MOUSEBUTTONUP && isrend[pile-1][col] == false && isrend[pile-1][col-1] == true) {
+        if (inside && truepile && e->type == SDL_MOUSEBUTTONUP && !isrend[pile - 1][col] && isrend[pile - 1][col - 1]) {
             ren = false;
             matrix[pile-1]--;
             isrend[pile-1][col-1] = false;

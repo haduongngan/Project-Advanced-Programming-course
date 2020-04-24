@@ -51,8 +51,6 @@ extern Mix_Chunk *switchTurn;
 
 bool init();
 
-SDL_Texture* loadTexture(char* pathImage);
-
 bool loadMusic();
 
 bool loadText(char* pathFont, char* text, int size);
@@ -61,26 +59,26 @@ bool loadTextNew(char* pathFont, char* text, int size);
 
 void close();
 
-vector<int> chooseLevel(const char* f, int level, vector<vector<int>>data);
+vector<int> chooseLevel(int level, vector<vector<int>>data);
 
 void loadData(const char* f);
 
-void welcome(class Game &yourGame);
+void welcome(struct Game &yourGame);
 
-void help(class Game &yourGame);
+void help(struct Game &yourGame);
 
-void setup(class Game &yourGame);
+void setup(struct Game &yourGame);
 
-void level(class Game &yourGame);
+void level(struct Game &yourGame);
 
-void handleEventCase1(SDL_Event* e, bool &quit, int &WinCase);
+void handleEventCase1(SDL_Event* e, int &WinCase, bool &quit);
 
 void handleEventCase2(SDL_Event* e, int &WinCase);
 
-void handleEventCase3(SDL_Event* e, int &WinCase, class Game &yourGame);
+void handleEventCase3(SDL_Event* e, int &WinCase, struct Game &yourGame);
 
-void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame);
+void handleEventCase4(SDL_Event* e, int &WinCase, struct Game &yourGame);
 
-void handleEventCase5(SDL_Event* e, int &WinCase, class Game &yourGame, bool &quit);
+void handleEventCase5(SDL_Event* e, int &WinCase, struct Game &yourGame, bool &quit);
 
 #endif //GAME_VARIABLES_PROTOTYPE_H

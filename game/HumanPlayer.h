@@ -9,8 +9,7 @@ using namespace std;
 #ifndef GAME_HUMANPLAYER_H
 #define GAME_HUMANPLAYER_H
 
-class HumanPlayer{
-public:
+struct HumanPlayer{
     string name;
     int id; //nguoi choi so 1 hay so 2
     bool Isyourturn;

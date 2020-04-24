@@ -8,8 +8,7 @@ using namespace std;
 #ifndef GAME_SMARTAIPLAYER_H
 #define GAME_SMARTAIPLAYER_H
 
-class SmartAIPlayer{
-public:
+struct SmartAIPlayer{
     string name;
     int id; //nguoi choi so 1 hay so 2
     bool Isyourturn;
