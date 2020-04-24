@@ -12,7 +12,6 @@
 using namespace std;
 extern Mix_Chunk *selectBrick;
 
-
 struct brick {
     //brick-01
     LTexture obj;
@@ -28,8 +27,8 @@ struct brick {
     double mHeight;
 
     //render?
-    bool ren;
-    bool ren02;
+    bool ren; //kich co binh thuong
+    bool ren02; //kich co to
 
     //pile
     int pile;

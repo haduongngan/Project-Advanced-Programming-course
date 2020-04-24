@@ -42,9 +42,6 @@ struct LTexture {
     //renders texture at given point
     void render(int x, int y);
 
-    //get image dimensions
-    double getWidth();
-    double getHeight();
 
 };
 

@@ -25,7 +25,6 @@ bool LTexture :: loadFFile(char* path){
     //the final texture
     SDL_Texture* newTexture = nullptr;
 
-
     //Load image
     SDL_Surface* loadedSurface = IMG_Load(path);
     if (loadedSurface == nullptr){
@@ -92,12 +91,4 @@ void LTexture :: render(int x, int y){
     //set rendering space and render to screen
     SDL_Rect renderQuad = {x, y, static_cast<int>(mWidth), static_cast<int>(mHeight)};
     SDL_RenderCopy(renderer, mTexture, nullptr, &renderQuad);
-}
-
-//get image dimensions
-double LTexture :: getWidth(){
-    return mWidth;
-}
-double LTexture :: getHeight(){
-    return mHeight;
 }

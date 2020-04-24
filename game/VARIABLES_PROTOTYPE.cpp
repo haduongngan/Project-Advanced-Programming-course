@@ -54,6 +54,7 @@ bool init(){
     return success;
 }
 
+//load Music
 bool loadMusic(){
     bool succcess = true;
 
@@ -91,6 +92,7 @@ bool loadMusic(){
     return succcess;
 }
 
+//load Text mau trang
 bool loadText(char* pathFont, char* text, int size){
     bool success = true;
     TTF_CloseFont(font);
@@ -111,6 +113,7 @@ bool loadText(char* pathFont, char* text, int size){
     return success;
 }
 
+//load text mau do
 bool loadTextNew(char* pathFont, char* text, int size){
     bool success = true;
     TTF_CloseFont(font);
@@ -133,8 +136,6 @@ bool loadTextNew(char* pathFont, char* text, int size){
 
 //Frees media and shuts down SDl
 void close(){
-    brick.free();
-    brick_02.free();
     active.free();
     unactive.free();
     hint.free();
@@ -179,6 +180,7 @@ void close(){
     SDL_Quit();
 }
 
+//tao mang luu so stones dua vao level
 vector<int> chooseLevel(int level, vector<vector<int>>data){
     int num = level-1;
     vector<int>a;
@@ -188,6 +190,7 @@ vector<int> chooseLevel(int level, vector<vector<int>>data){
     return a;
 }
 
+//doc du lieu tu Stones.txt
 void loadData(const char* f){
     ifstream infile(f);
     string line;
@@ -202,7 +205,8 @@ void loadData(const char* f){
     }
 }
 
-void welcome(class Game &yourGame){
+//Case 1 : Welcome to Nim game
+void welcome(struct Game &yourGame){
     //Clear screen
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -274,6 +278,7 @@ void welcome(class Game &yourGame){
 
 }
 
+//Case 2 : Instructions
 void help(struct Game &yourGame){
     //Clear screen
     SDL_RenderClear(renderer);
@@ -353,7 +358,8 @@ void help(struct Game &yourGame){
 
 }
 
-void setup(class Game &yourGame){
+//Case 3 : Set up your game
+void setup(struct Game &yourGame){
     //Clear screen
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -406,7 +412,8 @@ void setup(class Game &yourGame){
 
 }
 
-void level(class Game &yourGame){
+//Case 4 : load back, brick, cac node,... theo level -> man hinh choi game
+void level(struct Game &yourGame){
     //Clear screen
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -481,6 +488,7 @@ void level(class Game &yourGame){
 
 }
 
+//Case 1 : Welcome to Nim game -> xu ky khi chon cac node
 void handleEventCase1(SDL_Event* e, int &WinCase, bool &quit){
     //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP){
@@ -524,6 +532,7 @@ void handleEventCase1(SDL_Event* e, int &WinCase, bool &quit){
     }
 }
 
+//Case 2 : Instructions -> xu ky khi chon cac node
 void handleEventCase2(SDL_Event* e, int &WinCase){
 //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP){
@@ -545,7 +554,8 @@ void handleEventCase2(SDL_Event* e, int &WinCase){
     }
 }
 
-void handleEventCase3(SDL_Event* e, int &WinCase, class Game &yourGame){
+//Case 3 : Set up your game -> xu ky khi chon cac node
+void handleEventCase3(SDL_Event* e, int &WinCase, struct Game &yourGame){
     //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP){
         //get mouse position
@@ -631,27 +641,6 @@ void handleEventCase3(SDL_Event* e, int &WinCase, class Game &yourGame){
             yourGame.select = false;
             yourGame.pileNow = -1;
 
-            yourGame.human1.Isthewinner = 0;
-            yourGame.human1.Isyourturn = 0;
-            yourGame.human1.play = 0;
-            yourGame.human1.hint = 1;
-
-            yourGame.human2.Isthewinner = 0;
-            yourGame.human2.Isyourturn = 0;
-            yourGame.human2.play = 0;
-            yourGame.human2.hint = 1;
-
-            yourGame.AI.Isthewinner = 0;
-            yourGame.AI.Isyourturn = 0;
-            yourGame.AI.pileChoose = 0;
-            yourGame.AI.stonesChoose = 0;
-            yourGame.AI.play = 0;
-
-            yourGame.smart.Isthewinner = 0;
-            yourGame.smart.Isyourturn = 0;
-            yourGame.smart.pileChoose = 0;
-            yourGame.smart.stonesChoose = 0;
-            yourGame.smart.play = 0;
 
             yourGame.setbrick();
             yourGame.setPlayers();
@@ -664,7 +653,8 @@ void handleEventCase3(SDL_Event* e, int &WinCase, class Game &yourGame){
     }
 }
 
-void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
+//Case 4 : man hinh choi game -> xu ky khi chon cac node, thao tac khi choi game
+void handleEventCase4(SDL_Event* e, int &WinCase, struct Game &yourGame) {
     //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEMOTION) {
         //get mouse position
@@ -688,38 +678,31 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         }
                     }
 
-
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < yourGame.NPiles; i++) {
                             if (yourGame.select) break;
-                            for (int j = 0; j < 13; j++) {
-                                //nhung vien co the chon
-                                if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles) &&
-                                    (yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col - 1]) &&
-                                    !yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col]) {
-                                    bool inside = true;
-                                    if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
-                                    else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth)
-                                        inside = false;
-                                    else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
-                                    else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight)
-                                        inside = false;
-                                    if (inside && e->type == SDL_MOUSEBUTTONUP) {
-                                        yourGame.Stone[i][j].ren = false;
-                                        yourGame.isrend[i][j] = false;
-                                        // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
-                                        yourGame.select = true;
-                                        yourGame.NStones[i]--;
-                                        yourGame.pileNow = i + 1;
-                                        Mix_PlayChannel(-1, selectBrick, 0);
-                                        break;
-                                    }
-                                }
+
+                            int j = yourGame.NStones[i]-1; //xet vien cuoi cung moi hang
+
+                            bool inside = true;
+                            if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
+                            else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth) inside = false;
+                            else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
+                            else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight) inside = false;
+
+                            if (inside && e->type == SDL_MOUSEBUTTONUP) {
+                                yourGame.Stone[i][j].ren = false;
+                                yourGame.isrend[i][j] = false;
+                                // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
+                                yourGame.select = true;
+                                yourGame.NStones[i]--;
+                                yourGame.pileNow = i + 1;
+                                Mix_PlayChannel(-1, selectBrick, 0);
+                                break;
                             }
                         }
                     }
-
 
                     //set truepile
                     for (int i=0; i<6; i++){
@@ -744,7 +727,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inHint = false;
                     else if (y > 597 + 60) inHint = false;
 
-                    if (yourGame.select == false && inHint == true && yourGame.human1.hint == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (!yourGame.select && inHint && yourGame.human1.hint && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human1.hint = false;
                         yourGame.human1.Isyourturn = false;
                         yourGame.human2.Isyourturn = true;
@@ -762,7 +745,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inmenu = false;
                     else if (y > 597 + 60) inmenu = false;
 
-                    if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (inmenu && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
                         Mix_PlayChannel(-1, selectNode, 0);
                     }
@@ -775,7 +758,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 627) inNext = false;
                     else if (y > 627 + 26) inNext = false;
 
-                    if (yourGame.select == true && inNext == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (yourGame.select && inNext && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human1.Isyourturn = false;
                         yourGame.human2.Isyourturn = true;
                         yourGame.select = false;
@@ -788,7 +771,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                         yourGame.human1.Isthewinner = true;
                         yourGame.human2.Isthewinner = false;
                         WinCase = 5;
-                        Mix_PlayChannel(-1, win, 1);
+                        Mix_PlayChannel(-1, win, 0);
                     }
 
                 }
@@ -806,31 +789,26 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < yourGame.NPiles; i++) {
                             if (yourGame.select) break;
-                            for (int j = 0; j < 13; j++) {
-                                //nhung vien co the chon
-                                if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles) &&
-                                    (yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col - 1]) &&
-                                    (yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col] ==
-                                     false)) {
-                                    bool inside = true;
-                                    if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
-                                    else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth)
-                                        inside = false;
-                                    else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
-                                    else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight)
-                                        inside = false;
-                                    if (inside && e->type == SDL_MOUSEBUTTONUP) {
-                                        yourGame.Stone[i][j].ren = false;
-                                        yourGame.isrend[i][j] = false;
-                                        yourGame.select = true;
-                                        yourGame.NStones[i]--;
-                                        yourGame.pileNow = i + 1;
-                                        Mix_PlayChannel(-1, selectBrick, 0);
-                                        break;
-                                    }
-                                }
+
+                            int j = yourGame.NStones[i]-1; //xet vien cuoi cung moi hang
+
+                            bool inside = true;
+                            if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
+                            else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth) inside = false;
+                            else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
+                            else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight) inside = false;
+
+                            if (inside && e->type == SDL_MOUSEBUTTONUP) {
+                                yourGame.Stone[i][j].ren = false;
+                                yourGame.isrend[i][j] = false;
+                                // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
+                                yourGame.select = true;
+                                yourGame.NStones[i]--;
+                                yourGame.pileNow = i + 1;
+                                Mix_PlayChannel(-1, selectBrick, 0);
+                                break;
                             }
                         }
                     }
@@ -857,7 +835,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inHint = false;
                     else if (y > 597 + 60) inHint = false;
 
-                    if (yourGame.select == false && inHint == true && yourGame.human2.hint == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (!yourGame.select && inHint && yourGame.human2.hint && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human2.hint = false;
                         yourGame.human2.Isyourturn = false;
                         yourGame.human1.Isyourturn = true;
@@ -875,7 +853,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inmenu = false;
                     else if (y > 597 + 60) inmenu = false;
 
-                    if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (inmenu && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
                         Mix_PlayChannel(-1, selectNode, 0);
                     }
@@ -888,7 +866,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 627) inNext = false;
                     else if (y > 627 + 26) inNext = false;
 
-                    if (yourGame.select == true && inNext == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (yourGame.select && inNext && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human2.Isyourturn = false;
                         yourGame.human1.Isyourturn = true;
                         yourGame.select = false;
@@ -920,8 +898,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     yourGame.AI.move(yourGame.NStones);
                     for (int i=0; i<6; i++) {
                         for (int j = 0; j < 13; j++) {
-                            if (i<yourGame.NPiles && j < yourGame.NStones[i]) yourGame.isrend[i][j] = true;
-                            else yourGame.isrend[i][j] = false;
+                            yourGame.isrend[i][j] = (i < yourGame.NPiles && j < yourGame.NStones[i]);
                         }
                     }
                     Mix_PlayChannel(-1, selectBrick, 0);
@@ -953,30 +930,26 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < yourGame.NPiles; i++) {
                             if (yourGame.select) break;
-                            for (int j = 0; j < 13; j++) {
-                                //nhung vien co the chon
-                                if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles) &&
-                                    (yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col - 1]) &&
-                                    !yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col]) {
-                                    bool inside = true;
-                                    if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
-                                    else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth)
-                                        inside = false;
-                                    else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
-                                    else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight)
-                                        inside = false;
-                                    if (inside && e->type == SDL_MOUSEBUTTONUP) {
-                                        yourGame.Stone[i][j].ren = false;
-                                        yourGame.isrend[i][j] = false;
-                                        yourGame.select = true;
-                                        yourGame.NStones[i]--;
-                                        yourGame.pileNow = i + 1;
-                                        Mix_PlayChannel(-1, selectBrick, 0);
-                                        break;
-                                    }
-                                }
+
+                            int j = yourGame.NStones[i]-1; //xet vien cuoi cung moi hang
+
+                            bool inside = true;
+                            if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
+                            else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth) inside = false;
+                            else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
+                            else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight) inside = false;
+
+                            if (inside && e->type == SDL_MOUSEBUTTONUP) {
+                                yourGame.Stone[i][j].ren = false;
+                                yourGame.isrend[i][j] = false;
+                                // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
+                                yourGame.select = true;
+                                yourGame.NStones[i]--;
+                                yourGame.pileNow = i + 1;
+                                Mix_PlayChannel(-1, selectBrick, 0);
+                                break;
                             }
                         }
                     }
@@ -1003,7 +976,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inHint = false;
                     else if (y > 597 + 60) inHint = false;
 
-                    if (yourGame.select == false && inHint == true && yourGame.human2.hint == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (!yourGame.select && inHint && yourGame.human2.hint && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human2.hint = false;
                         yourGame.human2.Isyourturn = false;
                         yourGame.AI.Isyourturn = true;
@@ -1021,7 +994,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inmenu = false;
                     else if (y > 597 + 60) inmenu = false;
 
-                    if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (inmenu && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
                         Mix_PlayChannel(-1, selectNode, 0);
                     }
@@ -1034,7 +1007,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 627) inNext = false;
                     else if (y > 627 + 26) inNext = false;
 
-                    if (yourGame.select == true && inNext == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (yourGame.select && inNext && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human2.Isyourturn = false;
                         yourGame.AI.Isyourturn = true;
                         yourGame.select = false;
@@ -1099,30 +1072,26 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
 
                     if (!yourGame.select) {
                         //xet vien brick duoc chon dau tien
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < yourGame.NPiles; i++) {
                             if (yourGame.select) break;
-                            for (int j = 0; j < 13; j++) {
-                                //nhung vien co the chon
-                                if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles) &&
-                                    (yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col - 1]) &&
-                                    !yourGame.isrend[yourGame.Stone[i][j].pile - 1][yourGame.Stone[i][j].col]) {
-                                    bool inside = true;
-                                    if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
-                                    else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth)
-                                        inside = false;
-                                    else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
-                                    else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight)
-                                        inside = false;
-                                    if (inside && e->type == SDL_MOUSEBUTTONUP) {
-                                        yourGame.Stone[i][j].ren = false;
-                                        yourGame.isrend[i][j] = false;
-                                        yourGame.select = true;
-                                        yourGame.NStones[i]--;
-                                        yourGame.pileNow = i + 1;
-                                        Mix_PlayChannel(-1, selectBrick, 0);
-                                        break;
-                                    }
-                                }
+
+                            int j = yourGame.NStones[i]-1; //xet vien cuoi cung moi hang
+
+                            bool inside = true;
+                            if (x < yourGame.Stone[i][j].mPosition.x) inside = false;
+                            else if (x > yourGame.Stone[i][j].mPosition.x + yourGame.Stone[i][j].mWidth) inside = false;
+                            else if (y < yourGame.Stone[i][j].mPosition.y) inside = false;
+                            else if (y > yourGame.Stone[i][j].mPosition.y + yourGame.Stone[i][j].mHeight) inside = false;
+
+                            if (inside && e->type == SDL_MOUSEBUTTONUP) {
+                                yourGame.Stone[i][j].ren = false;
+                                yourGame.isrend[i][j] = false;
+                                // cout << i+1 << " " << j+1 << " " << yourGame.isrend[i][j] << endl;
+                                yourGame.select = true;
+                                yourGame.NStones[i]--;
+                                yourGame.pileNow = i + 1;
+                                Mix_PlayChannel(-1, selectBrick, 0);
+                                break;
                             }
                         }
                     }
@@ -1135,9 +1104,9 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     }
 
                     //neu chon brick
-                    for (int i=0; i<6; i++){
-                        for (int j=0; j<13 ; j++){
-                            if ((j < yourGame.NStones[i]) && (i < yourGame.NPiles)) yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
+                    for (int i=0; i < yourGame.NPiles; i++){
+                        for (int j=0; j < yourGame.NStones[i] ; j++){
+                            yourGame.Stone[i][j].handleEvent(e, yourGame.isrend, yourGame.NStones);
                         }
                     }
 
@@ -1149,7 +1118,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inHint = false;
                     else if (y > 597 + 60) inHint = false;
 
-                    if (yourGame.select == false && inHint == true && yourGame.human2.hint == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (!yourGame.select && inHint && yourGame.human2.hint && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human2.hint = false;
                         yourGame.human2.Isyourturn = false;
                         yourGame.smart.Isyourturn = true;
@@ -1167,7 +1136,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 597) inmenu = false;
                     else if (y > 597 + 60) inmenu = false;
 
-                    if (inmenu == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (inmenu && e->type == SDL_MOUSEBUTTONUP){
                         WinCase = 1;
                         Mix_PlayChannel(-1, selectNode, 0);
                     }
@@ -1180,7 +1149,7 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
                     else if (y < 627) inNext = false;
                     else if (y > 627 + 26) inNext = false;
 
-                    if (yourGame.select == true && inNext == true && e->type == SDL_MOUSEBUTTONUP){
+                    if (yourGame.select && inNext && e->type == SDL_MOUSEBUTTONUP){
                         yourGame.human2.Isyourturn = false;
                         yourGame.smart.Isyourturn = true;
                         yourGame.select = false;
@@ -1203,7 +1172,8 @@ void handleEventCase4(SDL_Event* e, int &WinCase, class Game &yourGame) {
     }
 }
 
-void handleEventCase5(SDL_Event* e, int &WinCase, class Game &yourGame, bool &quit){
+//Case 5 : sau khi thong bao chien thang -> xu ky khi chon cac node: next level, quit, ...
+void handleEventCase5(SDL_Event* e, int &WinCase, struct Game &yourGame, bool &quit){
 //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP){
         //get mouse position

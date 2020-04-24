@@ -11,6 +11,7 @@
 #include "game.h"
 #include "VARIABLES_PROTOTYPE.h"
 #include "LTexture.h"
+
 using namespace std;
 
 const double SCREEN_WIDTH = 532.992;
@@ -45,8 +46,6 @@ char* pathfont = "../font/Sriracha-Regular.ttf";
 
 
 LTexture background[7]; //0: nen tron, 1 la nen winner, 2-6: nen theo so pile
-LTexture brick;
-LTexture brick_02;
 LTexture active;
 LTexture unactive;
 LTexture hint;
@@ -56,8 +55,7 @@ LTexture minusnode;
 LTexture plusnode;
 LTexture text_input;
 
-vector<vector<int>>data;
-
+vector<vector<int>>data; //du lieu doc tu Stones.txt
 
 
 int main(int argc, char** argv) {
@@ -66,6 +64,7 @@ int main(int argc, char** argv) {
     }
     else {
         struct Game yourGame;
+
         //load cac anh cho san
         if (!background[0].loadFFile("../image/144511.png")){
             cout << "Failed to load background case 1" << endl;
@@ -87,13 +86,6 @@ int main(int argc, char** argv) {
         }
         if (!background[6].loadFFile("../image/background6.png")){
             cout << "Failed to load background6" << endl;
-        }
-
-        if (!brick.loadFFile("../image/brick-01.png")){
-            cout << "Failed to load brick" << endl;
-        }
-        if (!brick_02.loadFFile("../image/brick02.png")){
-            cout << "Failed to load brick02" << endl;
         }
 
         if (!active.loadFFile("../image/active_character-01.png")){
@@ -123,15 +115,23 @@ int main(int argc, char** argv) {
         if (!nextnode.loadFFile("../image/function button.png")){
             cout << "Failed to load function button" << endl;
         }
+
+        //doc du lieu tu Stones.txt
         loadData(pathdata);
 
+        //load music
         if (!loadMusic()){
             cout << "Unable to load music!" << endl;
         }
 
+        //bat dau su kien
         SDL_Event e;
         bool quit = false;
-        int WinCase = 1;
+        int WinCase = 1; /*WinCase : 1 -> Welcome to Nim Game
+                                     2 -> Instructions
+                                     3 -> Set up game
+                                     4 -> Play game
+                                     5 -> Thong bao chien thang */
 
         while (!quit){
             //if there is no music
@@ -140,10 +140,13 @@ int main(int argc, char** argv) {
                 Mix_PlayMusic(gMusic, -1);
             }
 
+            //neu co su kien trong hang doi
             while (SDL_PollEvent(&e)){
+                //neu tat cua so
                 if (e.type == SDL_QUIT){
                     quit = true;
                 }
+                //xu ly su kien tuy thuoc vao cua so nao dang hien thi
                 switch (WinCase){
                     case 1: {
                         handleEventCase1(&e, WinCase, quit);
@@ -172,6 +175,7 @@ int main(int argc, char** argv) {
                 }
             }
 
+            //neu khong co su kien -> load tuy thuoc vao cua so nao dang hien thi
             switch (WinCase){
                 case 1: {
                     welcome(yourGame);
@@ -199,9 +203,7 @@ int main(int argc, char** argv) {
                 }
             }
         }
-
         close();
     }
-
     return 0;
 }

@@ -42,7 +42,7 @@ struct Game{
     //tao mang luu so stones moi pile
     void setStones();
 
-    //khoi tao nguoi choi dua vao mode
+    //khoi tao nguoi choi dua vao mode, firstturn
     void setPlayers();
 
     //kiem tra co nguoi chien thang
@@ -51,7 +51,7 @@ struct Game{
     //de cho case 5: thong bao nguoi chien thang
     void winner();
 
-    //tao mang brick dua theo level
+    //set toa do cua brick dua theo level
     void setbrick();
 
     //tao mang isrend dua theo level

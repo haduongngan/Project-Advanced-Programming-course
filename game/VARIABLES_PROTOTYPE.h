@@ -32,8 +32,6 @@ extern TTF_Font* font;
 extern LTexture texttexture;
 
 extern LTexture background[7]; //0: nen tron, 1 la nen winner, 2-6: nen theo so pile
-extern LTexture brick;
-extern LTexture brick_02;
 extern LTexture active;
 extern LTexture unactive;
 extern LTexture hint;

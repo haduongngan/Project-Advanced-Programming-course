@@ -10,8 +10,8 @@ brick :: brick(){
         cout << "Failed to load brick" << endl;
     }
     else {
-        mWidth = obj.getWidth();
-        mHeight = obj.getHeight();
+        mWidth = obj.mWidth;
+        mHeight = obj.mHeight;
         mPosition.x = 0;
         mPosition.y = 0;
         ren = true;
@@ -57,7 +57,7 @@ void brick :: setPosition(int x, int y){
     mPosition.y = y;
 }
 
-//xu ly khi bam vao
+//xu ly khi bam vao hoac di chuyen vao
 void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int> &matrix){
     //if mouse event happened
     if (e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEMOTION ){
@@ -65,7 +65,7 @@ void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int
         int x, y;
         SDL_GetMouseState(&x, &y);
 
-        //check if mourse is ib button
+        //check if mourse is in button
         bool inside = true;
         if (x < mPosition.x) inside = false;
         else if (x > mPosition.x + mWidth) inside = false;
@@ -80,7 +80,7 @@ void brick :: handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int
         }
         else ren = true;
 
-        if (inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1] == true){
+        if (inside && e->type == SDL_MOUSEMOTION && isrend[pile-1][col-1]){
             ren02  = true;
         }
         else {

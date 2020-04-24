@@ -67,25 +67,23 @@ void SmartAIPlayer :: moveTwoPiles(vector<int>& matrix){
             break;
         }
     }
-    if (matrix[index1]>matrix[index2]){
+    if (matrix[index1] > matrix[index2]){
         pileChoose = index1;
         stonesChoose = matrix[index1] - matrix[index2];
-        matrix[index1]=matrix[index2];
     }
-    else if (matrix[index1]<matrix[index2]){
+    else if (matrix[index1] < matrix[index2]){
         pileChoose = index2;
         stonesChoose = matrix[index2] - matrix[index1];
-        matrix[index2] = matrix[index1];
     }
     else{
         int Npiles = matrix.size();
-        while (stonesChoose==0){
+        while (stonesChoose == 0){
             srand(time(0));
             pileChoose = rand() % Npiles;
             if (matrix[pileChoose]) stonesChoose = rand() % (matrix[pileChoose]) + 1;
         }
-        matrix[pileChoose] -= stonesChoose;
     }
+    matrix[pileChoose] -= stonesChoose;
 }
 
 int SmartAIPlayer :: NimSum(const vector<int>& matrix){
@@ -132,7 +130,6 @@ void SmartAIPlayer :: move(vector<int>& matrix){
             }
             stonesChoose = matrix[index] - x[index];
             pileChoose = index;
-            matrix[pileChoose] -= stonesChoose;
         }
         else {
             int Npiles = matrix.size();
@@ -141,8 +138,9 @@ void SmartAIPlayer :: move(vector<int>& matrix){
                 pileChoose = rand() % Npiles;
                 if (matrix[pileChoose]) stonesChoose = rand() % (matrix[pileChoose]) + 1;
             }
-            matrix[pileChoose] -= stonesChoose;
+
         }
+        matrix[pileChoose] -= stonesChoose;
     }
 }
 

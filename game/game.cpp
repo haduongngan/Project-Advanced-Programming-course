@@ -165,7 +165,7 @@ void Game :: winner(){
     background[0].render(0,0);
     background[1].render(0,0);
 
-    //thong bao chien thang : load text //nen load trc cho render
+    //thong bao chien thang : load text
 
     if (human1.Isthewinner){
         if (loadText(pathfont, "Congratulation!!!", 30)) {
@@ -213,12 +213,11 @@ void Game :: winner(){
     }
 
     //load cac node
-
     //get mouse position
     int x, y;
     SDL_GetMouseState(&x, &y);
 
-    //check if mourse is ib button
+    //check if mourse is in button
     bool inNext = true;
     bool inquit = true;
     bool inMenu = true;
@@ -271,12 +270,11 @@ void Game :: winner(){
         }
     }
 
-
     //update screen
     SDL_RenderPresent(renderer);
 }
 
-//tao mang brick dua theo level
+//set toa do cua brick dua theo level
 void Game :: setbrick(){
 
     if (level==1 || level==2 || level==3){
@@ -569,14 +567,13 @@ void Game :: setbrick(){
         Stone[5][11].setPosition(427,460); //
         Stone[5][12].setPosition(462,460); //
     }
-
 }
 
 //tao mang isrend dua theo level
 void Game :: setIsrend(){
     for (int i=0; i<6; i++){
         for (int j=0; j<13 ; j++){
-            isrend[i][j] = i < NPiles && j < NStones[i];
+            isrend[i][j] = (i < NPiles && j < NStones[i]);
         }
     }
 }
