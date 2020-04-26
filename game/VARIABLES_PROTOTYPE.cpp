@@ -217,7 +217,7 @@ void welcome(struct Game &yourGame){
     int x, y;
     SDL_GetMouseState(&x, &y);
 
-    //check if mourse is ib button
+    //check if mourse is in button
     bool inhelp = true;
     bool instart = true;
     bool inquit = true;
@@ -315,7 +315,7 @@ void help(struct Game &yourGame){
         texttexture.render(50, 257);
     }
     hint.render(400,257);
-    if (loadText(pathfont, "(once time) to skip your turn.", 27)) {
+    if (loadText(pathfont, "(one time) to skip your turn.", 27)) {
         texttexture.render(65, 282);
     }
 
@@ -339,8 +339,8 @@ void help(struct Game &yourGame){
         texttexture.render(150, 450);
     }
 
-    if (loadText(pathfont, "You are able choose who will take the first turn.", 27)) {
-        texttexture.render(20, 484);
+    if (loadText(pathfont, "You are able choose who goes first.", 27)) {
+        texttexture.render(60, 484);
     }
     if (loadText(pathfont, "If you are in mode 2 or 3, you will be", 27)) {
         texttexture.render(55, 509);
@@ -1216,7 +1216,8 @@ void handleEventCase5(SDL_Event* e, int &WinCase, struct Game &yourGame, bool &q
             //setup lai
             yourGame.NPiles = 0;
             yourGame.NStones.clear();
-            yourGame.level++;
+            if (yourGame.level<15) yourGame.level++;
+            else yourGame.level = 1;
             yourGame.select = false;
             yourGame.pileNow = -1;
 
