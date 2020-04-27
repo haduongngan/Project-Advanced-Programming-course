@@ -13,3 +13,4 @@ Players are able to choose who will be take the first turn:
 
 During the game, players can use "Star" to skip their turn. It can be used only one time.
 
+Link demo: https://youtu.be/2ZtYBStHKy0 
