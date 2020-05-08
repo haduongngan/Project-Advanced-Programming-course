@@ -24,23 +24,27 @@ struct LTexture {
     double mWidth;
     double mHeight;
 
-    //ham tao
+    //constructor
     LTexture();
 
-    //ham huy
+    //destructor
     ~LTexture();
 
-    //load image -> mTexture
+    /*load image -> mTexture
+     * take path to image as the parameter
+     */
     bool loadFFile(char* path);
 
-    //create image from font string -> mTexture
+    /* create image from font string -> mTexture
+    * the 1st parameter is content of text, the 2nd parameter is color of text
+    */
     bool loadFromRenderedText (char* texturetext, SDL_Colour textColor);
 
     //deallocates texture
     void free();
 
     //renders texture at given point
-    void render(int x, int y);
+    void render(int x, int y) const;
 
 
 };

@@ -3,22 +3,23 @@
 //
 
 #include "LTexture.h"
-#include "VARIABLES_PROTOTYPE.h"
 
 
-//khoi tao
+//constructor
 LTexture :: LTexture(){
     mTexture = nullptr;
     mWidth = 0;
     mHeight = 0;
 }
 
-//ham huy
+//destructor
 LTexture :: ~LTexture(){
     free();
 }
 
-//load image -> mTexture
+/*load image -> mTexture
+ * take path to image as the parameter
+ */
 bool LTexture :: loadFFile(char* path){
     free();
 
@@ -51,7 +52,9 @@ bool LTexture :: loadFFile(char* path){
     return (mTexture != nullptr);
 }
 
-//create image from font string -> mTexture
+/* create image from font string -> mTexture
+ * the 1st parameter is content of text, the 2nd parameter is color of text
+ */
 bool LTexture :: loadFromRenderedText(char* texturetext, SDL_Colour textColor){
     free();
 
@@ -87,7 +90,7 @@ void LTexture :: free(){
 }
 
 //renders texture at given point
-void LTexture :: render(int x, int y){
+void LTexture :: render(int x, int y) const{
     //set rendering space and render to screen
     SDL_Rect renderQuad = {x, y, static_cast<int>(mWidth), static_cast<int>(mHeight)};
     SDL_RenderCopy(renderer, mTexture, nullptr, &renderQuad);

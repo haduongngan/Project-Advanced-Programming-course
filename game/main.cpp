@@ -1,21 +1,21 @@
 #include <iostream>
 #include <SDL.h>
-#include <SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL_mixer.h>
-#include <cmath>
-#include <string>
-#include "HumanPlayer.h"
-#include "AIPlayer.h"
-#include "SmartAIPlayer.h"
+#include "Player.h"
 #include "game.h"
 #include "VARIABLES_PROTOTYPE.h"
 #include "LTexture.h"
-
 using namespace std;
 
+
+ // window's wigth and height
 const double SCREEN_WIDTH = 532.992;
 const double SCREEN_HEIGHT = 666.24;
+
+// max pile (fixed) and max bricks in each pile
+const int MAX_PILE = 6;
+const int MAX_BRICK = 13;
 
 //the window
 SDL_Window* window = nullptr;
@@ -23,49 +23,68 @@ SDL_Window* window = nullptr;
 //the window renderer
 SDL_Renderer* renderer = nullptr;
 
-//current displayed texture
-SDL_Texture* Texture = nullptr; //chuyen load anh
-
 //globally used font
 TTF_Font* font = nullptr;
 
-//rendered texture
-LTexture texttexture;  //chuyen load text
+//rendered text texture
+LTexture texttexture;
 
-//music
+//music + sound effect
 Mix_Music *gMusic = nullptr;
 Mix_Chunk *selectBrick = nullptr;
 Mix_Chunk *selectNode = nullptr;
 Mix_Chunk *win = nullptr;
 Mix_Chunk *switchTurn = nullptr;
 
-
 //path
 const char pathdata[] = "../Stones.txt";
 char* pathfont = "../font/Sriracha-Regular.ttf";
 
+//Color of text
+const SDL_Color textColor_white = {0xF8,0xF8,0xff};
+const SDL_Color textColor_red = {0xa5,0x2a,0x2a};
 
-LTexture background[7]; //0: nen tron, 1 la nen winner, 2-6: nen theo so pile
+//background
+LTexture background[7]; //0: basic backgr, 1 : winner backgr , 2-6: backgr based on number of piles
+
+//active means that now is your turn
 LTexture active;
 LTexture unactive;
+
+//some function nodes
 LTexture hint;
 LTexture menu;
 LTexture nextnode;
+
+//function nodes help to set game
 LTexture minusnode;
 LTexture plusnode;
 LTexture text_input;
 
-vector<vector<int>>data; //du lieu doc tu Stones.txt
+//data from Stones.txt : number of bricks in levels.
+vector<vector<int>>data;
 
 
 int main(int argc, char** argv) {
+
+    /* 73:
+     * init SDL : window, IMG, TTF, ...
+     */
     if ( !init() ){
         cout << "Failed to initialize!\n";
     }
     else {
+        /* 78:
+         * Init yourGame
+         */
         struct Game yourGame;
 
-        //load cac anh cho san
+
+        /* 84 - 132
+         * load image : backgrounds, function nodes
+         * (LTexture.h)
+         */
+
         if (!background[0].loadFFile("../image/144511.png")){
             cout << "Failed to load background case 1" << endl;
         }
@@ -116,37 +135,52 @@ int main(int argc, char** argv) {
             cout << "Failed to load function button" << endl;
         }
 
-        //doc du lieu tu Stones.txt
+
+        /* 141:
+         * read data from file .txt
+         */
         loadData(pathdata);
 
-        //load music
+
+        /* 148 - 150
+         * load music + sound effects
+         */
         if (!loadMusic()){
             cout << "Unable to load music!" << endl;
         }
 
-        //bat dau su kien
+        //Begin event
         SDL_Event e;
         bool quit = false;
-        int WinCase = 1; /*WinCase : 1 -> Welcome to Nim Game
-                                     2 -> Instructions
-                                     3 -> Set up game
-                                     4 -> Play game
-                                     5 -> Thong bao chien thang */
+        int WinCase = 1; /* WinCase : 1 -> Welcome to Nim Game
+                                      2 -> Instructions
+                                      3 -> Set up game
+                                      4 -> Play game
+                                      5 -> announce winner */
 
         while (!quit){
-            //if there is no music
+
+            /* 162 - 165
+             * if there is no music -> play music
+             */
             if (Mix_PlayingMusic()==0){
                 //play
                 Mix_PlayMusic(gMusic, -1);
             }
 
-            //neu co su kien trong hang doi
+
+            /* 172 - 206
+             * if have event (mouse event) -> handle bases on situation
+             * there are 5 cases (which is discern by WinCase)
+             */
             while (SDL_PollEvent(&e)){
-                //neu tat cua so
+
+                //if quit
                 if (e.type == SDL_QUIT){
                     quit = true;
                 }
-                //xu ly su kien tuy thuoc vao cua so nao dang hien thi
+
+                //handle bases on situation
                 switch (WinCase){
                     case 1: {
                         handleEventCase1(&e, WinCase, quit);
@@ -175,7 +209,11 @@ int main(int argc, char** argv) {
                 }
             }
 
-            //neu khong co su kien -> load tuy thuoc vao cua so nao dang hien thi
+
+            /* 213 - 238
+             * if have not event -> render images, text, nodes,.. bases on situation
+             * there are 5 cases (which is discern by WinCase)
+             */
             switch (WinCase){
                 case 1: {
                     welcome(yourGame);
@@ -198,7 +236,7 @@ int main(int argc, char** argv) {
                 }
 
                 case 5: {
-                    yourGame.winner();
+                    winner(yourGame);
                     break;
                 }
             }

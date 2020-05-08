@@ -3,14 +3,11 @@ project(game)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(game main.cpp
-        HumanPlayer.h HumanPlayer.cpp
-        AIPlayer.h AIPlayer.cpp
-        SmartAIPlayer.h SmartAIPlayer.cpp
         game.cpp game.h
         VARIABLES_PROTOTYPE.cpp VARIABLES_PROTOTYPE.h
         LTexture.cpp LTexture.h
         brick.cpp brick.h
-        )
+        Player.cpp Player.h)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /Users/hatnho0708/Documents/SDL/cmake)
 

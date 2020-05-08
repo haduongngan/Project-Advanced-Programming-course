@@ -7,16 +7,22 @@
 
 #include <iostream>
 #include <vector>
-#include "HumanPlayer.h"
-#include "AIPlayer.h"
-#include "SmartAIPlayer.h"
-#include "VARIABLES_PROTOTYPE.h"
+#include "Player.h"
 #include "brick.h"
 using namespace std;
-extern vector<vector<int>>data;
+
+//path
 extern const char pathdata[];
-extern char* pathfont;
+
+//data
+extern vector<vector<int>>data;
+
+//backgr
 extern LTexture background[7];
+
+// max pile (fixed) and max bricks in each pile
+extern const int MAX_PILE;
+extern const int MAX_BRICK;
 
 struct Game{
     int NPiles;
@@ -33,30 +39,31 @@ struct Game{
     AIPlayer AI;
     SmartAIPlayer smart;
 
-    //ham tao
+    //constructor
     Game();
 
-    //ham huy
+    //destructor
     ~Game();
 
-    //tao mang luu so stones moi pile
+    //construct the matrix NStones based on level
     void setStones();
 
-    //khoi tao nguoi choi dua vao mode, firstturn
+    //construct players based on mode and first turn
     void setPlayers();
 
-    //kiem tra co nguoi chien thang
+    //check winner : return true if there is a winner
     bool checkWin();
 
-    //de cho case 5: thong bao nguoi chien thang
-    void winner();
-
-    //set toa do cua brick dua theo level
+    //set bricks's position based on level
     void setbrick();
 
-    //tao mang isrend dua theo level
+    //set matrix isrend based on level
     void setIsrend();
 };
 
+/*construct a matrix which saves number of stones based on level
+ * take game level as the 1st parameter and vector data as the another parameter
+ */
+vector<int> chooseLevel(int level, vector<vector<int>>data);
 
 #endif //GAME_GAME_H

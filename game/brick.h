@@ -3,20 +3,20 @@
 //
 
 
-
 #ifndef GAME_BRICK_H
 #define GAME_BRICK_H
 
 #include "LTexture.h"
 #include <vector>
 using namespace std;
+//sound effect
 extern Mix_Chunk *selectBrick;
 
 struct brick {
     //brick-01
     LTexture obj;
 
-    //brick-02
+    //brick-02 - the bigger brick
     LTexture brick02;
 
     //top left position
@@ -27,8 +27,8 @@ struct brick {
     double mHeight;
 
     //render?
-    bool ren; //kich co binh thuong
-    bool ren02; //kich co to
+    bool ren; //normal brick
+    bool ren02; //bigger brick
 
     //pile
     int pile;
@@ -37,28 +37,37 @@ struct brick {
     //Colum
     int col;
 
-    //ham tao
     brick();
 
-    //ham huy
     ~brick();
 
-    //xac dinh xem co thuoc hang dang chon khong
+
+    /* set "truepile" based on the pile could be selected in this turn
+    * take the id of pile could be selected in this turn as the parameter
+    */
     void setTruepile(int p);
 
-    //xac dinh thuoc hang nao
+    /* determine the own brick's pile
+    * take the id of this brick's pile as the parameter
+    */
     void setPile(int p);
 
-    //xac dinh thuoc cot nao
+    /* determine the own brick's column
+    * take the id of this brick's column as the parameter
+    */
     void setCol(int id);
 
     //render
-    void rend();
+    void rend() const;
 
-    //xac dinh toa do brick
+    //determine the own brick's Position
     void setPosition(int x, int y);
 
-    //xu ly khi bam vao
+    /* handle when mouse event happened
+    * the 1st parameter is main pointer SDL_Event.
+    * The 2nd is the vector which determine if bricks should be render or not,
+    * and the last parameter is the vector saving number of bricks each pile
+    */
     void handleEvent(SDL_Event* e, vector<vector<bool>> &isrend, vector<int> &matrix);
 
 };

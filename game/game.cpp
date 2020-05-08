@@ -3,11 +3,9 @@
 //
 
 #include "game.h"
-#include "VARIABLES_PROTOTYPE.h"
-using namespace std;
 
 
-//ham tao
+//constructor : 9 - 31
 Game :: Game(){
     NPiles = 0;
     playMode = 1;
@@ -15,25 +13,27 @@ Game :: Game(){
     firstturn = 1;
     select = false;
     pileNow = -1;
-    for (int i=0; i<6; i++){
-        for (int j=0; j<13 ; j++){
+    for (int i = 0; i < MAX_PILE; i++){
+        for (int j = 0; j < MAX_BRICK ; j++){
             Stone[i][j].setPile(i+1);
             Stone[i][j].setCol(j+1);
         }
     }
-    for (int i=0; i<6; i++){
+
+    //construct the isrend
+    for (int i = 0; i < MAX_PILE; i++){
         vector<bool> tmp;
-        for (int j=0; j<13; j++){
+        for (int j = 0; j < MAX_BRICK; j++){
             tmp.push_back(false);
         }
         isrend.push_back(tmp);
     }
 }
 
-//ham huy
+//destructor : 34 - 41
 Game :: ~Game(){
-    for (int i=0; i<6; i++){
-        for (int j=0; j<13; j++){
+    for (int i = 0; i < MAX_PILE; i++){
+        for (int j = 0; j < MAX_BRICK; j++){
             Stone[i][j].obj.free();
             Stone[i][j].brick02.free();
         }
@@ -41,14 +41,14 @@ Game :: ~Game(){
 }
 
 
-//tao mang luu so stones moi pile
+//construct the matrix NStones based on level
 void Game :: setStones(){
     NStones = chooseLevel(level,data);
     NPiles = NStones.size();
 
 }
 
-//khoi tao nguoi choi dua vao mode va first turn
+//construct players based on mode and first turn
 void Game :: setPlayers(){
     if (playMode == 1) { //human vs human
         human1.id = 1;
@@ -144,11 +144,11 @@ void Game :: setPlayers(){
     }
 }
 
-//kiem tra co nguoi chien thang : tra ve 1 neu co ng thang
+//check winner : return true if there is a winner
 bool Game :: checkWin(){
     bool check = 1;
-    for (int i=0; i<NPiles; i++){
-        for (int j=0; j<13;j++){
+    for (int i = 0; i < NPiles; i++){
+        for (int j = 0; j < MAX_BRICK; j++){
             if (isrend[i][j]) {
                 check = 0;
                 break;
@@ -158,126 +158,10 @@ bool Game :: checkWin(){
     return check;
 }
 
-
-//de cho case 5: thong bao nguoi chien thang while(!quit)
-void Game :: winner(){
-    //load back case 5
-    background[0].render(0,0);
-    background[1].render(0,0);
-
-    //thong bao chien thang : load text
-
-    if (human1.Isthewinner){
-        if (loadText(pathfont, "Congratulation!!!", 30)) {
-            texttexture.render(160, 200);
-        }
-        if (loadText(pathfont, "The winner is", 28)) {
-            texttexture.render(186, 232);
-        }
-        if (loadText(pathfont, "Player 1", 32)) {
-            texttexture.render(217, 260);
-        }
-    }
-    else if (human2.Isthewinner && select){
-        if (loadText(pathfont, "Congratulation!!!", 30)) {
-            texttexture.render(160, 200);
-        }
-        if (loadText(pathfont, "The winner is", 28)) {
-            texttexture.render(186, 232);
-        }
-        if (loadText(pathfont, "Player 2", 32)) {
-            texttexture.render(217, 260);
-        }
-    }
-    else if (AI.Isthewinner) {
-        if (loadText(pathfont, "Congratulation!!!", 30)) {
-            texttexture.render(160, 200);
-        }
-        if (loadText(pathfont, "The winner is", 28)) {
-            texttexture.render(186, 232);
-        }
-        if (loadText(pathfont, "AIPlayer", 32)) {
-            texttexture.render(200, 260);
-        }
-    }
-    else if (smart.Isthewinner) {
-        if (loadText(pathfont, "Congratulation!!!", 30)) {
-            texttexture.render(160, 200);
-        }
-        if (loadText(pathfont, "The winner is", 28)) {
-            texttexture.render(186, 232);
-        }
-        if (loadText(pathfont, "SmartAIPlayer", 32)) {
-            texttexture.render(167, 260);
-        }
-    }
-
-    //load cac node
-    //get mouse position
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-
-    //check if mourse is in button
-    bool inNext = true;
-    bool inquit = true;
-    bool inMenu = true;
-    if (x < 241) inquit = false;
-    else if (x > 241 + 52) inquit = false;
-    else if (y < 438) inquit = false;
-    else if (y > 438 + 23) inquit = false;
-
-    if (x < 212) inNext = false;
-    else if (x > 212 + 127) inNext = false;
-    else if (y < 332) inNext = false;
-    else if (y > 332 + 26) inNext = false;
-
-    if (x < 238) inMenu = false;
-    else if (x > 238 + 70) inMenu = false;
-    else if (y < 378) inMenu = false;
-    else if (y > 378 + 26) inMenu = false;
-
-
-    if (inNext){
-        if (loadTextNew(pathfont, "Next level", 28)) {
-            texttexture.render(212, 318);
-        }
-    }
-    else {
-        if (loadText(pathfont, "Next level", 28)) {
-            texttexture.render(212, 318);
-        }
-    }
-
-    if (inMenu){
-        if (loadTextNew(pathfont, "Menu", 28)) {
-            texttexture.render(238, 365);
-        }
-    }
-    else {
-        if (loadText(pathfont, "Menu", 28)) {
-            texttexture.render(238, 365);
-        }
-    }
-
-    if (inquit){
-        if (loadTextNew(pathfont, "Quit", 28)) {
-            texttexture.render(241, 420);
-        }
-    }
-    else {
-        if (loadText(pathfont, "Quit", 28)) {
-            texttexture.render(241, 420);
-        }
-    }
-
-    //update screen
-    SDL_RenderPresent(renderer);
-}
-
-//set toa do cua brick dua theo level
+//set bricks's position based on level
 void Game :: setbrick(){
 
-    if (level==1 || level==2 || level==3){
+    if (level == 1 || level == 2 || level == 3){
         Stone[0][0].setPosition(42,199); //
         Stone[0][1].setPosition(77, 199); //
         Stone[0][2].setPosition(112, 199);  //
@@ -308,7 +192,7 @@ void Game :: setbrick(){
     }
 
 
-    else if (level==4 || level==5 || level==6){
+    else if (level == 4 || level == 5 || level == 6){
         Stone[0][0].setPosition(42,135); //
         Stone[0][1].setPosition(77, 135); //
         Stone[0][2].setPosition(112, 135);  //
@@ -352,7 +236,7 @@ void Game :: setbrick(){
         Stone[2][12].setPosition(462,388); //
     }
 
-    else if (level==7 || level==8 ||level==9){
+    else if (level == 7 || level == 8 ||level == 9){
         Stone[0][0].setPosition(42,108); //
         Stone[0][1].setPosition(77, 108); //
         Stone[0][2].setPosition(112, 108);  //
@@ -410,7 +294,7 @@ void Game :: setbrick(){
         Stone[3][12].setPosition(462,429); //
     }
 
-    else if (level==10 || level==11 || level==12){
+    else if (level == 10 || level == 11 || level == 12){
         Stone[0][0].setPosition(42,94); //
         Stone[0][1].setPosition(77, 94); //
         Stone[0][2].setPosition(112, 94);  //
@@ -482,7 +366,7 @@ void Game :: setbrick(){
         Stone[4][12].setPosition(462,458); //
     }
 
-    else if (level==13 || level==14 || level==15){
+    else if (level == 13 || level == 14 || level == 15){
         Stone[0][0].setPosition(42,76); //
         Stone[0][1].setPosition(77, 76); //
         Stone[0][2].setPosition(112, 76);  //
@@ -569,11 +453,23 @@ void Game :: setbrick(){
     }
 }
 
-//tao mang isrend dua theo level
+//set matrix isrend based on level
 void Game :: setIsrend(){
-    for (int i=0; i<6; i++){
-        for (int j=0; j<13 ; j++){
+    for (int i = 0; i < MAX_PILE; i++){
+        for (int j = 0; j < MAX_BRICK ; j++){
             isrend[i][j] = (i < NPiles && j < NStones[i]);
         }
     }
+}
+
+/*construct a matrix which saves number of stones based on level
+ * take game level as the 1st parameter and vector data as the another parameter
+ */
+vector<int> chooseLevel(int level, vector<vector<int>>data){
+    int num = level - 1;
+    vector<int> a;
+    for (int i = 0; i < data[num][0]; i++){
+        a.push_back(data[num][i+1]);
+    }
+    return a;
 }
